@@ -1,132 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as XLSX from "xlsx";
-
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
-const WORKBOOK_URL = "https://raw.githubusercontent.com/jamal715/Pakistan--Food-Non-Rice-Export-Data-Deep-Dive/main/TDAP_Export_Directory_HS01_24.xlsx";
-
-type Row = Record<string, unknown>;
-type Exporter = {
-  key:string; name:string; ntn:string; value:number; hs8Count:number; hs4Count:number; largestHs8:string; share:number; cumulative:number; rank:number;
-};
-type Product = { hs8:string; hs4:string; name:string; value:number; exporters:number; share:number; rank:number };
-type Tier = "A"|"B"|"C";
-type Cache = { workbook:XLSX.WorkBook; chapters:{code:string; sheet:string; name:string}[] };
-let cache:Cache | null = null;
-
-function text(v:unknown){ return String(v ?? "").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim(); }
-function num(v:unknown){ const n=Number(v); return Number.isFinite(n)?n:0; }
-function hs(v:unknown,width:number){ const s=text(v).replace(/\.0$/," ").replace(/\D/g,""); return s.padStart(width,"0").slice(-width); }
-function pick(row:Row,names:string[]){
-  const map = new Map(Object.keys(row).map(k=>[k.trim().toLowerCase(),k]));
-  for(const n of names){ const k=map.get(n.toLowerCase()); if(k) return row[k]; }
-  return undefined;
-}
-
-async function loadWorkbook(){
-  if(cache) return cache;
-  const res = await fetch(WORKBOOK_URL,{next:{revalidate:3600}});
-  if(!res.ok) throw new Error(`Workbook fetch failed: ${res.status}`);
-  const wb = XLSX.read(await res.arrayBuffer(),{type:"array"});
-  const chapters = wb.SheetNames.map(sheet=>{
-    const m=sheet.match(/(?:^|\b)HS[_\s-]?(\d{1,2})(?:\b|\s)/i);
-    if(!m) return null;
-    const code=m[1].padStart(2,"0");
-    const name=sheet.replace(/^HS[_\s-]?\d{1,2}\s*/i,"").trim() || `Chapter ${code}`;
-    return {code,sheet,name};
-  }).filter(Boolean) as {code:string;sheet:string;name:string}[];
-  chapters.sort((a,b)=>Number(a.code)-Number(b.code));
-  cache={workbook:wb,chapters};
-  return cache;
-}
-
-function parseRows(wb:XLSX.WorkBook,sheetName:string){
-  const ws=wb.Sheets[sheetName];
-  const raw=XLSX.utils.sheet_to_json<Row>(ws,{defval:null,raw:true});
-  return raw.map(r=>({
-    exporterName:text(pick(r,["exporter_name","master_name","company_name_detail","company_name"])),
-    ntn:text(pick(r,["ntn","detail_NTN","NTN"])),
-    hs8:hs(pick(r,["hs8","ptc_code","pct_code"]),8),
-    hs4:hs(pick(r,["hs4"]),4),
-    productName:text(pick(r,["product_name","commodity_description"])),
-    value:num(pick(r,["exported_value_rs","ExpSum","exported_value","export_value"])),
-    records:num(pick(r,["reported_record_count","Count(*)","count"])),
-  })).filter(r=>r.exporterName && /^\d{8}$/.test(r.hs8) && r.value>0);
-}
-
-function percentile(values:number[],target:number){
-  const sorted=[...values].sort((a,b)=>a-b); let less=0, equal=0;
-  for(const v of sorted){ if(v<target) less++; else if(v===target) equal++; }
-  const rank=less+(equal+1)/2; return rank/sorted.length;
-}
-
+export const runtime="nodejs"; export const dynamic="force-dynamic";
+const WORKBOOK_URL="https://raw.githubusercontent.com/jamal715/Pakistan--Food-Non-Rice-Export-Data-Deep-Dive/main/TDAP_Export_Directory_HS01_24.xlsx";
+type Row=Record<string,unknown>; type Tier="A"|"B"|"C"; let cache:any=null;
+const text=(v:unknown)=>String(v??"").replace(/<[^>]+>/g," ").replace(/\s+/g," ").trim(); const num=(v:unknown)=>Number.isFinite(Number(v))?Number(v):0;
+function hs(v:unknown,w:number){return text(v).replace(/\.0$/," ").replace(/\D/g,"").padStart(w,"0").slice(-w)}
+function pick(r:Row,n:string[]){const m=new Map(Object.keys(r).map(k=>[k.trim().toLowerCase(),k]));for(const x of n){const k=m.get(x.toLowerCase());if(k)return r[k]}return undefined}
+async function loadWorkbook(){if(cache)return cache;const res=await fetch(WORKBOOK_URL,{next:{revalidate:3600}});if(!res.ok)throw Error("workbook");const wb=XLSX.read(await res.arrayBuffer(),{type:"array"});const chapters=wb.SheetNames.map(sheet=>{const m=sheet.match(/(?:^|\b)HS[_\s-]?(\d{1,2})(?:\b|\s)/i);if(!m)return null;const code=m[1].padStart(2,"0");return{code,sheet,name:sheet.replace(/^HS[_\s-]?\d{1,2}\s*/i,"").trim()||`Chapter ${code}`}}).filter(Boolean).sort((a:any,b:any)=>+a.code-+b.code);return cache={workbook:wb,chapters}}
+function parseRows(wb:XLSX.WorkBook,sheet:string){return XLSX.utils.sheet_to_json<Row>(wb.Sheets[sheet],{defval:null,raw:true}).map(r=>({exporterName:text(pick(r,["exporter_name","master_name","company_name_detail","company_name"])),ntn:text(pick(r,["ntn","detail_NTN","NTN"])),hs8:hs(pick(r,["hs8","ptc_code","pct_code"]),8),hs4:hs(pick(r,["hs4"]),4),productName:text(pick(r,["product_name","commodity_description"])),value:num(pick(r,["exported_value_rs","ExpSum","exported_value","export_value"]))})).filter(r=>r.exporterName&&/^\d{8}$/.test(r.hs8)&&r.value>0)}
+function percentile(a:number[],t:number){const s=[...a].sort((x,y)=>x-y);let l=0,e=0;for(const v of s){if(v<t)l++;else if(v===t)e++}return(l+(e+1)/2)/s.length}
 function analyse(rows:ReturnType<typeof parseRows>,code:string,name:string){
-  const firms=new Map<string,{name:string;ntn:string;value:number;hs8:Set<string>;hs4:Set<string>;largestHs8:string;largestValue:number}>();
-  const products=new Map<string,{hs8:string;hs4:string;name:string;value:number;firms:Set<string>}>();
-  const firmProducts=new Map<string,{firmKey:string;name:string;ntn:string;hs8:string;hs4:string;product:string;value:number}>();
-
-  for(const r of rows){
-    const firmKey=`${r.ntn}|${r.exporterName}`;
-    const f=firms.get(firmKey)??{name:r.exporterName,ntn:r.ntn,value:0,hs8:new Set<string>(),hs4:new Set<string>(),largestHs8:r.hs8,largestValue:-1};
-    f.value+=r.value; f.hs8.add(r.hs8); f.hs4.add(r.hs4 || r.hs8.slice(0,4)); if(r.value>f.largestValue){f.largestValue=r.value;f.largestHs8=r.hs8;} firms.set(firmKey,f);
-    const pKey=`${r.hs8}|${r.productName}`; const p=products.get(pKey)??{hs8:r.hs8,hs4:r.hs4||r.hs8.slice(0,4),name:r.productName||"Unlabelled product",value:0,firms:new Set<string>()}; p.value+=r.value;p.firms.add(firmKey);products.set(pKey,p);
-    const fpKey=`${firmKey}|${r.hs8}`; const fp=firmProducts.get(fpKey)??{firmKey,name:r.exporterName,ntn:r.ntn,hs8:r.hs8,hs4:r.hs4||r.hs8.slice(0,4),product:r.productName||"Unlabelled product",value:0}; fp.value+=r.value; firmProducts.set(fpKey,fp);
-  }
-
-  const total=[...firms.values()].reduce((s,f)=>s+f.value,0);
-  let cumulative=0;
-  const exporters:Exporter[]=[...firms.entries()].sort((a,b)=>b[1].value-a[1].value).map(([key,f],i)=>{const share=total?f.value/total:0;cumulative+=share;return{key,name:f.name,ntn:f.ntn,value:f.value,hs8Count:f.hs8.size,hs4Count:f.hs4.size,largestHs8:f.largestHs8,share,cumulative,rank:i+1};});
-  const shares=exporters.map(e=>e.share);
-  const toThreshold=(t:number)=>Math.max(0,exporters.findIndex(e=>e.cumulative>=t)+1);
-  const hhi=shares.reduce((s,x)=>s+x*x,0)*10000;
-
-  const productList:Product[]=[...products.values()].sort((a,b)=>b.value-a.value).map((p,i)=>({hs8:p.hs8,hs4:p.hs4,name:p.name,value:p.value,exporters:p.firms.size,share:total?p.value/total:0,rank:i+1}));
-  const firmValues=exporters.map(e=>e.value);
-  const exporterByKey=new Map(exporters.map(e=>[e.key,e]));
-  const byHs8=new Map<string,{total:number;items:{key:string;value:number}[]}>();
-  for(const fp of firmProducts.values()){const x=byHs8.get(fp.hs8)??{total:0,items:[]};x.total+=fp.value;x.items.push({key:`${fp.firmKey}|${fp.hs8}`,value:fp.value});byHs8.set(fp.hs8,x);}
-  for(const x of byHs8.values()) x.items.sort((a,b)=>b.value-a.value);
-  const tierOrder:Record<Tier,number>={A:1,B:2,C:3};
-  const strategic=[...firmProducts.values()].map(fp=>{
-    const firm=exporterByKey.get(fp.firmKey)!; const hsInfo=byHs8.get(fp.hs8)!; const rank=hsInfo.items.findIndex(x=>x.key===`${fp.firmKey}|${fp.hs8}`)+1; const within=hsInfo.total?fp.value/hsInfo.total:0; const firmPct=percentile(firmValues,firm.value); const firmsIn=hsInfo.items.length;
-    const topProduct=rank<=3, material=within>=.10, large=firmPct>=.90, scarce=firmsIn<=5;
-    const tier:Tier=large&&topProduct&&material?"A":((topProduct&&material)||(large&&scarce)?"B":"C");
-    return {tier,exporter:fp.name,hs8:fp.hs8,product:fp.product,chapterRank:firm.rank,hs8Rank:rank,firmsInHs8:firmsIn,shareWithinHs8:within,firmValue:firm.value,hs8Value:fp.value};
-  }).sort((a,b)=>tierOrder[a.tier]-tierOrder[b.tier]||a.chapterRank-b.chapterRank||a.hs8Rank-b.hs8Rank);
-
-  const top10=shares.slice(0,10).reduce((s,x)=>s+x,0), top5=shares.slice(0,5).reduce((s,x)=>s+x,0), top1=shares[0]||0;
-  const concentrationLabel=hhi>=2500?"highly concentrated":hhi>=1500?"moderately concentrated":"relatively dispersed";
-  const insight=[
-    `The chapter contains ${exporters.length.toLocaleString()} observed exporters across ${productList.length.toLocaleString()} HS8 products.`,
-    `The top 10 firms account for ${(top10*100).toFixed(1)}% of reported value; ${toThreshold(.60)} exporters are needed to reach 60%.`,
-    `HHI is ${hhi.toFixed(0)}, indicating a ${concentrationLabel} exporter structure within this TDAP extract.`,
-    productList[0]?`The largest observed HS8 line is ${productList[0].hs8} — ${productList[0].name} — at ${(productList[0].share*100).toFixed(1)}% of reported chapter value.`:"",
-    `${strategic.filter(x=>x.tier==="A").length} exporter-product combinations meet the app’s Tier A evidence rule and ${strategic.filter(x=>x.tier==="B").length} meet Tier B.`
-  ].filter(Boolean);
-
-  return {
-    chapter:{code,name},
-    source:{label:"TDAP master exporter workbook used by Pakistan Export Intelligence",url:WORKBOOK_URL},
-    kpis:{totalValue:total,exporters:exporters.length,products:productList.length,top1,top5,top10,hhi,to60:toThreshold(.60),to80:toThreshold(.80)},
-    exporters:exporters.slice(0,25),
-    products:productList.slice(0,20),
-    concentration:exporters.map(e=>({rank:e.rank,cumulative:e.cumulative})),
-    strategic:strategic.filter(x=>x.tier!=="C").slice(0,30),
-    tierCounts:{A:strategic.filter(x=>x.tier==="A").length,B:strategic.filter(x=>x.tier==="B").length,C:strategic.filter(x=>x.tier==="C").length},
-    insights:insight,
-    guardrail:"Reported values, shares and rankings describe the selected TDAP extract. They are not automatically Pakistan national market shares; record count is not physical quantity."
-  };
-}
-
-export async function GET(req:NextRequest){
-  try{
-    const {workbook,chapters}=await loadWorkbook();
-    const requested=req.nextUrl.searchParams.get("chapter")?.padStart(2,"0")||"12";
-    const selected=chapters.find(c=>c.code===requested)??chapters[0];
-    const data=analyse(parseRows(workbook,selected.sheet),selected.code,selected.name);
-    return NextResponse.json({chapters,data},{headers:{"Cache-Control":"public, s-maxage=3600, stale-while-revalidate=86400"}});
-  }catch(error){
-    console.error(error); return NextResponse.json({error:"Unable to load export intelligence workbook."},{status:500});
-  }
-}
+ const firms=new Map<string,any>(),products=new Map<string,any>(),fps=new Map<string,any>();
+ for(const r of rows){const fk=`${r.ntn}|${r.exporterName}`;const f=firms.get(fk)??{name:r.exporterName,ntn:r.ntn,value:0,hs8:new Set(),hs4:new Set(),largestHs8:r.hs8,largestValue:-1};f.value+=r.value;f.hs8.add(r.hs8);f.hs4.add(r.hs4||r.hs8.slice(0,4));if(r.value>f.largestValue){f.largestValue=r.value;f.largestHs8=r.hs8}firms.set(fk,f);const pk=`${r.hs8}|${r.productName}`;const p=products.get(pk)??{hs8:r.hs8,hs4:r.hs4||r.hs8.slice(0,4),name:r.productName||"Unlabelled product",value:0,firms:new Set()};p.value+=r.value;p.firms.add(fk);products.set(pk,p);const fpk=`${fk}|${r.hs8}`;const fp=fps.get(fpk)??{firmKey:fk,name:r.exporterName,hs8:r.hs8,product:r.productName||"Unlabelled product",value:0};fp.value+=r.value;fps.set(fpk,fp)}
+ const total=[...firms.values()].reduce((s,f)=>s+f.value,0);let cum=0;const exporters=[...firms.entries()].sort((a,b)=>b[1].value-a[1].value).map(([key,f],i)=>{const share=f.value/total;cum+=share;return{key,name:f.name,ntn:f.ntn,value:f.value,hs8Count:f.hs8.size,hs4Count:f.hs4.size,largestHs8:f.largestHs8,share,cumulative:cum,rank:i+1}});const shares=exporters.map(e=>e.share), threshold=(t:number)=>Math.max(0,exporters.findIndex(e=>e.cumulative>=t)+1),hhi=shares.reduce((s,x)=>s+x*x,0)*10000;
+ const productList=[...products.values()].sort((a,b)=>b.value-a.value).map((p,i)=>({hs8:p.hs8,hs4:p.hs4,name:p.name,value:p.value,exporters:p.firms.size,share:p.value/total,rank:i+1}));const firmValues=exporters.map(e=>e.value),byKey=new Map(exporters.map(e=>[e.key,e])),byHs8=new Map<string,any>();for(const fp of fps.values()){const x=byHs8.get(fp.hs8)??{total:0,items:[]};x.total+=fp.value;x.items.push({key:`${fp.firmKey}|${fp.hs8}`,value:fp.value});byHs8.set(fp.hs8,x)}for(const x of byHs8.values())x.items.sort((a:any,b:any)=>b.value-a.value);
+ const order:any={A:1,B:2,C:3};const strategic=[...fps.values()].map(fp=>{const firm:any=byKey.get(fp.firmKey),info=byHs8.get(fp.hs8),rank=info.items.findIndex((x:any)=>x.key===`${fp.firmKey}|${fp.hs8}`)+1,within=fp.value/info.total,large=percentile(firmValues,firm.value)>=.9,top=rank<=3,material=within>=.1,scarce=info.items.length<=5;const tier:Tier=large&&top&&material?"A":((top&&material)||(large&&scarce)?"B":"C");return{tier,exporter:fp.name,hs8:fp.hs8,product:fp.product,chapterRank:firm.rank,hs8Rank:rank,firmsInHs8:info.items.length,shareWithinHs8:within,firmValue:firm.value,hs8Value:fp.value}}).sort((a,b)=>order[a.tier]-order[b.tier]||a.chapterRank-b.chapterRank);
+ const top10=shares.slice(0,10).reduce((s,x)=>s+x,0),top5=shares.slice(0,5).reduce((s,x)=>s+x,0),top1=shares[0]||0,lead=productList[0],second=productList[1];const concentration=hhi>=2500?"very concentrated":hhi>=1500?"concentrated":hhi>=1000?"moderately concentrated":"broadly distributed";const dependence=top10>=.7?"A small group of firms carries most of the chapter. That creates scale, but also dependence: disruption, financing stress or lost buyers at a few exporters can move the whole picture.":top10>=.45?"The chapter has a meaningful leading group without being completely locked up by it. Policy can therefore work on two fronts: deepen the strongest firms while helping the next tier scale.":"Value is spread across a relatively wide exporter base. The strategic problem is less about dependence on champions and more about productivity, standards, market access and helping capable firms grow.";
+ const productRead=lead?(lead.share>=.5?`${lead.name} alone represents ${(lead.share*100).toFixed(1)}% of observed value. The chapter is therefore, in economic terms, much narrower than its product count suggests.`:lead.share>=.3?`${lead.name} is the anchor product at ${(lead.share*100).toFixed(1)}%. ${second?`${second.name} adds another ${(second.share*100).toFixed(1)}%.`:""} Product strategy should start with these anchors rather than treating every HS8 line equally.`:`No single HS8 line exceeds 30% of observed value. That diversity can be a strength, but it also means a chapter-wide intervention may be too blunt; product-specific constraints matter more.`):"";
+ const direction=top10>=.7?"The immediate policy question is resilience: can the chapter broaden its competitive exporter base without weakening the firms already operating at scale? Supplier development, standards capacity and buyer diversification deserve more attention than simply adding exporter registrations.":lead&&lead.share>=.5?"The strongest opportunity is to build around the dominant product while deliberately testing adjacent products for scale. Export promotion should distinguish between defending the anchor and discovering the next source of growth.":"A portfolio approach makes more sense here. Rather than picking one winner, identify the product-firm combinations already showing scale and remove their specific bottlenecks in finance, certification, logistics and market development.";
+ const tierCounts={A:strategic.filter(x=>x.tier==="A").length,B:strategic.filter(x=>x.tier==="B").length,C:strategic.filter(x=>x.tier==="C").length};
+ return{chapter:{code,name},kpis:{totalValue:total,exporters:exporters.length,products:productList.length,top1,top5,top10,hhi,to60:threshold(.6),to80:threshold(.8)},exporters:exporters.slice(0,25),products:productList.slice(0,20),concentration:exporters.map(e=>({rank:e.rank,cumulative:e.cumulative})),strategic:strategic.filter(x=>x.tier!=="C").slice(0,30),tierCounts,narrative:{lede:`HS ${code} contains ${exporters.length.toLocaleString()} observed exporters and ${productList.length} HS8 product lines, but those headline counts hide the structure that matters. The top ten firms account for ${(top10*100).toFixed(1)}% of observed value and ${threshold(.6)} firms are enough to reach 60%.`,structure:`On the exporter side, this is a ${concentration} chapter. ${dependence}`,product:productRead,direction,critical:`The useful question is not simply “who exports?” It is where scale, product importance and competitive depth intersect. The priority screen below surfaces those combinations; it should be treated as a starting point for investigation, not as a substitute for firm-level due diligence.`}}}
+export async function GET(req:NextRequest){try{const{workbook,chapters}=await loadWorkbook();const requested=req.nextUrl.searchParams.get("chapter")?.padStart(2,"0")||"12",selected=chapters.find((c:any)=>c.code===requested)??chapters[0],data=analyse(parseRows(workbook,selected.sheet),selected.code,selected.name);return NextResponse.json({chapters,data},{headers:{"Cache-Control":"public, s-maxage=3600, stale-while-revalidate=86400"}})}catch(e){console.error(e);return NextResponse.json({error:"Unable to load export intelligence workbook."},{status:500})}}
