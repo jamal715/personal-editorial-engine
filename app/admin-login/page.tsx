@@ -1,0 +1,9 @@
+export const metadata={title:"Editor access"};
+
+const styles=`.loginPage{min-height:100vh;background:#f7f1e8;display:grid;place-items:center;padding:24px}.loginCard{width:min(460px,100%);background:#fbf8f3;border:1px solid #d8d4cd;padding:32px}.loginCard span{font-size:10px;font-weight:800;letter-spacing:.14em;color:#004d73}.loginCard h1{margin:8px 0 12px;font:700 38px/1.05 Georgia,serif;color:#202426}.loginCard p{margin:0 0 22px;color:#5d6466;line-height:1.6}.loginCard label{display:grid;gap:7px;font-size:12px;font-weight:700;color:#343a3d}.loginCard input{width:100%;padding:12px;border:1px solid #bfb9b0;background:white}.loginCard button{margin-top:14px;width:100%;padding:12px;border:1px solid #004d73;background:#004d73;color:white;font-weight:700}.error{margin:0 0 14px;padding:10px;background:#f3e5e2;color:#8f3030;font-size:12px}.setup{margin:0 0 14px;padding:10px;background:#eee8dc;color:#6f5b2c;font-size:12px}`;
+
+export default async function AdminLogin({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){
+ const params=await searchParams;
+ const next=params.next?.startsWith("/")?params.next:"/editor";
+ return <main className="loginPage"><style>{styles}</style><section className="loginCard"><span>PRIVATE ACCESS</span><h1>Editorial workspace</h1><p>This area is reserved for the site editor.</p>{params.error&&<div className="error">Incorrect password.</div>}{params.setup&&<div className="setup">Admin access is not configured yet. Add the <b>ADMIN_PASSWORD</b> environment variable in Vercel, then redeploy.</div>}<form action="/api/admin-login" method="post"><input type="hidden" name="next" value={next}/><label>Password<input type="password" name="password" autoComplete="current-password" required autoFocus/></label><button type="submit">Enter workspace</button></form></section></main>
+}
