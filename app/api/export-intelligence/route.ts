@@ -10,9 +10,8 @@ type Row = Record<string, unknown>;
 type Exporter = {
   key:string; name:string; ntn:string; value:number; hs8Count:number; hs4Count:number; largestHs8:string; share:number; cumulative:number; rank:number;
 };
-
 type Product = { hs8:string; hs4:string; name:string; value:number; exporters:number; share:number; rank:number };
-
+type Tier = "A"|"B"|"C";
 type Cache = { workbook:XLSX.WorkBook; chapters:{code:string; sheet:string; name:string}[] };
 let cache:Cache | null = null;
 
@@ -88,12 +87,13 @@ function analyse(rows:ReturnType<typeof parseRows>,code:string,name:string){
   const byHs8=new Map<string,{total:number;items:{key:string;value:number}[]}>();
   for(const fp of firmProducts.values()){const x=byHs8.get(fp.hs8)??{total:0,items:[]};x.total+=fp.value;x.items.push({key:`${fp.firmKey}|${fp.hs8}`,value:fp.value});byHs8.set(fp.hs8,x);}
   for(const x of byHs8.values()) x.items.sort((a,b)=>b.value-a.value);
+  const tierOrder:Record<Tier,number>={A:1,B:2,C:3};
   const strategic=[...firmProducts.values()].map(fp=>{
     const firm=exporterByKey.get(fp.firmKey)!; const hsInfo=byHs8.get(fp.hs8)!; const rank=hsInfo.items.findIndex(x=>x.key===`${fp.firmKey}|${fp.hs8}`)+1; const within=hsInfo.total?fp.value/hsInfo.total:0; const firmPct=percentile(firmValues,firm.value); const firmsIn=hsInfo.items.length;
     const topProduct=rank<=3, material=within>=.10, large=firmPct>=.90, scarce=firmsIn<=5;
-    const tier=large&&topProduct&&material?"A":((topProduct&&material)||(large&&scarce)?"B":"C");
+    const tier:Tier=large&&topProduct&&material?"A":((topProduct&&material)||(large&&scarce)?"B":"C");
     return {tier,exporter:fp.name,hs8:fp.hs8,product:fp.product,chapterRank:firm.rank,hs8Rank:rank,firmsInHs8:firmsIn,shareWithinHs8:within,firmValue:firm.value,hs8Value:fp.value};
-  }).sort((a,b)=>({A:1,B:2,C:3}[a.tier]-{A:1,B:2,C:3}[b.tier])||a.chapterRank-b.chapterRank||a.hs8Rank-b.hs8Rank);
+  }).sort((a,b)=>tierOrder[a.tier]-tierOrder[b.tier]||a.chapterRank-b.chapterRank||a.hs8Rank-b.hs8Rank);
 
   const top10=shares.slice(0,10).reduce((s,x)=>s+x,0), top5=shares.slice(0,5).reduce((s,x)=>s+x,0), top1=shares[0]||0;
   const concentrationLabel=hhi>=2500?"highly concentrated":hhi>=1500?"moderately concentrated":"relatively dispersed";
