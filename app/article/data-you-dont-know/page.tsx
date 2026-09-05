@@ -6,7 +6,7 @@ export default function ArticlePage() {
     <main>
       <div className="shell">
         <header className="topbar">
-          <div className="brand"><strong>Noshaba Nasir</strong><span>Research & Analysis</span></div>
+          <div className="brand"><strong>Jamal Nasir</strong><span>Research & Analysis</span></div>
           <nav className="nav"><a href="/">Home</a><a href="/editor">Editor</a></nav>
         </header>
       </div>
@@ -15,7 +15,7 @@ export default function ArticlePage() {
         <div className="kicker">Data & institutions</div>
         <h1 className="article-title">Data: you don’t know what you’ve got till it’s gone</h1>
         <p className="article-standfirst">The value of trustworthy official statistics is difficult to price. One way to understand it is to look at what happens when confidence in them weakens.</p>
-        <div className="article-meta"><span>By Noshaba Nasir</span><span>8 min read</span><span>Analysis</span></div>
+        <div className="article-meta"><span>By Jamal Nasir</span><span>8 min read</span><span>Analysis</span></div>
 
         <div className="article-body">
           <p>Official statistics are easy to treat as background infrastructure. They arrive on schedule, are quoted in policy papers and news reports, and disappear into spreadsheets used by businesses, governments and researchers. Their usefulness is usually assumed rather than measured.</p>
