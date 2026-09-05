@@ -3,7 +3,7 @@ export default function HomePage() {
     <main>
       <div className="shell">
         <header className="topbar">
-          <div className="brand"><strong>Noshaba Nasir</strong><span>Research & Analysis</span></div>
+          <div className="brand"><strong>Jamal Nasir</strong><span>Research & Analysis</span></div>
           <nav className="nav"><a href="/">Latest</a><a href="/article/data-you-dont-know">Featured</a><a href="/editor">Editor</a></nav>
         </header>
 
