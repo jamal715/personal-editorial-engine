@@ -1,0 +1,29 @@
+{
+  "phrases": [
+    "rapidly evolving landscape",
+    "game changer",
+    "paradigm shift",
+    "unlock potential",
+    "harnessing technology",
+    "key stakeholders",
+    "transformative journey",
+    "paving the way",
+    "fostering innovation",
+    "driving sustainable growth",
+    "it is important to note",
+    "this underscores the importance of",
+    "in conclusion"
+  ],
+  "structural_flags": [
+    "excessive_three_item_lists",
+    "repetitive_rhetorical_questions",
+    "paragraph_restatement",
+    "artificial_symmetry",
+    "generic_claim_explanation_takeaway",
+    "heading_overuse",
+    "em_dash_overuse",
+    "false_drama",
+    "overly_neat_conclusion",
+    "slogan_as_analysis"
+  ]
+}
