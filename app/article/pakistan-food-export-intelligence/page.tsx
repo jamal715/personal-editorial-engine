@@ -1,6 +1,6 @@
 import FoodExportExplorer from "../../../components/FoodExportExplorer";
 
-export const metadata={title:"Pakistan's Export Map — Jamal Nasir",description:"An interactive chapter-by-chapter reading of Pakistan's export structure, concentration and product mix."};
+export const metadata={title:"Pakistan's Export Map | Jamal Nasir",description:"An interactive chapter-by-chapter reading of Pakistan's export structure, concentration and product mix."};
 
 const pageStyles=`.research-note{background:#f7f1e8;min-height:100vh}.note-shell{max-width:1180px;margin:0 auto;padding:54px 28px 100px}.note-hero{max-width:960px;padding:46px 0 34px;border-top:4px solid #202426}.note-hero h1{margin:14px 0 18px;font:700 clamp(48px,6.2vw,78px)/.96 Georgia,'Times New Roman',serif;letter-spacing:-.045em;color:#00567a}.note-hero .standfirst{max-width:840px;font:22px/1.46 Georgia,'Times New Roman',serif;color:#4d5558}.note-byline{margin-top:22px;font:12px/1.5 Arial,sans-serif;color:#6d7375}.note-byline b{color:#202426}.method{max-width:790px;margin:45px auto 0;padding-top:16px;border-top:1px solid #cfc9bf;font:11px/1.6 Arial,sans-serif;color:#73787a}@media(max-width:650px){.note-shell{padding:34px 18px 80px}.note-hero{padding-top:34px}.note-hero h1{font-size:46px}.note-hero .standfirst{font-size:20px}}`;
 
