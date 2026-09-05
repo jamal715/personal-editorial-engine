@@ -1,97 +1,104 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-type Chapter = { code:string; name:string; fy24:number; fy25:number; hs8_24:number; hs8_25:number; markets24:number; markets25:number };
-type Exporter = { name:string; value:number; hs8:string; product:string };
+type Chapter={code:string;sheet:string;name:string};
+type Exporter={rank:number;name:string;ntn:string;value:number;share:number;cumulative:number;hs8Count:number;hs4Count:number;largestHs8:string};
+type Product={rank:number;hs8:string;name:string;value:number;exporters:number;share:number};
+type Strategic={tier:"A"|"B";exporter:string;hs8:string;product:string;chapterRank:number;hs8Rank:number;firmsInHs8:number;shareWithinHs8:number;firmValue:number;hs8Value:number};
+type Data={
+ chapter:{code:string;name:string};
+ kpis:{totalValue:number;exporters:number;products:number;top1:number;top5:number;top10:number;hhi:number;to60:number;to80:number};
+ exporters:Exporter[]; products:Product[]; concentration:{rank:number;cumulative:number}[]; strategic:Strategic[];
+ tierCounts:{A:number;B:number;C:number}; insights:string[]; guardrail:string;
+};
 
-const chapters: Chapter[] = [
-  {code:"02",name:"Meat & edible offal",fy24:144.95,fy25:135.35,hs8_24:26,hs8_25:24,markets24:24,markets25:24},
-  {code:"03",name:"Fish & seafood",fy24:114.44,fy25:128.44,hs8_24:69,hs8_25:55,markets24:36,markets25:39},
-  {code:"07",name:"Vegetables",fy24:113.57,fy25:93.86,hs8_24:42,hs8_25:37,markets24:49,markets25:52},
-  {code:"08",name:"Fruit & nuts",fy24:93.49,fy25:83.64,hs8_24:61,hs8_25:60,markets24:68,markets25:69},
-  {code:"09",name:"Coffee, tea & spices",fy24:36.08,fy25:32.11,hs8_24:38,hs8_25:43,markets24:86,markets25:85},
-  {code:"12",name:"Oil seeds, grains & medicinal plants",fy24:141.59,fy25:127.52,hs8_24:30,hs8_25:30,markets24:84,markets25:93},
-  {code:"15",name:"Animal & vegetable fats",fy24:10.09,fy25:38.21,hs8_24:22,hs8_25:24,markets24:40,markets25:47},
-  {code:"17",name:"Sugar & confectionery",fy24:62.82,fy25:162.80,hs8_24:12,hs8_25:12,markets24:108,markets25:109},
-  {code:"19",name:"Cereal & bakery preparations",fy24:30.00,fy25:37.81,hs8_24:23,hs8_25:20,markets24:97,markets25:100},
-  {code:"20",name:"Prepared vegetables & fruit",fy24:24.58,fy25:26.49,hs8_24:31,hs8_25:30,markets24:89,markets25:81},
-  {code:"21",name:"Misc. edible preparations",fy24:31.38,fy25:36.27,hs8_24:22,hs8_25:20,markets24:79,markets25:81},
-  {code:"22",name:"Beverages",fy24:127.23,fy25:96.96,hs8_24:10,hs8_25:11,markets24:78,markets25:73},
-  {code:"23",name:"Food industry residues",fy24:20.12,fy25:15.11,hs8_24:15,hs8_25:11,markets24:25,markets25:26}
-];
+const money=(n:number)=>n>=1e9?`Rs ${(n/1e9).toFixed(1)}bn`:n>=1e6?`Rs ${(n/1e6).toFixed(1)}m`:`Rs ${n.toLocaleString()}`;
+const pct=(n:number)=>`${(n*100).toFixed(1)}%`;
 
-const exporters: Exporter[] = [
-  {name:"Produce Import & Export Co",value:220.08,hs8:"12119000",product:"Medicinal / aromatic plants"},
-  {name:"M/S Durvesh International",value:172.03,hs8:"12119000",product:"Medicinal / aromatic plants"},
-  {name:"M/S International Impex",value:95.66,hs8:"12119000",product:"Medicinal / aromatic plants"},
-  {name:"Tower Trading Company",value:85.55,hs8:"12079900",product:"Other oil seeds"},
-  {name:"Pakistan Trading House",value:84.68,hs8:"12119000",product:"Medicinal / aromatic plants"},
-  {name:"M/S Duaa Enterprises",value:68.26,hs8:"12119000",product:"Medicinal / aromatic plants"},
-  {name:"Munawar Industrial Ent",value:60.98,hs8:"12119000",product:"Medicinal / aromatic plants"},
-  {name:"Amanat Trading Company",value:55.33,hs8:"12119000",product:"Medicinal / aromatic plants"},
-  {name:"Mohammad & Fahad Brothers",value:47.78,hs8:"12079900",product:"Other oil seeds"},
-  {name:"M/S G.R Traders",value:40.98,hs8:"12119000",product:"Medicinal / aromatic plants"}
-];
+function ConcentrationCurve({points}:{points:{rank:number;cumulative:number}[]}){
+ const shown=points.slice(0,Math.min(points.length,80));
+ const maxRank=Math.max(1,shown.at(-1)?.rank||1);
+ const path=shown.map((p,i)=>`${i?"L":"M"} ${(p.rank/maxRank)*1000} ${300-(p.cumulative*280)}`).join(" ");
+ return <div className="ie-chartbox"><svg viewBox="0 0 1000 330" role="img" aria-label="Cumulative exporter concentration curve">
+   {[.25,.5,.6,.8,1].map(v=><g key={v}><line x1="0" x2="1000" y1={300-v*280} y2={300-v*280} stroke="#d8d4cd"/><text x="8" y={294-v*280} fontSize="18" fill="#6d7375">{Math.round(v*100)}%</text></g>)}
+   <path d={path} fill="none" stroke="#004d73" strokeWidth="8" strokeLinecap="round"/>
+ </svg></div>;
+}
 
 export default function FoodExportExplorer(){
-  const [selected,setSelected] = useState("12");
-  const [year,setYear] = useState<"fy24"|"fy25">("fy25");
-  const [firmView,setFirmView] = useState<"value"|"product">("value");
-  const chapter = chapters.find(c=>c.code===selected)!;
-  const max = Math.max(...chapters.map(c=>c[year]));
-  const growth = ((chapter.fy25/chapter.fy24)-1)*100;
-  const selectedLabel = year==="fy25" ? "FY2025" : "FY2024";
-  const firmMax = Math.max(...exporters.map(e=>e.value));
-  const productGroups = useMemo(()=>{
-    const counts:Record<string,number>={}; exporters.forEach(e=>counts[e.product]=(counts[e.product]||0)+1); return Object.entries(counts);
-  },[]);
+ const [chapters,setChapters]=useState<Chapter[]>([]);
+ const [chapter,setChapter]=useState("12");
+ const [data,setData]=useState<Data|null>(null);
+ const [loading,setLoading]=useState(true);
+ const [topN,setTopN]=useState(10);
 
-  return <div className="food-explorer">
-    <section className="viz-panel national-panel">
-      <div className="viz-head">
-        <div><span className="viz-kicker">National export layer</span><h3>Move from the headline to the actual product system</h3></div>
-        <div className="segmented" aria-label="Fiscal year"><button className={year==="fy24"?"active":""} onClick={()=>setYear("fy24")}>FY2024</button><button className={year==="fy25"?"active":""} onClick={()=>setYear("fy25")}>FY2025</button></div>
-      </div>
-      <div className="chapter-layout">
-        <div className="chapter-list" role="list">
-          {chapters.map(c=><button key={c.code} onClick={()=>setSelected(c.code)} className={selected===c.code?"chapter-row active":"chapter-row"}>
-            <span className="chapter-code">{c.code}</span><span className="chapter-name">{c.name}</span><span className="chapter-value">Rs {c[year].toFixed(1)}bn</span>
-            <span className="chapter-track"><span style={{width:`${Math.max(3,(c[year]/max)*100)}%`}} /></span>
-          </button>)}
-        </div>
-        <div className="chapter-focus">
-          <div className="focus-number">HS {chapter.code}</div>
-          <h4>{chapter.name}</h4>
-          <div className="focus-value">Rs {chapter[year].toFixed(1)}bn</div>
-          <div className={growth>=0?"delta positive":"delta negative"}>{growth>=0?"+":""}{growth.toFixed(1)}% FY24→FY25</div>
-          <div className="focus-stats"><div><b>{year==="fy25"?chapter.hs8_25:chapter.hs8_24}</b><span>HS8 products</span></div><div><b>{year==="fy25"?chapter.markets25:chapter.markets24}</b><span>destination markets</span></div></div>
-          <p>{selectedLabel} national trade data. Product and destination totals come from the PBS HS8 × country layer.</p>
-        </div>
-      </div>
-    </section>
+ useEffect(()=>{ let cancelled=false; setLoading(true); fetch(`/api/export-intelligence?chapter=${chapter}`).then(r=>r.json()).then(j=>{if(cancelled)return;setChapters(j.chapters||[]);setData(j.data||null);setLoading(false)}).catch(()=>setLoading(false));return()=>{cancelled=true}},[chapter]);
+ const exporterMax=Math.max(1,...(data?.exporters.slice(0,topN).map(x=>x.value)||[1]));
+ const productMax=Math.max(1,...(data?.products.slice(0,10).map(x=>x.value)||[1]));
+ const tierTotal=(data?.tierCounts.A||0)+(data?.tierCounts.B||0)+(data?.tierCounts.C||0);
+ const strategicTop=useMemo(()=>data?.strategic.slice(0,12)||[],[data]);
 
-    <section className="viz-panel sesame-panel">
-      <div className="spotlight-copy"><span className="viz-kicker">Chapter 12 spotlight</span><h3>The exporter layer tells a different story</h3><p>National statistics tell us how much Pakistan exported. The TDAP directory tells us which firms and HS8 capabilities appear in the exporter universe. These are deliberately kept as two separate evidence layers — the national totals are not attributed to individual firms.</p></div>
-      <div className="layer-flow" aria-label="Evidence architecture">
-        <div className="flow-node"><span>01</span><b>PBS national trade</b><small>HS8 × destination × fiscal year</small></div><div className="flow-arrow">→</div>
-        <div className="flow-node"><span>02</span><b>Product system</b><small>30 HS8 lines in Chapter 12</small></div><div className="flow-arrow">→</div>
-        <div className="flow-node"><span>03</span><b>TDAP firm directory</b><small>Exporter × HS8 records</small></div><div className="flow-arrow">→</div>
-        <div className="flow-node strong"><span>04</span><b>Strategic use</b><small>Who to investigate, finance or support</small></div>
-      </div>
-    </section>
+ return <div className="ie-wrap">
+   <style>{styles}</style>
+   <section className="ie-controlbar">
+     <div><span>LIVE ANALYTICAL SOURCE</span><strong>Pakistan Export Intelligence workbook</strong></div>
+     <label>HS chapter<select value={chapter} onChange={e=>setChapter(e.target.value)}>{chapters.map(c=><option key={c.code} value={c.code}>HS {c.code} · {c.name}</option>)}</select></label>
+   </section>
 
-    <section className="viz-panel exporter-panel">
-      <div className="viz-head"><div><span className="viz-kicker">Firm intelligence</span><h3>Who appears at the top of the Chapter 12 directory?</h3></div><div className="segmented"><button className={firmView==="value"?"active":""} onClick={()=>setFirmView("value")}>Reported value</button><button className={firmView==="product"?"active":""} onClick={()=>setFirmView("product")}>Product mix</button></div></div>
-      {firmView==="value" ? <div className="firm-bars">{exporters.map((e,i)=><div className="firm-row" key={e.name}><span className="firm-rank">{String(i+1).padStart(2,"0")}</span><div><b>{e.name}</b><small>{e.hs8} · {e.product}</small></div><div className="firm-track"><span style={{width:`${(e.value/firmMax)*100}%`}} /></div><strong>Rs {e.value.toFixed(1)}m</strong></div>)}</div> : <div className="product-cloud">{productGroups.map(([name,count])=><div key={name}><b>{count}</b><span>{name}</span></div>)}</div>}
-      <p className="viz-footnote">TDAP reported values shown above describe the directory extract and are not national market shares. Firm names are shown for research discovery; due diligence is still required before treating any firm as a current market leader.</p>
-    </section>
+   {loading && <div className="ie-loading">Loading the selected chapter from the same master workbook used by the analytical app…</div>}
+   {!loading && !data && <div className="ie-loading">The analytical workbook could not be loaded.</div>}
+   {data && <>
+     <section className="ie-titleline"><div><span>HS {data.chapter.code}</span><h2>{data.chapter.name}</h2></div><p>{data.guardrail}</p></section>
 
-    <section className="use-grid">
-      <div><span>Policy</span><h4>Where is capability broad, thin or concentrated?</h4><p>Use product breadth and market reach to distinguish a production story from a scalable export pathway.</p></div>
-      <div><span>Finance</span><h4>Which firms merit the next conversation?</h4><p>Exporter scale and HS8 position can create a transparent first screen before credit, transaction and buyer due diligence.</p></div>
-      <div><span>Research</span><h4>What should be investigated next?</h4><p>Move from chapter totals into products, destinations, firms, logistics, standards and the binding constraint.</p></div>
-      <div><span>Business</span><h4>Where are the commercial gaps?</h4><p>Compare existing product capability with destination reach, then look for missing processing, preservation, certification or buyer links.</p></div>
-    </section>
-  </div>
+     <section className="ie-kpis">
+       <div><span>TDAP reported value</span><b>{money(data.kpis.totalValue)}</b></div>
+       <div><span>Observed exporters</span><b>{data.kpis.exporters.toLocaleString()}</b></div>
+       <div><span>Distinct HS8 products</span><b>{data.kpis.products}</b></div>
+       <div><span>Top 10 share</span><b>{pct(data.kpis.top10)}</b></div>
+       <div><span>Exporters to 60%</span><b>{data.kpis.to60}</b></div>
+       <div><span>HHI</span><b>{data.kpis.hhi.toFixed(0)}</b></div>
+     </section>
+
+     <section className="ie-insights"><span className="ie-eyebrow">What matters in this chapter</span><div>{data.insights.map((x,i)=><p key={i}>{x}</p>)}</div></section>
+
+     <section className="ie-grid two">
+       <article className="ie-panel">
+         <header><div><span className="ie-eyebrow">01 · Concentration</span><h3>How quickly does reported value concentrate?</h3></div><div className="ie-mini"><b>{pct(data.kpis.top5)}</b><span>top five</span></div></header>
+         <ConcentrationCurve points={data.concentration}/>
+         <div className="ie-thresholds"><span><b>{data.kpis.to60}</b> firms → 60%</span><span><b>{data.kpis.to80}</b> firms → 80%</span><span><b>{pct(data.kpis.top1)}</b> top firm</span></div>
+       </article>
+
+       <article className="ie-panel">
+         <header><div><span className="ie-eyebrow">02 · Exporter structure</span><h3>Who controls the top of the extract?</h3></div><select value={topN} onChange={e=>setTopN(Number(e.target.value))}><option value="10">Top 10</option><option value="15">Top 15</option><option value="25">Top 25</option></select></header>
+         <div className="ie-bars">{data.exporters.slice(0,topN).map(e=><div className="ie-bar" key={`${e.rank}-${e.name}`}><span className="rank">{e.rank}</span><div className="label"><b>{e.name}</b><small>{e.largestHs8} · {e.hs8Count} HS8</small></div><div className="track"><i style={{width:`${(e.value/exporterMax)*100}%`}}/></div><strong>{pct(e.share)}</strong></div>)}</div>
+       </article>
+     </section>
+
+     <section className="ie-grid two">
+       <article className="ie-panel">
+         <header><div><span className="ie-eyebrow">03 · Product mix</span><h3>Which HS8 products dominate?</h3></div></header>
+         <div className="ie-products">{data.products.slice(0,10).map(p=><div key={`${p.hs8}-${p.name}`}><div className="prodhead"><span>{p.hs8}</span><b>{pct(p.share)}</b></div><strong>{p.name}</strong><small>{p.exporters} observed exporters</small><div className="prodtrack"><i style={{width:`${(p.value/productMax)*100}%`}}/></div></div>)}</div>
+       </article>
+
+       <article className="ie-panel">
+         <header><div><span className="ie-eyebrow">04 · Strategic selection</span><h3>How much of the pipeline clears the app’s evidence rules?</h3></div></header>
+         <div className="tier-stack"><div className="tier a" style={{width:`${tierTotal?data.tierCounts.A/tierTotal*100:0}%`}}/><div className="tier b" style={{width:`${tierTotal?data.tierCounts.B/tierTotal*100:0}%`}}/><div className="tier c" style={{width:`${tierTotal?data.tierCounts.C/tierTotal*100:0}%`}}/></div>
+         <div className="tier-legend"><div><b>{data.tierCounts.A}</b><span>Tier A<br/>high-priority evidence</span></div><div><b>{data.tierCounts.B}</b><span>Tier B<br/>priority review</span></div><div><b>{data.tierCounts.C}</b><span>Tier C<br/>broader pipeline</span></div></div>
+         <p className="ie-note">The same transparent rules as the analytical app are used: firm scale, within-HS8 rank, observed HS8 share and scarcity. This is a due-diligence screen, not a financing recommendation.</p>
+       </article>
+     </section>
+
+     <section className="ie-panel ie-shortlist">
+       <header><div><span className="ie-eyebrow">05 · Priority evidence</span><h3>Exporter × product combinations worth investigating first</h3></div></header>
+       <div className="ie-table"><div className="ie-tr head"><span>Tier</span><span>Exporter</span><span>HS8 / product</span><span>Chapter rank</span><span>HS8 position</span><span>Observed HS8 share</span></div>{strategicTop.map((s,i)=><div className="ie-tr" key={`${s.exporter}-${s.hs8}-${i}`}><span><em className={`pill ${s.tier.toLowerCase()}`}>{s.tier}</em></span><span><b>{s.exporter}</b></span><span>{s.hs8}<small>{s.product}</small></span><span>#{s.chapterRank}</span><span>#{s.hs8Rank} of {s.firmsInHs8}</span><span>{pct(s.shareWithinHs8)}</span></div>)}</div>
+     </section>
+
+     <div className="ie-source">Source engine: the same <b>TDAP_Export_Directory_HS01_24.xlsx</b> master workbook and analytical definitions used by the Pakistan Export Intelligence app. Changing the chapter above recalculates the page from that workbook.</div>
+   </>}
+ </div>
 }
+
+const styles=`
+.ie-wrap{margin:58px 0 78px;font-family:Arial,Helvetica,sans-serif;color:#343a3d}.ie-controlbar{display:flex;justify-content:space-between;gap:24px;align-items:end;border-top:4px solid #202426;border-bottom:1px solid #cfc9bf;padding:18px 0}.ie-controlbar>div span,.ie-eyebrow{display:block;color:#004d73;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.ie-controlbar>div strong{display:block;margin-top:7px;color:#202426;font-size:18px}.ie-controlbar label{display:grid;gap:6px;font-size:11px;color:#6d7375}.ie-controlbar select,.ie-panel select{min-width:280px;border:1px solid #bbb6ae;background:#fbf8f3;padding:10px 12px;color:#202426}.ie-loading{padding:50px 0;color:#6d7375}.ie-titleline{display:flex;justify-content:space-between;gap:40px;align-items:end;padding:34px 0 18px}.ie-titleline span{font-size:12px;font-weight:800;color:#004d73}.ie-titleline h2{margin:7px 0 0;font:700 42px/1.04 Georgia,'Times New Roman',serif;color:#202426}.ie-titleline p{max-width:500px;margin:0;font-size:11px;line-height:1.55;color:#6d7375}.ie-kpis{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid #202426;border-bottom:1px solid #202426}.ie-kpis div{padding:17px 13px;border-right:1px solid #d8d4cd}.ie-kpis div:last-child{border-right:0}.ie-kpis span{display:block;min-height:28px;color:#6d7375;font-size:10px;line-height:1.3;text-transform:uppercase;letter-spacing:.05em}.ie-kpis b{display:block;margin-top:9px;color:#202426;font:700 26px/1 Georgia,'Times New Roman',serif}.ie-insights{display:grid;grid-template-columns:220px 1fr;gap:32px;padding:30px 0 38px}.ie-insights div{display:grid;grid-template-columns:1fr 1fr;gap:8px 28px}.ie-insights p{margin:0;padding:0 0 12px;border-bottom:1px solid #ded8cf;font:17px/1.45 Georgia,'Times New Roman',serif;color:#404648}.ie-grid.two{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}.ie-panel{background:#fbf8f3;border:1px solid #d8d4cd;padding:22px}.ie-panel header{display:flex;justify-content:space-between;gap:18px;align-items:start;margin-bottom:22px}.ie-panel h3{margin:7px 0 0;font:700 27px/1.08 Georgia,'Times New Roman',serif;color:#202426}.ie-mini{text-align:right}.ie-mini b{display:block;font:700 28px/1 Georgia,'Times New Roman',serif;color:#004d73}.ie-mini span{font-size:10px;color:#6d7375}.ie-chartbox{height:280px;overflow:hidden}.ie-chartbox svg{width:100%;height:100%}.ie-thresholds{display:flex;gap:18px;flex-wrap:wrap;border-top:1px solid #ded8cf;padding-top:13px;font-size:11px;color:#6d7375}.ie-thresholds b{color:#202426}.ie-bars{display:grid;gap:9px;max-height:430px;overflow:auto;padding-right:4px}.ie-bar{display:grid;grid-template-columns:24px minmax(150px,1.2fr) minmax(120px,1fr) 58px;gap:10px;align-items:center}.ie-bar .rank{font-size:10px;color:#8a8f91}.ie-bar .label b{display:block;font-size:12px;color:#202426}.ie-bar .label small{display:block;margin-top:2px;font-size:9px;color:#7a8082}.track,.prodtrack{background:#e6e0d7;height:10px}.track i,.prodtrack i{display:block;height:100%;background:#004d73}.ie-bar>strong{text-align:right;font-size:11px}.ie-products{display:grid;gap:12px}.ie-products>div{border-bottom:1px solid #ded8cf;padding-bottom:10px}.prodhead{display:flex;justify-content:space-between;font-size:10px;color:#004d73}.ie-products>div>strong{display:block;margin:4px 0 2px;color:#202426;font-size:12px}.ie-products small{font-size:9px;color:#767c7e}.prodtrack{margin-top:8px;height:7px}.tier-stack{height:42px;display:flex;background:#e7e1d8;margin:36px 0 22px}.tier{height:100%}.tier.a{background:#004d73}.tier.b{background:#6f95a8}.tier.c{background:#c7c1b8}.tier-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.tier-legend div{border-top:2px solid #202426;padding-top:10px}.tier-legend b{display:block;font:700 31px/1 Georgia,'Times New Roman',serif;color:#202426}.tier-legend span{display:block;margin-top:6px;font-size:10px;line-height:1.35;color:#6d7375}.ie-note{margin:22px 0 0;font-size:11px;line-height:1.55;color:#6d7375}.ie-shortlist{margin-top:22px}.ie-table{overflow:auto}.ie-tr{display:grid;grid-template-columns:55px minmax(180px,1.2fr) minmax(190px,1.5fr) 90px 100px 120px;gap:12px;align-items:center;border-top:1px solid #ded8cf;padding:10px 4px;font-size:11px;min-width:850px}.ie-tr.head{font-size:9px;text-transform:uppercase;color:#7a8082;letter-spacing:.04em}.ie-tr span small{display:block;color:#7a8082;margin-top:3px}.pill{font-style:normal;font-weight:800;border-radius:999px;padding:5px 8px}.pill.a{background:#004d73;color:white}.pill.b{background:#d7e7ef;color:#004d73}.ie-source{margin-top:18px;padding:13px 0;border-top:1px solid #202426;font-size:10px;line-height:1.5;color:#6d7375}@media(max-width:950px){.ie-kpis{grid-template-columns:repeat(3,1fr)}.ie-grid.two{grid-template-columns:1fr}.ie-insights{grid-template-columns:1fr}.ie-controlbar,.ie-titleline{align-items:start;flex-direction:column}.ie-controlbar select{min-width:0;width:100%}.ie-controlbar label{width:100%}}@media(max-width:620px){.ie-kpis{grid-template-columns:repeat(2,1fr)}.ie-insights div{grid-template-columns:1fr}.ie-titleline h2{font-size:34px}.ie-bar{grid-template-columns:22px 1fr 48px}.ie-bar .track{grid-column:2/4}.tier-legend{grid-template-columns:1fr 1fr 1fr}.ie-panel{padding:17px}}
+`;
