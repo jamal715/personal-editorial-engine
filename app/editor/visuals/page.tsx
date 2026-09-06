@@ -1,5 +1,5 @@
-import VisualIntelligenceEngineV3 from "../../../components/VisualIntelligenceEngineV3";
+import VisualIntelligenceEngineV4 from "../../../components/VisualIntelligenceEngineV4";
 
 export const metadata={title:"Visual Intelligence | Jamal Nasir",robots:{index:false,follow:false}};
 
-export default function VisualsPage(){return <VisualIntelligenceEngineV3/>}
+export default function VisualsPage(){return <VisualIntelligenceEngineV4/>}
