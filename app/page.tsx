@@ -1,7 +1,8 @@
 import ResearchPulse from "../components/ResearchPulse";
 
 const research=[
- {href:"/article/pakistan-power-transition",section:"Power & Energy",kicker:"Pakistan power · Structural analysis",title:"Pakistan built for electricity scarcity. Now the grid is losing demand.",deck:"Excess capacity, distributed solar, fixed costs and transmission are reshaping the country's power crisis.",meta:"Latest"},
+ {href:"/article/precision-recall-text-summarization",section:"Explainable AI",kicker:"NLP · Model evaluation",title:"Precision and Recall in Text Summarization: Why Bigrams Matter",deck:"Why unigram precision and recall can reward the wrong summary, and how bigrams preserve more of the sequence.",meta:"Latest · Mar 2025"},
+ {href:"/article/pakistan-power-transition",section:"Power & Energy",kicker:"Pakistan power · Structural analysis",title:"Pakistan built for electricity scarcity. Now the grid is losing demand.",deck:"Excess capacity, distributed solar, fixed costs and transmission are reshaping the country's power crisis.",meta:"Structural analysis"},
  {href:"/article/pakistan-food-export-intelligence",section:"Economics",kicker:"Pakistan trade · Interactive",title:"Where Pakistan’s export strength really sits.",deck:"A chapter-by-chapter reading of exporter concentration, product mix and strategically important capabilities.",meta:"Export intelligence · HS 01–24"},
  {href:"/article/visual-intelligence-benchmark",section:"Tech",kicker:"Visual research · Product benchmark",title:"When the map becomes the argument.",deck:"A compact benchmark for linked maps, derived metrics and visual-first research publishing.",meta:"Visual intelligence"}
 ];
