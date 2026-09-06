@@ -1,3 +1,25 @@
-import{NextRequest,NextResponse}from"next/server";const DB="https://bkbzrrvjpogtrhlkixll.supabase.co",PUBLIC_KEY=process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY||"sb_publishable_U0hnx70zmvzUN22opv-Wzw_U4VghXGZ";async function sha256(v:string){const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v));return Array.from(new Uint8Array(d)).map(b=>b.toString(16).padStart(2,"0")).join("")}async function authorized(req:NextRequest){const p=process.env.ADMIN_PASSWORD;if(!p)return false;return req.cookies.get("editor_session")?.value===await sha256(p)}function slugify(v:string){return v.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,90)||`article-${Date.now()}`}async function bootstrap(req:NextRequest){return fetch(new URL("/api/publications/bootstrap",req.url),{method:"POST",headers:{cookie:req.headers.get("cookie")||""}})}async function rpc(name:string,body:any){return fetch(`${DB}/rest/v1/rpc/${name}`,{method:"POST",headers:{apikey:PUBLIC_KEY,"Content-Type":"application/json"},body:JSON.stringify(body)})}
-export async function POST(req:NextRequest){if(!await authorized(req))return NextResponse.json({ok:false,error:"Unauthorized"},{status:401});const password=process.env.ADMIN_PASSWORD||"",b=await req.json(),slug=slugify(String(b.slug||b.title||"")),payload={p_secret:password,p_slug:slug,p_title:String(b.title||"Untitled article"),p_deck:String(b.deck||""),p_category:String(b.category||"Research"),p_kicker:String(b.kicker||""),p_content_html:String(b.content_html||""),p_visible:b.visible!==false,p_status:String(b.status||"published"),p_published_at:b.published_at||new Date().toISOString()};let r=await rpc("admin_publication_write",payload);if(!r.ok&&(await r.clone().text()).includes("unauthorized")){const boot=await bootstrap(req);if(boot.ok)r=await rpc("admin_publication_write",payload)}if(!r.ok)return NextResponse.json({ok:false,error:await r.text()},{status:500});return NextResponse.json({ok:true,slug,publication:await r.json()})}
-export async function PATCH(req:NextRequest){if(!await authorized(req))return NextResponse.json({ok:false,error:"Unauthorized"},{status:401});const password=process.env.ADMIN_PASSWORD||"",b=await req.json(),payload={p_secret:password,p_slug:String(b.slug||""),p_visible:Boolean(b.visible),p_status:String(b.status||"archived")};let r=await rpc("admin_publication_set_state",payload);if(!r.ok&&(await r.clone().text()).includes("unauthorized")){const boot=await bootstrap(req);if(boot.ok)r=await rpc("admin_publication_set_state",payload)}if(!r.ok)return NextResponse.json({ok:false,error:await r.text()},{status:500});return NextResponse.json({ok:true,publication:await r.json()})}
+import{NextRequest,NextResponse}from"next/server";
+const DB="https://bkbzrrvjpogtrhlkixll.supabase.co";
+const PUBLIC_KEY=process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY||"sb_publishable_HIOdjN7r7wL9WABzHjBWnQ_PMQH0HM-";
+async function sha256(v:string){const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v));return Array.from(new Uint8Array(d)).map(b=>b.toString(16).padStart(2,"0")).join("")}
+async function authorized(req:NextRequest){const p=process.env.ADMIN_PASSWORD;if(!p)return false;return req.cookies.get("editor_session")?.value===await sha256(p)}
+function slugify(v:string){return v.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,90)||`article-${Date.now()}`}
+async function bootstrap(req:NextRequest){return fetch(new URL("/api/publications/bootstrap",req.url),{method:"POST",headers:{cookie:req.headers.get("cookie")||""},cache:"no-store"})}
+async function rpc(name:string,body:any){return fetch(`${DB}/rest/v1/rpc/${name}`,{method:"POST",headers:{apikey:PUBLIC_KEY,"Content-Type":"application/json"},body:JSON.stringify(body),cache:"no-store"})}
+export async function POST(req:NextRequest){
+ if(!await authorized(req))return NextResponse.json({ok:false,error:"Unauthorized"},{status:401});
+ const password=process.env.ADMIN_PASSWORD||"",b=await req.json(),slug=slugify(String(b.slug||b.title||""));
+ const payload={p_secret:password,p_slug:slug,p_title:String(b.title||"Untitled article"),p_deck:String(b.deck||""),p_category:String(b.category||"Research"),p_kicker:String(b.kicker||""),p_content_html:String(b.content_html||""),p_visible:b.visible!==false,p_status:String(b.status||"published"),p_published_at:b.published_at||new Date().toISOString()};
+ let r=await rpc("admin_publication_write",payload);
+ if(!r.ok&&(await r.clone().text()).includes("unauthorized")){const boot=await bootstrap(req);if(boot.ok)r=await rpc("admin_publication_write",payload)}
+ if(!r.ok)return NextResponse.json({ok:false,error:await r.text()},{status:500});
+ return NextResponse.json({ok:true,slug,publication:await r.json()},{headers:{"Cache-Control":"no-store, max-age=0"}})
+}
+export async function PATCH(req:NextRequest){
+ if(!await authorized(req))return NextResponse.json({ok:false,error:"Unauthorized"},{status:401});
+ const password=process.env.ADMIN_PASSWORD||"",b=await req.json(),payload={p_secret:password,p_slug:String(b.slug||""),p_visible:Boolean(b.visible),p_status:String(b.status||"archived")};
+ let r=await rpc("admin_publication_set_state",payload);
+ if(!r.ok&&(await r.clone().text()).includes("unauthorized")){const boot=await bootstrap(req);if(boot.ok)r=await rpc("admin_publication_set_state",payload)}
+ if(!r.ok)return NextResponse.json({ok:false,error:await r.text()},{status:500});
+ return NextResponse.json({ok:true,publication:await r.json()},{headers:{"Cache-Control":"no-store, max-age=0"}})
+}
