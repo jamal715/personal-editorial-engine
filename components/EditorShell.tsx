@@ -9,10 +9,11 @@ export default function EditorShell(){
   useEffect(()=>{
     const handler=(event:MouseEvent)=>{
       const el=(event.target as HTMLElement).closest("button");
-      if(el?.textContent?.trim()==="06 Visuals"){
+      const text=el?.textContent?.trim();
+      if(text==="06 Visuals"||text==="07 Publish"){
         event.preventDefault();
         event.stopPropagation();
-        router.push("/editor/visuals");
+        router.push(text==="06 Visuals"?"/editor/visuals":"/editor/publish");
       }
     };
     document.addEventListener("click",handler,true);
