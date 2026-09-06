@@ -1,38 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {useEffect,useState} from "react";
 
-const sizes = [18, 20, 22, 24];
-const widths = [620, 720, 820];
+const KEY="reader-preferences-v2";
+const NOTE_KEY="reader-note-pakistan-export-intelligence";
+const sizes=[18,20,22,24];
+const widths=[680,790,900];
+const themes={
+  warm:{bg:"#f7f1e8",surface:"#fbf8f3",text:"#363d40",muted:"#6d7375",ink:"#202426",line:"#d8d4cd",brand:"#005b7f"},
+  light:{bg:"#ffffff",surface:"#f6f6f3",text:"#303638",muted:"#6d7375",ink:"#171a1b",line:"#ddddda",brand:"#005b7f"},
+  dark:{bg:"#181b1d",surface:"#222729",text:"#e4e1da",muted:"#aeb5b8",ink:"#f4f0e8",line:"#3d4548",brand:"#8cc5df"}
+};
 
-export default function ReaderControls() {
-  const [sizeIndex, setSizeIndex] = useState(1);
-  const [widthIndex, setWidthIndex] = useState(1);
-  const [theme, setTheme] = useState("warm");
-  const [font, setFont] = useState("editorial");
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.dataset.font = font;
-    document.documentElement.style.setProperty("--reader-size", `${sizes[sizeIndex]}px`);
-    document.documentElement.style.setProperty("--reader-width", `${widths[widthIndex]}px`);
-  }, [sizeIndex, widthIndex, theme, font]);
-
-  return (
-    <div className="reader-toolbar" aria-label="Reading preferences">
-      <button onClick={() => setSizeIndex(Math.max(0, sizeIndex - 1))}>A−</button>
-      <button onClick={() => setSizeIndex(Math.min(sizes.length - 1, sizeIndex + 1))}>A+</button>
-      <select value={font} onChange={e => setFont(e.target.value)} aria-label="Typeface">
-        <option value="editorial">Editorial</option>
-        <option value="sans">Sans</option>
-        <option value="accessible">Accessible</option>
-      </select>
-      <select value={theme} onChange={e => setTheme(e.target.value)} aria-label="Theme">
-        <option value="warm">Warm</option>
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-      </select>
-      <button onClick={() => setWidthIndex((widthIndex + 1) % widths.length)}>↔</button>
-    </div>
-  );
+export default function ReaderControls(){
+ const[sizeIndex,setSizeIndex]=useState(1),[widthIndex,setWidthIndex]=useState(1),[theme,setTheme]=useState<keyof typeof themes>("warm"),[font,setFont]=useState("editorial"),[open,setOpen]=useState(false),[note,setNote]=useState("");
+ useEffect(()=>{try{const p=JSON.parse(localStorage.getItem(KEY)||"{}");if(typeof p.sizeIndex==="number")setSizeIndex(p.sizeIndex);if(typeof p.widthIndex==="number")setWidthIndex(p.widthIndex);if(p.theme&&themes[p.theme as keyof typeof themes])setTheme(p.theme);if(p.font)setFont(p.font);setNote(localStorage.getItem(NOTE_KEY)||"")}catch{}},[]);
+ useEffect(()=>{const r=document.documentElement,t=themes[theme];r.style.setProperty("--reader-size",`${sizes[sizeIndex]}px`);r.style.setProperty("--reader-width",`${widths[widthIndex]}px`);r.style.setProperty("--reader-bg",t.bg);r.style.setProperty("--reader-surface",t.surface);r.style.setProperty("--reader-text",t.text);r.style.setProperty("--reader-muted",t.muted);r.style.setProperty("--reader-ink",t.ink);r.style.setProperty("--reader-line",t.line);r.style.setProperty("--reader-brand",t.brand);r.style.setProperty("--reader-font",font==="sans"?"Arial,Helvetica,sans-serif":font==="accessible"?"Verdana,Arial,sans-serif":"Georgia,'Times New Roman',serif");try{localStorage.setItem(KEY,JSON.stringify({sizeIndex,widthIndex,theme,font}))}catch{}},[sizeIndex,widthIndex,theme,font]);
+ function saveNote(v:string){setNote(v);try{localStorage.setItem(NOTE_KEY,v)}catch{}}
+ function emailNote(){const subject=encodeURIComponent("Feedback on Pakistan Export Intelligence");const body=encodeURIComponent(note||"I have feedback on your Pakistan Export Intelligence research note:\n\n");window.location.href=`mailto:j.nasir25260@gmail.com?subject=${subject}&body=${body}`}
+ return <div className="readerDock"><style>{styles}</style><button className="readerTrigger" onClick={()=>setOpen(!open)} aria-expanded={open}>Aa&nbsp; Reading</button>{open&&<div className="readerPanel"><div className="readerTitle"><div><span>Reading view</span><b>Make the note yours</b></div><button onClick={()=>setOpen(false)}>×</button></div><div className="readerRow"><label>Text size</label><div className="seg"><button onClick={()=>setSizeIndex(Math.max(0,sizeIndex-1))}>A−</button><span>{sizes[sizeIndex]}</span><button onClick={()=>setSizeIndex(Math.min(sizes.length-1,sizeIndex+1))}>A+</button></div></div><div className="readerRow"><label>Typeface</label><select value={font} onChange={e=>setFont(e.target.value)}><option value="editorial">Editorial serif</option><option value="sans">Clean sans</option><option value="accessible">Accessible</option></select></div><div className="readerRow"><label>Page tone</label><div className="swatches"><button className={theme==="warm"?"sel":""} onClick={()=>setTheme("warm")} title="Warm">W</button><button className={theme==="light"?"sel":""} onClick={()=>setTheme("light")} title="Light">L</button><button className={theme==="dark"?"sel dark":"dark"} onClick={()=>setTheme("dark")} title="Dark">D</button></div></div><div className="readerRow"><label>Reading width</label><button className="widthBtn" onClick={()=>setWidthIndex((widthIndex+1)%widths.length)}>{widths[widthIndex]} px ↔</button></div><div className="noteBox"><span>Private reader note</span><textarea value={note} onChange={e=>saveNote(e.target.value)} placeholder="Write a thought, question or criticism. It stays in this browser unless you choose to email it."/><div><small>{note?"Saved in this browser":"Nothing saved yet"}</small><button onClick={emailNote}>Email feedback</button></div></div></div>}</div>
 }
+
+const styles=`.readerDock{position:fixed;right:18px;bottom:18px;z-index:50;font-family:Arial,Helvetica,sans-serif}.readerTrigger{border:1px solid var(--reader-ink,#202426);background:var(--reader-ink,#202426);color:var(--reader-bg,#f7f1e8);padding:10px 13px;font-size:11px;font-weight:700;box-shadow:0 6px 22px rgba(0,0,0,.13)}.readerPanel{position:absolute;right:0;bottom:46px;width:330px;background:var(--reader-surface,#fbf8f3);color:var(--reader-text,#343a3d);border:1px solid var(--reader-line,#d8d4cd);box-shadow:0 14px 42px rgba(0,0,0,.18);padding:17px}.readerTitle{display:flex;justify-content:space-between;gap:10px;padding-bottom:13px;border-bottom:1px solid var(--reader-line,#d8d4cd)}.readerTitle span,.noteBox>span{display:block;font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--reader-brand,#005b7f)}.readerTitle b{display:block;margin-top:3px;font:700 18px Georgia,serif;color:var(--reader-ink,#202426)}.readerTitle>button{border:0;background:none;color:var(--reader-muted,#777);font-size:21px}.readerRow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--reader-line,#d8d4cd)}.readerRow label{font-size:10px;font-weight:700}.readerRow select,.widthBtn{border:1px solid var(--reader-line,#d8d4cd);background:var(--reader-bg,#fff);color:var(--reader-text,#343a3d);padding:7px 8px;font-size:10px}.seg{display:flex;align-items:center;border:1px solid var(--reader-line,#d8d4cd)}.seg button,.seg span{border:0;background:transparent;color:var(--reader-text,#343a3d);padding:6px 8px;font-size:10px}.seg span{border-inline:1px solid var(--reader-line,#d8d4cd)}.swatches{display:flex;gap:5px}.swatches button{width:28px;height:28px;border:1px solid #aaa;background:#f7f1e8;font-size:9px}.swatches button:nth-child(2){background:#fff}.swatches button.dark{background:#181b1d;color:#fff}.swatches .sel{outline:2px solid var(--reader-brand,#005b7f);outline-offset:1px}.noteBox{padding-top:15px}.noteBox textarea{width:100%;min-height:92px;margin-top:7px;padding:10px;resize:vertical;border:1px solid var(--reader-line,#d8d4cd);background:var(--reader-bg,#fff);color:var(--reader-text,#343a3d);font:12px/1.45 Arial,sans-serif}.noteBox>div{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:7px}.noteBox small{font-size:8px;color:var(--reader-muted,#777)}.noteBox button{border:0;border-bottom:1px solid var(--reader-brand,#005b7f);background:none;color:var(--reader-brand,#005b7f);padding:2px 0;font-size:9px;font-weight:700}@media(max-width:500px){.readerDock{right:10px;bottom:10px}.readerPanel{width:min(330px,calc(100vw - 20px))}}`;
