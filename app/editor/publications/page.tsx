@@ -1,0 +1,1 @@
+import PublicationManager from "../../../components/PublicationManager";export const metadata={title:"Publications | Jamal Nasir",robots:{index:false,follow:false}};export default function Page(){return <PublicationManager/>}
