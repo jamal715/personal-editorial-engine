@@ -1,4 +1,5 @@
 "use client";
+import React from"react";
 
 export type Row=Record<string,any>;
 export type GeoFeature={properties:Record<string,any>;geometry:{type:string;coordinates:any}};
@@ -12,7 +13,7 @@ export function svgPath(f:GeoFeature,b:any,w=820,h=780){const a=f.geometry.type=
 
 const aliases:Record<string,string>={
  "deghazikhan":"deraghazikhan","dgkhan":"deraghazikhan","deraghazikhan":"deraghazikhan",
- "rahimyarkhan":"rahimyarkhan","rahimyarkhan":"rahimyarkhan",
+ "rahimyarkhan":"rahimyarkhan",
  "naushahroferoze":"naushahroferoze","nowsheroferoze":"naushahroferoze",
  "qambarshahdadkot":"kambarshahdadkot","kambarshahdadkot":"kambarshahdadkot",
  "shaheedbenazirabad":"nawabshah","nawabshah":"nawabshah",
@@ -35,5 +36,3 @@ export function RichDistrictMap({geo,bounds,index,boundary,metric,numeric,noteFi
 export function fmt(v:any){const n=num(v);if(n===null)return"—";return n.toLocaleString(undefined,{maximumFractionDigits:2})}
 export function rankStats(rows:Row[],metric:string,geo:string){const a=rows.filter(r=>num(r[metric])!==null).sort((x,y)=>(num(y[metric])||0)-(num(x[metric])||0));const vals=a.map(r=>num(r[metric])!);if(!a.length)return null;const med=[...vals].sort((x,y)=>x-y)[Math.floor(vals.length/2)],avg=vals.reduce((s,x)=>s+x,0)/vals.length;return{n:a.length,high:a[0],low:a[a.length-1],median:med,mean:avg,top:a.slice(0,5),bottom:a.slice(-5).reverse(),geo}}
 export function RankedList({rows,metric,geo,onSelect}:{rows:Row[];metric:string;geo:string;onSelect:(k:string)=>void}){const s=rankStats(rows,metric,geo);if(!s)return null;const max=num(s.high[metric])||1;return <div className="ranklist">{s.top.map((r,i)=><button key={i} onClick={()=>onSelect(canon(r[geo]))}><span>{i+1}. {txt(r[geo])}</span><i><em style={{width:`${Math.max(2,(num(r[metric])||0)/max*100)}%`}}/></i><b>{fmt(r[metric])}</b></button>)}</div>}
-
-import React from"react";
