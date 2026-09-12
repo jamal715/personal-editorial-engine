@@ -5,7 +5,7 @@ const PUBLIC_KEY=process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY||"sb_publishable_HIOd
 const legacy:Publication[]=[
  {slug:"pakistan-power-transition",category:"Power & Energy",kicker:"Pakistan power · Structural analysis",title:"Pakistan built for electricity scarcity. Now the grid is losing demand.",deck:"Excess capacity, distributed solar, fixed costs and transmission are reshaping the country's power crisis.",content_html:"",visible:true,status:"published",published_at:"2026-09-06T00:00:00Z"},
  {slug:"pakistan-food-export-intelligence",category:"Economics",kicker:"Pakistan trade · Interactive",title:"Where Pakistan’s export strength really sits.",deck:"A chapter-by-chapter reading of exporter concentration, product mix and strategically important capabilities.",content_html:"",visible:true,status:"published",published_at:"2026-09-05T00:00:00Z"},
- {slug:"visual-intelligence-benchmark",category:"Tech",kicker:"Visual research · Product benchmark",title:"When the map becomes the argument.",deck:"A compact benchmark for linked maps, derived metrics and visual-first research publishing.",content_html:"",visible:true,status:"published",published_at:"2026-09-04T00:00:00Z"}
+ {slug:"visual-intelligence-benchmark",category:"Tech",kicker:"Visual research · Product benchmark",title:"When the map becomes the argument.",deck:"A compact benchmark for linked maps, derived metrics and visual-first research publishing.",content_html:"",visible:true,status:"working",published_at:"2026-09-04T00:00:00Z"}
 ];
 
 const precisionFallback:Publication={
@@ -20,17 +20,22 @@ const precisionFallback:Publication={
 
 const allFallback=[precisionFallback,...legacy];
 export function slugify(value:string){return value.toLowerCase().trim().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,90)||`article-${Date.now()}`}
-function merge(rows:Publication[]){const m=new Map<string,Publication>();for(const p of allFallback)m.set(p.slug,p);for(const p of rows)m.set(p.slug,{...m.get(p.slug),...p});return [...m.values()].sort((a,b)=>new Date(b.published_at).getTime()-new Date(a.published_at).getTime())}
 
 export async function publicPublications():Promise<Publication[]>{
  const url=`${SUPABASE_URL}/rest/v1/rpc/list_public_publications`;
- try{const r=await fetch(url,{method:"POST",headers:{apikey:PUBLIC_KEY,"Content-Type":"application/json"},body:"{}",cache:"no-store"});if(r.ok)return merge(await r.json())}catch{}
- return allFallback;
+ try{
+  const r=await fetch(url,{method:"POST",headers:{apikey:PUBLIC_KEY,"Content-Type":"application/json"},body:"{}",cache:"no-store"});
+  if(r.ok){const rows:Publication[]=await r.json();return rows.sort((a,b)=>new Date(b.published_at).getTime()-new Date(a.published_at).getTime())}
+ }catch{}
+ return allFallback.filter(p=>p.visible&&(p.status==="published"||p.status==="working"));
 }
 
 export async function publicationBySlug(slug:string):Promise<Publication|null>{
  const fallback=allFallback.find(x=>x.slug===slug)||null;
  const url=`${SUPABASE_URL}/rest/v1/rpc/get_public_publication`;
- try{const r=await fetch(url,{method:"POST",headers:{apikey:PUBLIC_KEY,"Content-Type":"application/json"},body:JSON.stringify({p_slug:slug}),cache:"no-store"});if(r.ok){const rows:Publication[]=await r.json();if(rows[0])return {...fallback,...rows[0]}}}catch{}
- return fallback;
+ try{
+  const r=await fetch(url,{method:"POST",headers:{apikey:PUBLIC_KEY,"Content-Type":"application/json"},body:JSON.stringify({p_slug:slug}),cache:"no-store"});
+  if(r.ok){const rows:Publication[]=await r.json();return rows[0]?{...fallback,...rows[0]}:null}
+ }catch{}
+ return fallback&&fallback.visible&&(fallback.status==="published"||fallback.status==="working")?fallback:null;
 }
