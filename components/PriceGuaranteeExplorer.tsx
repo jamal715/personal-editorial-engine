@@ -3,7 +3,7 @@ import {useMemo,useState} from "react";
 import {runIsmoModel,type LoadShape} from "../lib/ismo-model";
 
 const scenarios=[["2025 repeats",1],["Prices 10% higher",1.1],["Prices 25% higher",1.25],["Prices 50% higher",1.5],["Prices 100% higher",2]] as const;
-const POOL="#1F6CB0", GUARANTOR="#BE7C1C", NAVY="#1A3C5A";
+const POOL="var(--pool)", GUARANTOR="var(--guarantor)", NAVY="#1A3C5A";
 const dash=(v:number,dec=2)=>Math.abs(v)<.0000001?"–":v.toFixed(dec);
 const bn=(v:number)=>v/1e9;
 const money=(v:number)=>Math.abs(v)<.5?"–":v>=1e9?"PKR "+bn(v).toFixed(2)+"bn":"PKR "+(v/1e6).toFixed(2)+"m";
