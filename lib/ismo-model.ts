@@ -40,7 +40,7 @@ function loadWeights(shape:LoadShape){
 export function runIsmoModel(bookMW:number,K:number,loading:number,annualReturn:number,priceMultiplier:number,shape:LoadShape="national"){
  const weights=loadWeights(shape),annualWeight=weights.reduce((s,row,i)=>s+row.reduce((a,b)=>a+b,0)*ISMO_2025[i].days,0),scale=bookMW*8760/annualWeight,monthlyRate=annualReturn/12;
  const systemUnits=ISMO_2025.reduce((s,m)=>s+m.demand.reduce((a,b)=>a+b,0)*m.days*1000,0),systemAvg=systemUnits/(365*24*1000);
- const monthly=ISMO_2025.map((m,i)=>{let electricity=0,payout=0,marketCost=0;for(let h=0;h<24;h++){const units=weights[i][h]*scale*1000*m.days,price=m.price[h]*priceMultiplier;electricity+=units;marketCost+=units*price;payout+=units*Math.max(price-K,0)}return{month:m.month,electricity,payout,avgPrice:marketCost/electricity}});
+ const monthly=ISMO_2025.map((m,i)=>{let electricity=0,payout=0,marketCost=0;for(let h=0;h<24;h++){const units=weights[i][h]*scale*1000*m.days,price=m.price[h]*priceMultiplier;electricity+=units;marketCost+=units*price;payout+=units*Math.max(price-K,0)}return{month:m.month,days:m.days,electricity,payout,avgPrice:marketCost/electricity}});
  const basePayout=ISMO_2025.map((m,i)=>{let p=0;for(let h=0;h<24;h++){const units=weights[i][h]*scale*1000*m.days;p+=units*Math.max(m.price[h]-K,0)}return p});
  const expected=basePayout.reduce((s,p,i)=>s+p/Math.pow(1+monthlyRate,i+1),0),premium=expected*(1+loading),annualUnits=bookMW*1000*8760,premiumPerKwh=premium/annualUnits;
  let pool=premium,ncgcl=0;const draw=monthly.map(m=>{const start=pool,interest=start*monthlyRate,paid=Math.min(start+interest,m.payout),g=m.payout-paid;pool=start+interest-paid;ncgcl+=g;return{...m,start,interest,poolPays:paid,ncgcl:g,end:pool}});
