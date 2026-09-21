@@ -8,7 +8,7 @@ export default function PriceGuaranteeExplorer(){
  const[book,setBook]=useState(400),[si,setSi]=useState(2),[li,setLi]=useState(3),[ki,setKi]=useState(0);
  const s=scenarios[si],l=loads[li],k=fixed[ki],scale=book/400,max=Math.max(...hours);
  const bn=(v:number)=>(v*scale).toFixed(2)+"bn";
- return <section className="pgx">
+ return <section className="pgx"><style>{css}</style>
   <div className="pgTop"><div><span>LIVE STRUCTURE</span><h2>Change the assumptions. Watch who pays.</h2></div><p>Each control is anchored to a case in the supplied model. Book size scales linearly. Nothing here is a forecast.</p></div>
   <div className="pgControls"><label>Book size<input type="range" min="50" max="800" step="50" value={book} onChange={e=>setBook(+e.target.value)}/><b>{book} MW</b></label><label>Price scenario<select value={si} onChange={e=>setSi(+e.target.value)}>{scenarios.map((x,i)=><option value={i} key={String(x[0])}>{x[0]}</option>)}</select></label></div>
   <div className="pgKpis"><div><span>Buyers prefund</span><b>PKR {(13.84*(Number(l[1])/34.6)*scale).toFixed(2)}bn</b></div><div><span>Scenario payouts</span><b>PKR {bn(Number(s[1]))}</b></div><div><span>Guarantor pays</span><b>PKR {bn(Number(s[2]))}</b></div><div><span>Pool left</span><b>PKR {bn(Number(s[3]))}</b></div></div>
