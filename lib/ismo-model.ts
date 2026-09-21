@@ -14,13 +14,36 @@ export const ISMO_2025:IsmoMonth[]=[
 ["Dec-25",31,[9788.8178,9338.6149,9051.8798,8962.9134,8746.2507,9506.3185,10742.5104,11061.2322,11129.1516,10611.1638,10028.2534,9812.1721,9737.2036,9821.6582,10733.5917,12071.9977,12789.3727,13401.2817,13295.4718,12822.0804,12233.2522,11844.8427,10835.9575,10321.8463],[8.498413,6.869366,5.882128,6.191079,6.357903,8.138667,11.947854,15.540039,16.483424,16.481248,14.439745,13.307057,12.383377,13.403197,14.995695,18.298623,17.921718,17.649654,17.307159,16.89949,16.630596,16.474848,14.430011,13.164641]]
 ].map(x=>({month:x[0] as string,days:x[1] as number,demand:x[2] as number[],price:x[3] as number[]}));
 
-export function runIsmoModel(bookMW:number,K:number,loading:number,annualReturn:number,priceMultiplier:number){
- const systemUnits=ISMO_2025.reduce((s,m)=>s+m.demand.reduce((a,b)=>a+b,0)*m.days*1000,0);
- const systemAvg=systemUnits/(365*24*1000),scale=bookMW/systemAvg,monthlyRate=annualReturn/12;
- const monthly=ISMO_2025.map(m=>{let electricity=0,payout=0,marketCost=0;for(let h=0;h<24;h++){const units=m.demand[h]*scale*1000*m.days,price=m.price[h]*priceMultiplier;electricity+=units;marketCost+=units*price;payout+=units*Math.max(price-K,0)}return{month:m.month,electricity,payout,avgPrice:marketCost/electricity}});
- const basePayout=ISMO_2025.map(m=>{let p=0;for(let h=0;h<24;h++){const units=m.demand[h]*scale*1000*m.days;p+=units*Math.max(m.price[h]-K,0)}return p});
+export const BUYER_PROFILE_TEMPLATE:number[][]=[
+[12,11,10.3,10.3,11,18.9,32.7,34.4,34.4,34.4,34.4,34.4,31.6,33.7,34.4,34.4,34.4,34.4,33.7,32.7,31,27.5,18.9,13.8],
+[11.8,10.8,10.1,10.1,10.8,18.5,31.9,33.6,33.6,33.6,33.6,33.6,30.9,32.9,33.6,33.6,33.6,33.6,32.9,31.9,30.2,26.9,18.5,13.4],
+[12.9,11.8,11,11,11.8,20.2,35,36.8,36.8,36.8,36.8,36.8,33.9,36.1,36.8,36.8,36.8,36.8,36.1,35,33.1,29.4,20.2,14.7],
+[14,12.8,12,12,12.8,22,38,40,40,40,40,40,36.8,39.2,40,40,40,40,39.2,38,36,32,22,16],
+[15.1,13.8,13,13,13.8,23.8,41,43.2,43.2,43.2,43.2,43.2,39.7,42.3,43.2,43.2,43.2,43.2,42.3,41,38.9,34.6,23.8,17.3],
+[15.7,14.3,13.4,13.4,14.3,24.6,42.6,44.8,44.8,44.8,44.8,44.8,41.2,43.9,44.8,44.8,44.8,44.8,43.9,42.6,40.3,35.8,24.6,17.9],
+[15.7,14.3,13.4,13.4,14.3,24.6,42.6,44.8,44.8,44.8,44.8,44.8,41.2,43.9,44.8,44.8,44.8,44.8,43.9,42.6,40.3,35.8,24.6,17.9],
+[15.4,14.1,13.2,13.2,14.1,24.2,41.8,44,44,44,44,44,40.5,43.1,44,44,44,44,43.1,41.8,39.6,35.2,24.2,17.6],
+[14.8,13.6,12.7,12.7,13.6,23.3,40.3,42.4,42.4,42.4,42.4,42.4,39,41.6,42.4,42.4,42.4,42.4,41.6,40.3,38.2,33.9,23.3,17],
+[13.7,12.5,11.8,11.8,12.5,21.6,37.2,39.2,39.2,39.2,39.2,39.2,36.1,38.4,39.2,39.2,39.2,39.2,38.4,37.2,35.3,31.4,21.6,15.7],
+[12.6,11.5,10.8,10.8,11.5,19.8,34.2,36,36,36,36,36,33.1,35.3,36,36,36,36,35.3,34.2,32.4,28.8,19.8,14.4],
+[12,11,10.3,10.3,11,18.9,32.7,34.4,34.4,34.4,34.4,34.4,31.6,33.7,34.4,34.4,34.4,34.4,33.7,32.7,31,27.5,18.9,13.8]
+];
+
+export type LoadShape="national"|"buyer-template"|"day-shift"|"continuous";
+function loadWeights(shape:LoadShape){
+ if(shape==="national") return ISMO_2025.map(m=>m.demand);
+ if(shape==="buyer-template") return BUYER_PROFILE_TEMPLATE;
+ if(shape==="day-shift") return ISMO_2025.map(()=>Array.from({length:24},(_,h)=>h>=7&&h<19?1:0));
+ return ISMO_2025.map(()=>Array(24).fill(1));
+}
+
+export function runIsmoModel(bookMW:number,K:number,loading:number,annualReturn:number,priceMultiplier:number,shape:LoadShape="national"){
+ const weights=loadWeights(shape),annualWeight=weights.reduce((s,row,i)=>s+row.reduce((a,b)=>a+b,0)*ISMO_2025[i].days,0),scale=bookMW*8760/annualWeight,monthlyRate=annualReturn/12;
+ const systemUnits=ISMO_2025.reduce((s,m)=>s+m.demand.reduce((a,b)=>a+b,0)*m.days*1000,0),systemAvg=systemUnits/(365*24*1000);
+ const monthly=ISMO_2025.map((m,i)=>{let electricity=0,payout=0,marketCost=0;for(let h=0;h<24;h++){const units=weights[i][h]*scale*1000*m.days,price=m.price[h]*priceMultiplier;electricity+=units;marketCost+=units*price;payout+=units*Math.max(price-K,0)}return{month:m.month,electricity,payout,avgPrice:marketCost/electricity}});
+ const basePayout=ISMO_2025.map((m,i)=>{let p=0;for(let h=0;h<24;h++){const units=weights[i][h]*scale*1000*m.days;p+=units*Math.max(m.price[h]-K,0)}return p});
  const expected=basePayout.reduce((s,p,i)=>s+p/Math.pow(1+monthlyRate,i+1),0),premium=expected*(1+loading),annualUnits=bookMW*1000*8760,premiumPerKwh=premium/annualUnits;
  let pool=premium,ncgcl=0;const draw=monthly.map(m=>{const start=pool,interest=start*monthlyRate,paid=Math.min(start+interest,m.payout),g=m.payout-paid;pool=start+interest-paid;ncgcl+=g;return{...m,start,interest,poolPays:paid,ncgcl:g,end:pool}});
- const hourly=Array(24).fill(0);ISMO_2025.forEach(m=>m.demand.forEach((d,h)=>{const units=d*scale*1000*m.days;hourly[h]+=units*Math.max(m.price[h]*priceMultiplier-K,0)}));
+ const hourly=Array(24).fill(0);ISMO_2025.forEach((m,i)=>weights[i].forEach((d,h)=>{const units=d*scale*1000*m.days;hourly[h]+=units*Math.max(m.price[h]*priceMultiplier-K,0)}));
  return{systemAvg,expected,premium,premiumPerKwh,allIn:K+premiumPerKwh,totalPayout:monthly.reduce((s,m)=>s+m.payout,0),ncgcl,surplus:pool,monthly:draw,hourly};
 }
