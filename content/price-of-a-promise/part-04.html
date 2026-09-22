@@ -1,0 +1,180 @@
+<p>Two conventions are embedded here and both should be stated rather than discovered. Interest accrues on the opening balance for the full month before any claim is taken, which is mildly generous to the fund. And month order matters: the same twelve claims arriving in a different sequence would drain the pool at a different speed. Calendar 2025 front-loads its two largest claims into January and April, which is the harder arrangement.</p>
+
+<h3>6.4 The premium, and an identity that makes it checkable</h3>
+
+<p>The minimum premium that lets the pool meet every claim without calling on NCGCL can be found by search: guess a premium, run the twelve months, see whether the balance ever goes negative, and bisect. That is what the model does, and it converges in eighty iterations.</p>
+
+<p>It also has a closed form. The minimum premium is exactly the present value of the twelve monthly payouts, discounted at the fund&#8217;s own monthly return:</p>
+
+<div class="eq">premium<sub>min</sub> <span style="color:#857C72">=</span> <span style="font-size:19px">&#931;</span><sub>t=1&#8230;12</sub> &#160; payout<sub>t</sub> &#8725; (1 + <em>i</em>)<sup>t</sup> &#160;&#160;<span style="color:#857C72">where</span> <em>i</em> = 0.11/12</div>
+
+<p>The two agree to a fraction of a rupee on an eight-billion-rupee figure. This is not a coincidence &#8212; a balance that earns <em>i</em> and is drawn to exactly zero is the definition of a present value &#8212; but it is useful, because it means the entire model can be written in a spreadsheet with an <span style="font-family:var(--sans);font-size:15px">NPV()</span> function and audited by anyone, without simulation.</p>
+
+<div class="calc">
+undiscounted claims, 2025 <span class="op">=</span> <span class="r">PKR 8,707,836,471</span><br>
+NPV at <em>i</em> = 0.00916667 <span class="op">=</span> <span class="r">PKR 8,289,298,538</span><br>
+<span class="cm">difference = the 418.5m of interest the pool earns while holding the money</span>
+</div>
+
+<h3>6.5 The loading</h3>
+
+<p>The present value above is the <em>expected cost</em> in a year that looks exactly like 2025. Charging exactly that produces a pool that finishes the year at zero &#8212; adequate if next year is also 2025, and inadequate otherwise. The loading is the multiple applied on top:</p>
+
+<div class="eq">premium <span style="color:#857C72">=</span> expected cost <span style="color:#857C72">&#215;</span> (1 + &#945;)</div>
+
+<p>Setting &#945; is the central commercial decision in the product, and Section 10 derives the 67 per cent from the data rather than from judgement.</p>
+
+<h2>7 &#183; The fixed price is the average price</h2>
+
+<p>The contract rate of 16,350.30 rupees per megawatt hour looks like a negotiated figure. It is not. It is a computed one, and identifying what it is computed from changes how the whole structure should be read.</p>
+
+<p>Weight each month&#8217;s market price by the energy the book consumes in that month, and sum:</p>
+
+<div class="calc">
+<span class="op">&#931;</span> ( MWh<sub>m</sub> <span class="op">&#215;</span> price<sub>m</sub> ) <span class="op">=</span> <span class="r">PKR 57,291,589,433</span><br>
+<span class="op">&#247;</span> 3,504,000 MWh <span class="op">=</span> <span class="r">16,350.34 PKR/MWh</span><br>
+<br>
+contract fixed price <em>K</em> <span class="op">=</span> <span class="r">16,350.30 PKR/MWh</span><br>
+difference <span class="op">=</span> <span class="r">0.04 PKR/MWh</span> <span class="cm">&#183; four decimal places in consumer units</span>
+</div>
+
+<p><b>The fixed price is the 2025 load-weighted average market price, rounded.</b> It is the break-even rate: the rate at which, across the year as a whole, the buyer pays neither more nor less than the market would have charged. It carries no margin, no risk premium and no contingency.</p>
+
+<p class="pull">If the tariff is the average, the tariff cannot pay for the guarantee. Everything the guarantee costs has to come from the premium, and that is a structural fact, not a pricing choice.</p>
+
+<h4>Why the weighting matters</h4>
+
+<p>A simple average of the twelve monthly prices gives 16,286.97 rupees per megawatt hour &#8212; 63.37 lower, or 0.39 per cent. The difference arises because the dear months are not the heavy months: January prices at 22,517 but carries only 6.3 per cent of annual energy, while June carries 10.7 per cent at 16,914. Averaging the twelve prices treats a light January as equal in weight to a heavy June, which it is not.</p>
+
+<p>Nought point three nine per cent is small, but on a 57 billion rupee bill it is 222 million rupees, and it runs in the direction that would have understated the fair rate. Any recalculation of <em>K</em> should use the load weighting.</p>
+
+<h2>8 &#183; The asymmetry is the entire cost</h2>
+
+<p>This is the central analytical result of the paper, and it can be stated in two numbers.</p>
+
+<p>Suppose the contract were two-sided, as a British CfD is: when the market prices above <em>K</em> the fund pays the buyer, and when it prices below <em>K</em> the buyer pays the fund. Over calendar 2025, what would that have cost?</p>
+
+<div class="calc">
+buyer&#8217;s bill at market price <span class="op">=</span> <span class="r">PKR 57,291,589,433</span><br>
+buyer&#8217;s bill at fixed price <span class="op">=</span> <span class="r">PKR 57,291,451,200</span><br>
+net across the year <span class="op">=</span> <span class="r">PKR 138,233</span> <span class="cm">&#183; 0.00024% of the bill</span>
+</div>
+
+<p>One hundred and thirty-eight thousand rupees. On a fifty-seven billion rupee contract, a two-sided guarantee at this strike is free to within a rounding error &#8212; which is exactly what it should be, because <em>K</em> was set at the average price and the average is what a two-sided contract settles against.</p>
+
+<p>Now the same contract one-sided:</p>
+
+<div class="calc">
+one-sided payout, hour by hour <span class="op">=</span> <span class="r">PKR 8,707,836,471</span> <span class="cm">&#183; 15.20% of the bill</span><br>
+ratio to the two-sided cost <span class="op">=</span> <span class="r">62,994 : 1</span>
+</div>
+
+<figure id="fig-diverge"><svg viewBox="0 0 760 300" role="img" preserveAspectRatio="xMidYMid meet" aria-label="Where the buyer gains and where the buyer overpays. Monthly difference between the market bill and the fixed-price bill, in PKR billion.">
+<line x1="78" y1="252.00" x2="742" y2="252.00" stroke="#E4D6C4" stroke-width="0.8"/>
+<text x="70" y="255.50" text-anchor="end" class="ax">-2</text>
+<line x1="78" y1="193.00" x2="742" y2="193.00" stroke="#E4D6C4" stroke-width="0.8"/>
+<text x="70" y="196.50" text-anchor="end" class="ax">-1</text>
+<line x1="78" y1="134.00" x2="742" y2="134.00" stroke="#C9B8A3" stroke-width="1"/>
+<text x="70" y="137.50" text-anchor="end" class="ax">0</text>
+<line x1="78" y1="75.00" x2="742" y2="75.00" stroke="#E4D6C4" stroke-width="0.8"/>
+<text x="70" y="78.50" text-anchor="end" class="ax">1</text>
+<line x1="78" y1="16.00" x2="742" y2="16.00" stroke="#E4D6C4" stroke-width="0.8"/>
+<text x="70" y="19.50" text-anchor="end" class="ax">2</text>
+<text x="70" y="10" text-anchor="end" class="ax unit">PKR bn</text>
+<text x="105.67" y="268" text-anchor="middle" class="ax">Jan</text>
+<text x="161.00" y="268" text-anchor="middle" class="ax">Feb</text>
+<text x="216.33" y="268" text-anchor="middle" class="ax">Mar</text>
+<text x="271.67" y="268" text-anchor="middle" class="ax">Apr</text>
+<text x="327.00" y="268" text-anchor="middle" class="ax">May</text>
+<text x="382.33" y="268" text-anchor="middle" class="ax">Jun</text>
+<text x="437.67" y="268" text-anchor="middle" class="ax">Jul</text>
+<text x="493.00" y="268" text-anchor="middle" class="ax">Aug</text>
+<text x="548.33" y="268" text-anchor="middle" class="ax">Sep</text>
+<text x="603.67" y="268" text-anchor="middle" class="ax">Oct</text>
+<text x="659.00" y="268" text-anchor="middle" class="ax">Nov</text>
+<text x="714.33" y="268" text-anchor="middle" class="ax">Dec</text>
+<rect class="bar" x="79.00" y="54.31" width="53.33" height="79.69" rx="3" fill="#004D73" data-l="Jan" data-v="1 PKR bn"/>
+<rect class="bar" x="134.33" y="134.00" width="53.33" height="51.87" rx="3" fill="#C25A1E" data-l="Feb" data-v="-1 PKR bn"/>
+<rect class="bar" x="189.67" y="117.25" width="53.33" height="16.75" rx="3" fill="#004D73" data-l="Mar" data-v="0 PKR bn"/>
+<rect class="bar" x="245.00" y="30.88" width="53.33" height="103.12" rx="3" fill="#004D73" data-l="Apr" data-v="2 PKR bn"/>
+<rect class="bar" x="300.33" y="134.00" width="53.33" height="8.19" rx="3" fill="#C25A1E" data-l="May" data-v="-0 PKR bn"/>
+<rect class="bar" x="355.67" y="121.57" width="53.33" height="12.43" rx="3" fill="#004D73" data-l="Jun" data-v="0 PKR bn"/>
+<rect class="bar" x="411.00" y="134.00" width="53.33" height="5.61" rx="3" fill="#C25A1E" data-l="Jul" data-v="-0 PKR bn"/>
+<rect class="bar" x="466.33" y="134.00" width="53.33" height="53.99" rx="3" fill="#C25A1E" data-l="Aug" data-v="-1 PKR bn"/>
+<rect class="bar" x="521.67" y="134.00" width="53.33" height="21.62" rx="3" fill="#C25A1E" data-l="Sep" data-v="-0 PKR bn"/>
+<rect class="bar" x="577.00" y="89.12" width="53.33" height="44.88" rx="3" fill="#004D73" data-l="Oct" data-v="1 PKR bn"/>
+<rect class="bar" x="632.33" y="134.00" width="53.33" height="81.31" rx="3" fill="#C25A1E" data-l="Nov" data-v="-1 PKR bn"/>
+<rect class="bar" x="687.67" y="134.00" width="53.33" height="34.28" rx="3" fill="#C25A1E" data-l="Dec" data-v="-1 PKR bn"/>
+<rect x="78" y="284" width="10" height="10" rx="2" fill="#004D73"/>
+<text x="93" y="293" class="ax lg">Market above K: buyer gains</text>
+<rect x="294.5" y="284" width="10" height="10" rx="2" fill="#C25A1E"/>
+<text x="309.5" y="293" class="ax lg">Market below K: buyer overpays</text>
+</svg><figcaption><b>Where the buyer gains, and where the buyer overpays</b>PKR billion. Five months above the fixed price are worth 4.354bn to the buyer; seven months below cost them 4.354bn. The two columns cancel to within 138,233 rupees, because the fixed price is the year&#8217;s average. A two-sided contract nets these. A one-sided contract keeps only the gains.</figcaption></figure>
+
+<p>The chart above shows why. In five months the market ran above the fixed price and the buyer gained 4.354 billion rupees. In seven months it ran below and the buyer overpaid 4.354 billion. Those two figures agree to within 138,233 rupees, and that near-perfect cancellation <em>is</em> the fact that <em>K</em> is the average.</p>
+
+<p>A two-sided contract lets those two columns offset. A one-sided contract keeps the left column and discards the right. The cost of the product is the right column.</p>
+
+<h4>And then granularity doubles it again</h4>
+
+<p>The 4.354 billion above is the cost of applying the no-refund rule at <em>monthly</em> resolution &#8212; net within a month, then keep only the positive months. Applying the same rule hour by hour on the same data gives a materially different answer.</p>
+
+<div class="calc">
+no-refund applied monthly <span class="op">=</span> <span class="r">PKR 4,353,718,004</span><br>
+no-refund applied hourly <span class="op">=</span> <span class="r">PKR 8,707,836,471</span><br>
+understatement <span class="op">=</span> <span class="r">PKR 4,354,118,467</span> <span class="cm">&#183; the monthly method is 50.0% too low</span>
+</div>
+
+<figure id="fig-gap"><svg viewBox="0 0 760 310" role="img" preserveAspectRatio="xMidYMid meet" aria-label="What the guarantee costs per unit, two ways of measuring. The monthly-average method misses every hour that priced above the fixed price inside a cheap month.">
+<line x1="78" y1="262.00" x2="742" y2="262.00" stroke="#C9B8A3" stroke-width="1"/>
+<text x="70" y="265.50" text-anchor="end" class="ax">0</text>
+<line x1="78" y1="200.50" x2="742" y2="200.50" stroke="#E4D6C4" stroke-width="0.8"/>
+<text x="70" y="204.00" text-anchor="end" class="ax">2,000</text>
+<line x1="78" y1="139.00" x2="742" y2="139.00" stroke="#E4D6C4" stroke-width="0.8"/>
+<text x="70" y="142.50" text-anchor="end" class="ax">4,000</text>
+<line x1="78" y1="77.50" x2="742" y2="77.50" stroke="#E4D6C4" stroke-width="0.8"/>
+<text x="70" y="81.00" text-anchor="end" class="ax">6,000</text>
+<line x1="78" y1="16.00" x2="742" y2="16.00" stroke="#E4D6C4" stroke-width="0.8"/>
+<text x="70" y="19.50" text-anchor="end" class="ax">8,000</text>
+<text x="70" y="10" text-anchor="end" class="ax unit">PKR/MWh</text>
+<text x="105.67" y="278" text-anchor="middle" class="ax">Jan</text>
+<text x="161.00" y="278" text-anchor="middle" class="ax">Feb</text>
+<text x="216.33" y="278" text-anchor="middle" class="ax">Mar</text>
+<text x="271.67" y="278" text-anchor="middle" class="ax">Apr</text>
+<text x="327.00" y="278" text-anchor="middle" class="ax">May</text>
+<text x="382.33" y="278" text-anchor="middle" class="ax">Jun</text>
+<text x="437.67" y="278" text-anchor="middle" class="ax">Jul</text>
+<text x="493.00" y="278" text-anchor="middle" class="ax">Aug</text>
+<text x="548.33" y="278" text-anchor="middle" class="ax">Sep</text>
+<text x="603.67" y="278" text-anchor="middle" class="ax">Oct</text>
+<text x="659.00" y="278" text-anchor="middle" class="ax">Nov</text>
+<text x="714.33" y="278" text-anchor="middle" class="ax">Dec</text>
+<rect class="bar" x="80.00" y="72.39" width="24.67" height="189.61" rx="3" fill="#C25A1E" data-l="Jan &#183; Monthly-average method" data-v="6,166 PKR/MWh"/>
+<rect class="bar" x="106.67" y="54.44" width="24.67" height="207.56" rx="3" fill="#004D73" data-l="Jan &#183; Hour-by-hour method" data-v="6,750 PKR/MWh"/>
+<rect class="bar" x="135.33" y="262.00" width="24.67" height="0.40" rx="3" fill="#C25A1E" data-l="Feb &#183; Monthly-average method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="162.00" y="262.00" width="24.67" height="0.40" rx="3" fill="#004D73" data-l="Feb &#183; Hour-by-hour method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="190.67" y="223.76" width="24.67" height="38.24" rx="3" fill="#C25A1E" data-l="Mar &#183; Monthly-average method" data-v="1,244 PKR/MWh"/>
+<rect class="bar" x="217.33" y="181.01" width="24.67" height="80.99" rx="3" fill="#004D73" data-l="Mar &#183; Hour-by-hour method" data-v="2,634 PKR/MWh"/>
+<rect class="bar" x="246.00" y="74.55" width="24.67" height="187.45" rx="3" fill="#C25A1E" data-l="Apr &#183; Monthly-average method" data-v="6,096 PKR/MWh"/>
+<rect class="bar" x="272.67" y="68.66" width="24.67" height="193.34" rx="3" fill="#004D73" data-l="Apr &#183; Hour-by-hour method" data-v="6,287 PKR/MWh"/>
+<rect class="bar" x="301.33" y="262.00" width="24.67" height="0.40" rx="3" fill="#C25A1E" data-l="May &#183; Monthly-average method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="328.00" y="208.43" width="24.67" height="53.57" rx="3" fill="#004D73" data-l="May &#183; Hour-by-hour method" data-v="1,742 PKR/MWh"/>
+<rect class="bar" x="356.67" y="244.68" width="24.67" height="17.32" rx="3" fill="#C25A1E" data-l="Jun &#183; Monthly-average method" data-v="563 PKR/MWh"/>
+<rect class="bar" x="383.33" y="170.90" width="24.67" height="91.10" rx="3" fill="#004D73" data-l="Jun &#183; Hour-by-hour method" data-v="2,963 PKR/MWh"/>
+<rect class="bar" x="412.00" y="262.00" width="24.67" height="0.40" rx="3" fill="#C25A1E" data-l="Jul &#183; Monthly-average method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="438.67" y="192.85" width="24.67" height="69.15" rx="3" fill="#004D73" data-l="Jul &#183; Hour-by-hour method" data-v="2,249 PKR/MWh"/>
+<rect class="bar" x="467.33" y="262.00" width="24.67" height="0.40" rx="3" fill="#C25A1E" data-l="Aug &#183; Monthly-average method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="494.00" y="225.42" width="24.67" height="36.58" rx="3" fill="#004D73" data-l="Aug &#183; Hour-by-hour method" data-v="1,190 PKR/MWh"/>
+<rect class="bar" x="522.67" y="262.00" width="24.67" height="0.40" rx="3" fill="#C25A1E" data-l="Sep &#183; Monthly-average method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="549.33" y="212.72" width="24.67" height="49.28" rx="3" fill="#004D73" data-l="Sep &#183; Hour-by-hour method" data-v="1,603 PKR/MWh"/>
+<rect class="bar" x="578.00" y="180.36" width="24.67" height="81.64" rx="3" fill="#C25A1E" data-l="Oct &#183; Monthly-average method" data-v="2,655 PKR/MWh"/>
+<rect class="bar" x="604.67" y="139.70" width="24.67" height="122.30" rx="3" fill="#004D73" data-l="Oct &#183; Hour-by-hour method" data-v="3,977 PKR/MWh"/>
+<rect class="bar" x="633.33" y="262.00" width="24.67" height="0.40" rx="3" fill="#C25A1E" data-l="Nov &#183; Monthly-average method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="660.00" y="262.00" width="24.67" height="0.40" rx="3" fill="#004D73" data-l="Nov &#183; Hour-by-hour method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="688.67" y="262.00" width="24.67" height="0.40" rx="3" fill="#C25A1E" data-l="Dec &#183; Monthly-average method" data-v="0 PKR/MWh"/>
+<rect class="bar" x="715.33" y="251.47" width="24.67" height="10.53" rx="3" fill="#004D73" data-l="Dec &#183; Hour-by-hour method" data-v="342 PKR/MWh"/>
+<rect x="78" y="294" width="10" height="10" rx="2" fill="#C25A1E"/>
+<text x="93" y="303" class="ax lg">Monthly-average method</text>
+<rect x="262.0" y="294" width="10" height="10" rx="2" fill="#004D73"/>
+<text x="277.0" y="303" class="ax lg">Hour-by-hour method</text>
+</svg><figcaption><b>What the guarantee costs per unit, measured two ways</b>Rupees per megawatt hour. The monthly-average method nets cheap hours against dear ones inside a month and reports zero for May, July, August, September and December. The hour-by-hour method, which is what the contract actually pays, reports between 342 and 2,249 in those same months.</figcaption></figure>
