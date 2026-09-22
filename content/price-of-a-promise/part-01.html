@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing a promise &#183; NCGCL price guarantee fund</title>
+<meta name="description" content="A technical study of a prefunded electricity price guarantee for Pakistani bulk power consumers, backtested on ISMO hourly data for calendar 2025.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --paper:#FFF1E5; --panel:#FBEADB; --ink:#1A1A18; --ink2:#56504A;
+  --muted:#857C72; --rule:#E4D6C4; --rule2:#C9B8A3;
+  --s1:#004D73; --s2:#C25A1E; --ref:#990F3D;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:19px; line-height:1.62;
+  font-synthesis-weight:none;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+a{color:var(--s1);text-decoration:none;border-bottom:1px solid rgba(0,77,115,.35)}
+a:hover{border-bottom-color:var(--s1)}
+
+/* masthead */
+header.mast{border-bottom:2px solid var(--ink);margin-top:34px;padding-bottom:9px}
+.kicker{font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--s1)}
+.mast .org{font-family:var(--sans);font-size:11.5px;font-weight:500;letter-spacing:.06em;
+  color:var(--muted);float:right;text-transform:uppercase}
+h1{font-size:46px;line-height:1.08;font-weight:600;letter-spacing:-.015em;margin:26px 0 0}
+h1 .sub{display:block;font-size:26px;font-weight:300;font-style:italic;color:var(--ink2);
+  letter-spacing:-.005em;margin-top:12px;line-height:1.24}
+.standfirst{font-size:21px;line-height:1.52;color:var(--ink2);margin:22px 0 0;font-weight:300}
+.byline{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin:24px 0 0;
+  padding:11px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:6px 22px}
+.byline b{color:var(--ink2);font-weight:600}
+
+/* structure */
+h2{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--s1);margin:58px 0 0;
+  padding-bottom:7px;border-bottom:1px solid var(--rule2)}
+h3{font-size:25px;font-weight:600;line-height:1.22;letter-spacing:-.01em;margin:32px 0 0}
+h4{font-family:var(--sans);font-size:15px;font-weight:600;margin:28px 0 0;color:var(--ink)}
+p{margin:16px 0 0}
+p.lead{font-size:20.5px;color:var(--ink2)}
+ul,ol{margin:16px 0 0;padding-left:22px}
+li{margin:8px 0 0}
+strong{font-weight:600}
+em{font-style:italic}
+.small{font-size:16px;color:var(--ink2)}
+
+/* callouts */
+.pull{border-left:3px solid var(--s1);padding:2px 0 2px 20px;margin:30px 0 0;
+  font-size:22px;line-height:1.42;font-weight:300;color:var(--ink)}
+.note{background:var(--panel);border:1px solid var(--rule);padding:18px 20px;margin:28px 0 0;
+  font-size:17px;line-height:1.56}
+.note h4{margin-top:0}
+.note p:first-child{margin-top:0}
+
+/* maths */
+.calc{font-family:var(--sans);font-size:15.5px;line-height:1.85;background:var(--panel);
+  border:1px solid var(--rule);padding:16px 18px;margin:20px 0 0;overflow-x:auto;
+  font-variant-numeric:tabular-nums}
+.calc .op{color:var(--muted)}
+.calc .r{color:var(--s1);font-weight:600}
+.calc .cm{color:var(--muted);font-style:normal}
+.eq{font-family:var(--sans);font-size:16px;text-align:center;margin:22px 0 0;
+  color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:28px 0 0;
+  border-top:1px solid var(--rule2);border-bottom:1px solid var(--rule2)}
+.stats div{padding:16px 14px 16px 0;border-right:1px solid var(--rule)}
+.stats div:last-child{border-right:0}
+.stats .lab{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted)}
+.stats .val{font-size:27px;font-weight:600;letter-spacing:-.02em;margin-top:5px;line-height:1.1}
+.stats .cap{font-family:var(--sans);font-size:11.5px;color:var(--ink2);margin-top:5px;line-height:1.35}
+
+/* tables */
+.tw{overflow-x:auto;margin:22px 0 0;-webkit-overflow-scrolling:touch}
+.tw.wide{width:min(96vw,1040px);margin-left:50%;transform:translateX(-50%)}
+@media print{.tw.wide{width:100%;margin-left:0;transform:none}}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:13.5px;
+  font-variant-numeric:tabular-nums}
+caption{text-align:left;font-family:var(--sans);font-size:12px;color:var(--muted);
+  padding-bottom:9px;letter-spacing:.02em}
+th{text-align:right;font-weight:600;color:var(--ink);padding:8px 10px;
+  border-bottom:1.5px solid var(--ink);white-space:nowrap;vertical-align:bottom}
+th:first-child,td:first-child{text-align:left}
+td{text-align:right;padding:7px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
+tbody tr:nth-child(even){background:rgba(0,0,0,.018)}
+tfoot td{font-weight:600;border-top:1.5px solid var(--ink);border-bottom:0;background:none}
+td.z{color:var(--muted)}
+
+/* figures */
+figure{margin:38px 0 0}
+figure svg{width:100%;height:auto;display:block;overflow:visible}
+figcaption{font-family:var(--sans);font-size:12.5px;line-height:1.5;color:var(--ink2);
+  margin-top:12px;padding-top:9px;border-top:1px solid var(--rule)}
+figcaption b{display:block;color:var(--ink);font-size:13.5px;font-weight:600;margin-bottom:3px}
+.ax{font-family:var(--sans);font-size:11px;fill:var(--muted);font-variant-numeric:tabular-nums}
+.ax.unit{font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.ax.lg{font-size:11.5px;fill:var(--ink2)}
+.ax.ref{fill:var(--ref);font-weight:600;font-size:10.5px}
+.ax.ref2{fill:var(--ink2);font-weight:600;font-size:10.5px}
+.bar{cursor:default}
+.bar:hover{opacity:.78}
+
+/* refs */
+sup.fn{font-family:var(--sans);font-size:10.5px;font-weight:600;color:var(--s1);
+  vertical-align:super;line-height:0}
+ol.refs{font-family:var(--sans);font-size:14px;line-height:1.55;padding-left:24px}
+ol.refs li{margin:11px 0 0}
+ol.refs a{word-break:break-word}
+
+footer{margin:66px 0 80px;padding-top:20px;border-top:2px solid var(--ink);
+  font-family:var(--sans);font-size:12.5px;color:var(--muted);line-height:1.6}
+
+#tt{position:fixed;pointer-events:none;opacity:0;transition:opacity .09s;
+  background:var(--ink);color:#FFF1E5;font-family:var(--sans);font-size:12px;
+  padding:6px 9px;border-radius:4px;z-index:50;white-space:nowrap;
+  font-variant-numeric:tabular-nums}
+#tt b{display:block;font-weight:600;font-size:12.5px}
+
+@media (max-width:640px){
+  body{font-size:17.5px}
+  h1{font-size:33px} h1 .sub{font-size:20px} .standfirst{font-size:18.5px}
+  h3{font-size:21px} .pull{font-size:19px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stats div:nth-child(2){border-right:0}
+  .stats div:nth-child(1),.stats div:nth-child(2){border-bottom:1px solid var(--rule)}
+  .calc{font-size:13.5px}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .wrap{max-width:100%}
+  figure,table,.note,.calc{break-inside:avoid}
+  h2,h3{break-after:avoid}
+  a{color:var(--ink);border:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div id="tt"></div>
+<div class="wrap">
+
+<header class="mast">
+  <span class="org">NCGCL &#183; Product Structuring</span>
+  <span class="kicker">Working paper</span>
+  <h1>Pricing a promise
+    <span class="sub">What it costs to fix the price of electricity for a year, and who pays when the fund runs out</span>
+  </h1>
+</header>
+
+<p class="standfirst">On 21 September 2026 Pakistan opened bidding on its first 400 MW electricity wheeling auction. For the first time, large industrial buyers can contract directly with generators &#8212; and carry the price risk themselves. This paper prices the instrument that would take that risk back off them: a prefunded pool, one year long, backtested hour by hour on the market&#8217;s own 2025 data.</p>
+
+<div class="byline">
+  <span><b>NCGCL</b> &#183; Product Structuring</span>
+  <span>22 September 2026</span>
+  <span>Backtest window: calendar 2025</span>
+  <span>Source: ISMO hourly demand and marginal-cost tables</span>
+</div>
+
+<h2>Summary of findings</h2>
+
+<p class="lead">Six results, each reproducible from the published data and the accompanying workbook.</p>
+
+<p><b>One.</b> The fixed price at the centre of the proposal, 16,350.30 rupees per megawatt hour, is not a negotiated number. It is the load-weighted average market price of calendar 2025, computed to four decimal places and then written into the contract. It contains no margin of any kind. Anything the guarantee costs must therefore be recovered somewhere else.</p>
+
+<p><b>Two.</b> Almost the entire cost of the product comes from one design choice: the buyer keeps the benefit of cheap hours and is protected in dear ones. Run the same contract two-sided &#8212; refunding the fund when the market prices below the fixed price &#8212; and the net cost across 2025 is 138,233 rupees on an energy bill of 57.29 billion. That is two ten-thousandths of one per cent. Run it one-sided and the cost is 8.71 billion rupees. The promise is almost free; the asymmetry is the whole price.</p>
