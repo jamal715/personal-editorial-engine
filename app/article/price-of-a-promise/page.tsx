@@ -2,6 +2,7 @@ import {notFound} from "next/navigation";
 import ReaderControls from "../../../components/ReaderControls";
 import EditorialPaperDocument from "../../../components/EditorialPaperDocument";
 import {publicationBySlug} from "../../../lib/publications";
+import {pricingPaperHtml} from "../../../lib/pricingPaperSource";
 
 export const dynamic="force-dynamic";
 export const metadata={
@@ -11,10 +12,11 @@ export const metadata={
 
 export default async function Page(){
  const p=await publicationBySlug("price-of-a-promise");
- if(!p||!p.content_html)notFound();
+ if(!p)notFound();
+ const html=pricingPaperHtml();
  return <main className="paperPage">
   <style>{".paperPage{min-height:100vh;background:var(--reader-bg,#FFF1E5);color:var(--reader-text,#1A1A18)}@media print{.paperPage{background:#fff}}"}</style>
   <ReaderControls articleKey="price-of-a-promise" articleTitle={p.title}/>
-  <EditorialPaperDocument html={p.content_html}/>
+  <EditorialPaperDocument html={html}/>
  </main>;
 }
