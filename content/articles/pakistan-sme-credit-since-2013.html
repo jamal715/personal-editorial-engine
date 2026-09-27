@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SME Share of Pakistan's Business Credit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<style>
+:root{
+  --paper:#FFF1E5; --ink:#33302E; --ink2:#4D4845; --muted:#66605C; --rule:#CCC1B7; --rule2:#E6D9CE;
+  --wheat:#F2DFCE; --claret:#990F3D; --oxford:#0F5499; --teal:#008C80; --amber:#A87400;
+  --serif:"Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans:"Source Sans 3", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.6;margin:0;padding-inline:clamp(16px,4vw,56px);padding-block:0 64px}
+.wrap{max-width:1180px;margin:0 auto}
+.wide{max-width:1180px;margin:0 auto}
+a{color:var(--oxford);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--claret)}
+a:focus-visible{outline:2px solid var(--oxford);outline-offset:2px}
+/* masthead */
+.mast{border-bottom:4px solid var(--ink);padding-block:22px 10px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;font-family:var(--sans);font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink2)}
+.mast b{color:var(--claret);font-weight:700}
+.kicker{font-family:var(--sans);font-size:15px;font-weight:700;color:var(--claret);letter-spacing:.02em;margin:34px 0 8px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5.2vw,46px);line-height:1.12;letter-spacing:-.01em;margin:0 0 16px;text-wrap:balance}
+.stand{font-size:21px;line-height:1.45;color:var(--ink2);margin:0 0 20px}
+.byline{font-family:var(--sans);font-size:14px;color:var(--muted);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding-block:10px;display:flex;flex-wrap:wrap;gap:6px 20px}
+.byline strong{color:var(--ink)}
+h2{font-family:var(--serif);font-weight:600;font-size:28px;line-height:1.2;margin:56px 0 12px;padding-top:14px;border-top:1px solid var(--ink);text-wrap:balance}
+h2 .n{font-family:var(--sans);font-size:15px;color:var(--claret);font-weight:700;display:block;letter-spacing:.06em;margin-bottom:4px}
+h3{font-family:var(--sans);font-weight:700;font-size:19px;margin:32px 0 6px;color:var(--ink)}
+h4{font-family:var(--sans);font-weight:700;font-size:15px;margin:22px 0 4px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink2)}
+p{margin:0 0 16px}
+ul,ol{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:6px}
+.small{font-size:15px}
+.muted{color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+/* summary box */
+.glance{background:var(--wheat);padding:20px 22px;margin:28px 0}
+.glance h3{margin-top:0;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--claret)}
+.glance ol{margin-bottom:0}
+.glance li{font-size:17px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border-top:3px solid var(--ink);margin:26px 0}
+.stat{background:var(--paper);padding:12px 12px 14px}
+.stat .v{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat .l{font-family:var(--sans);font-size:13px;color:var(--ink2);line-height:1.35;margin-top:4px}
+/* contents */
+.toc{font-family:var(--sans);font-size:15px;columns:2;column-gap:28px;margin:18px 0 0;padding:0;list-style:none}
+.toc li{break-inside:avoid;margin-bottom:5px}
+.toc a{text-decoration:none;color:var(--ink)}
+.toc a:hover{color:var(--claret);text-decoration:underline}
+.toc span{color:var(--claret);font-weight:700;display:inline-block;min-width:26px}
+/* figures */
+figure{margin:30px 0 34px;padding:0}
+.fig-h{font-family:var(--sans);border-top:1px solid var(--ink);padding-top:8px}
+.fig-h .t{font-weight:700;font-size:17px;line-height:1.3}
+.fig-h .t b{color:var(--claret)}
+.fig-h .s{font-size:14px;color:var(--ink2);margin-top:2px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--sans);font-size:13.5px;color:var(--ink2);margin:10px 0 4px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px}
+.legend i.sq{width:11px;height:11px;border-radius:2px}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart svg text{font-family:var(--sans);fill:var(--muted);font-size:11.5px}
+figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:6px;line-height:1.45}
+.tip{position:absolute;pointer-events:none;background:#FFFAF5;border:1px solid var(--rule);box-shadow:0 2px 6px rgba(51,48,46,.12);padding:7px 9px;font-family:var(--sans);font-size:13px;line-height:1.4;color:var(--ink);white-space:nowrap;z-index:5}
+.tip b{display:block;margin-bottom:2px}
+.tip .sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
+/* tables */
+.tbl{overflow-x:auto;margin:18px 0 26px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:14.5px;font-variant-numeric:tabular-nums}
+caption{text-align:left;font-weight:700;font-size:16px;padding-bottom:6px;border-top:1px solid var(--ink);padding-top:8px;caption-side:top}
+caption small{display:block;font-weight:400;font-size:13.5px;color:var(--ink2)}
+th{text-align:left;font-weight:700;color:var(--ink2);border-bottom:1px solid var(--ink);padding:6px 8px;vertical-align:bottom;font-size:13.5px}
+td{border-bottom:1px solid var(--rule2);padding:6px 8px;vertical-align:top}
+td.r,th.r{text-align:right}
+tr.sub td{font-weight:700;border-top:1px solid var(--rule)}
+.tnote{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:5px}
+/* boxes */
+.box{border-top:3px solid var(--claret);background:var(--wheat);padding:16px 20px 6px;margin:26px 0}
+.box h4{margin-top:0;color:var(--claret)}
+.box p,.box li{font-size:16.5px}
+.eq{font-family:var(--serif);font-size:18px;background:#FFFAF5;border-left:3px solid var(--oxford);padding:10px 14px;margin:14px 0 18px;overflow-x:auto}
+.eq em{font-style:italic}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em;background:#FBE6D5;padding:1px 4px;border-radius:2px}
+.pull{font-size:24px;line-height:1.35;color:var(--claret);border-top:1px solid var(--claret);border-bottom:1px solid var(--claret);padding-block:14px;margin:30px 0}
+.refs li{font-size:15.5px;margin-bottom:9px;line-height:1.45}
+dl.gloss{display:grid;grid-template-columns:minmax(120px,190px) 1fr;gap:8px 18px;font-size:16px}
+dl.gloss dt{font-family:var(--sans);font-weight:700}
+dl.gloss dd{margin:0}
+.foot{border-top:4px solid var(--ink);margin-top:56px;padding-top:12px;font-family:var(--sans);font-size:13px;color:var(--muted)}
+@media (max-width:620px){
+  body{font-size:17px;padding-inline:16px}
+  .toc{columns:1}
+  dl.gloss{grid-template-columns:1fr;gap:2px 0}
+  dl.gloss dd{margin-bottom:10px}
+  .stand{font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head><body>
+
+<div class="wide"><div class="mast"><span><b>NCGCL Research</b></span><span>September 2026</span></div></div>
+
+<div class="wrap">
+<p class="kicker">Credit and the real economy</p>
+<h1>Of all the bank credit that goes to private businesses in Pakistan, how much reaches small and medium enterprises, through which types of finance, and how has that changed since 2013?</h1>
+<p class="stand">About one rupee in ten: Rs1,046bn of Rs9,811bn in June 2026, or 10.7%, against 9.5% in December 2013. Most of it now comes as long-term investment finance (53%) and working capital (43%); almost none as trade finance (5%). The share fell for a decade to 7.0% before rebounding sharply after 2022, driven almost entirely by long-term finance.</p>
+<div class="byline"><span><strong>NCGCL Research</strong></span><span>Data: State Bank of Pakistan, Feb 2013 to Aug 2026</span><span>Rs bn, nominal, outstanding at quarter-end</span><span>Workbook: <a href="https://pern-my.sharepoint.com/:x:/g/personal/25250023_lums_edu_pk/IQB7AD7njicDQ5o2asEPbPU6AdF9Zwp9fHQYOA3PvQC6ZRY?e=8N9sOm" target="_blank" rel="noopener">SME vs Corporate - finance by facility type.xlsx</a></span></div>
+
+<div class="stats" role="list">
+  <div class="stat" role="listitem"><div class="v">10.7%</div><div class="l">SME share of business credit, Jun 2026 (9.5% Dec 2013; low 7.0% Dec 2024)</div></div>
+  <div class="stat" role="listitem"><div class="v">Rs1,046bn</div><div class="l">SME credit outstanding, Jun 2026 (Rs271bn Dec 2013)</div></div>
+  <div class="stat" role="listitem"><div class="v">14.3%</div><div class="l">SME share of long-term (fixed investment) finance (3.7% in 2013)</div></div>
+  <div class="stat" role="listitem"><div class="v">2.5%</div><div class="l">SME share of trade finance (4.4% in 2013)</div></div>
+</div>
+
+<h3 style="margin-top:30px">Contents</h3>
+<ul class="toc">
+<li><a href="#s1"><span>1</span>SME and corporate credit by facility, 2013 vs 2026</a></li>
+<li><a href="#s2"><span>2</span>How much reaches SMEs</a></li>
+<li><a href="#s3"><span>3</span>Through which types of finance</a></li>
+<li><a href="#s4"><span>4</span>How it has changed since 2013</a></li>
+<li><a href="#s5"><span>5</span>Data sources</a></li>
+<li><a href="#s6"><span>6</span>Reconciliation of the data</a></li>
+<li><a href="#s7"><span>7</span>Method and calculations</a></li>
+<li><a href="#s8"><span>8</span>Robustness of the results</a></li>
+<li><a href="#s9"><span>9</span>Limitations</a></li>
+<li><a href="#appA"><span>A</span>The workbook</a></li>
+<li><a href="#appB"><span>B</span>Data, documents and code</a></li>
+<li><a href="#appC"><span>C</span>Glossary</a></li>
+</ul>
+
+<!-- ================= 1 ================= -->
+<h2 id="s1"><span class="n">1</span>SME and corporate credit by facility, 2013 vs 2026</h2>
+<div class="tbl"><table>
+<caption>Table 1. SME and corporate credit by type of finance, December 2013 and June 2026<small>Rs bn outstanding. Penetration = SME share of each facility. Facilities follow the SBP's own grouping of its 13 types of finance.</small></caption>
+<thead><tr><th>Facility</th><th class="r">Total Dec-13</th><th class="r">SME Dec-13</th><th class="r">SME share Dec-13</th><th class="r">Total Jun-26</th><th class="r">SME Jun-26</th><th class="r">Corporate Jun-26</th><th class="r">SME share Jun-26</th><th class="r">Share of SME book Jun-26</th></tr></thead>
+<tbody>
+<tr><td>Fixed investment (long-term)</td><td class="r">883.8</td><td class="r">32.3</td><td class="r">3.7%</td><td class="r">3,873.6</td><td class="r">552.6</td><td class="r">3,321.0</td><td class="r"><strong>14.3%</strong></td><td class="r">52.8%</td></tr>
+<tr><td>Working capital</td><td class="r">1,386.1</td><td class="r">212.7</td><td class="r">15.3%</td><td class="r">4,010.3</td><td class="r">445.9</td><td class="r">3,564.4</td><td class="r"><strong>11.1%</strong></td><td class="r">42.6%</td></tr>
+<tr><td>Trade finance</td><td class="r">599.5</td><td class="r">26.3</td><td class="r">4.4%</td><td class="r">1,927.4</td><td class="r">47.9</td><td class="r">1,879.5</td><td class="r"><strong>2.5%</strong></td><td class="r">4.6%</td></tr>
+<tr class="sub"><td>All business credit</td><td class="r">2,869.4</td><td class="r">271.3</td><td class="r">9.5%</td><td class="r">9,811.3</td><td class="r">1,046.4</td><td class="r">8,764.9</td><td class="r">10.7%</td><td class="r">100%</td></tr>
+</tbody></table><div class="tnote">Source: SBP monetary statistics and SBP Quarterly SME Finance Review; output workbook, sheet Calc_Facility, rows 8 and 58.</div></div>
+
+<div class="glance">
+<h3>The answer in five points</h3>
+<ol>
+<li><strong>How much:</strong> 10.7% of business credit (Rs1,046bn of Rs9,811bn) reached SMEs in June 2026, against 9.5% in December 2013. The endpoints are similar; the path between them is not.</li>
+<li><strong>Through which types:</strong> long-term (fixed investment) finance is 53% of SME credit, working capital 43%, trade finance 5%. SMEs hold 14.3% of all long-term business credit, 11.1% of working capital and 2.5% of trade finance.</li>
+<li><strong>Change, 2013–2022:</strong> SMEs lost ground. Corporates took 93–97% of new business credit, and the SME share fell from 10.2% (Dec 2016) to 7.8% (Jun 2022).</li>
+<li><strong>Change, since 2022:</strong> SMEs took 18.4% of new credit; SME credit grew 17.1% a year against 8.2% for all business credit. Long-term finance supplied 78% of that SME growth. SME trade finance shrank.</li>
+<li><strong>Composition of change since 2013:</strong> SME long-term credit rose from Rs32bn to Rs553bn (from 12% to 53% of the SME book); working capital fell from 78% to 43% of it; SME penetration of trade finance fell from 4.4% to 2.5%.</li>
+</ol>
+</div>
+
+<!-- ================= 2 ================= -->
+<h2 id="s2"><span class="n">2</span>How much reaches SMEs</h2>
+<figure>
+<div class="fig-h"><div class="t">Figure 1. <b>SMEs' share of business credit</b></div><div class="s">SME credit as % of business credit, quarter-ends, Mar 2013 – Jun 2026</div></div>
+<div class="chart" id="f3"></div>
+<figcaption>December values are raised by year-end lending (Section 8.3). Dashed line: June 2019 reclassification (Section 6.4). Source: SBP; output workbook, sheet Calc_Facility, column U.</figcaption>
+</figure>
+<figure>
+<div class="fig-h"><div class="t">Figure 2. <b>Business credit by borrower</b></div><div class="s">Outstanding credit to private-sector business, Rs bn, quarter-ends</div></div>
+<div class="legend"><span><i style="background:var(--ink)"></i>Total</span><span><i style="background:var(--oxford)"></i>Corporate</span><span><i style="background:var(--claret)"></i>SME</span></div>
+<div class="chart" id="f2"></div>
+<figcaption>Source: SBP monetary statistics.</figcaption>
+</figure>
+<p>Business credit rose 3.4 times, from Rs2,869bn (December 2013) to Rs9,811bn (June 2026). SME credit rose 3.9 times, from Rs271bn to Rs1,046bn. The SME share was 9.5% at the start and 10.7% at the end, peaked at 10.2% in December 2016, and bottomed at 7.0% in December 2024. The December 2024 low reflects a one-quarter surge in corporate working-capital lending ahead of the year-end advance-to-deposit ratio (ADR) tax test. Excluding that quarter, the low is 7.1% (March 2023).</p>
+
+<!-- ================= 3 ================= -->
+<h2 id="s3"><span class="n">3</span>Through which types of finance</h2>
+<h3>3.1 By facility</h3>
+<figure>
+<div class="fig-h"><div class="t">Figure 3. <b>Composition of SME credit</b></div><div class="s">SME credit by facility, % of SME credit, quarter-ends</div></div>
+<div class="legend"><span><i class="sq" style="background:var(--claret)"></i>Fixed investment</span><span><i class="sq" style="background:var(--oxford)"></i>Working capital</span><span><i class="sq" style="background:var(--teal)"></i>Trade finance</span></div>
+<div class="chart" id="f5"></div>
+<figcaption>Mix from the SBP SME Finance Review (2013–15 from chart labels in the report). Source: SBP; output workbook, sheet Calc_Facility, columns V–X.</figcaption>
+</figure>
+<figure>
+<div class="fig-h"><div class="t">Figure 4. <b>SME share of each facility (penetration)</b></div><div class="s">SME credit as % of all business credit in the facility, quarter-ends</div></div>
+<div class="legend"><span><i style="background:var(--claret)"></i>Fixed investment</span><span><i style="background:var(--oxford)"></i>Working capital</span><span><i style="background:var(--teal)"></i>Trade finance</span></div>
+<div class="chart" id="f6"></div>
+<figcaption>Source: SBP; output workbook, sheet Calc_Facility, columns R–T.</figcaption>
+</figure>
+<ul>
+<li><strong>Fixed investment (long-term finance):</strong> Rs553bn of SME credit, 52.8% of the SME book; SMEs hold 14.3% of all long-term business credit.</li>
+<li><strong>Working capital:</strong> Rs446bn, 42.6% of the SME book; SMEs hold 11.1% of working-capital credit; working capital was SMEs' highest-penetration facility until September 2025, when fixed investment overtook it.</li>
+<li><strong>Trade finance:</strong> Rs48bn, 4.6% of the SME book; SMEs hold 2.5% of trade finance.</li>
+</ul>
+
+<h3>3.2 By the 13 SBP types of finance (all borrowers exact; SME share estimated)</h3>
+<p>The SBP reports the 13 types of finance for all borrowers combined; it does not publish an SME split by type. Table 2 is SBP data. Table 3 is a modelled estimate and is kept separate.</p>
+<div class="tbl"><table>
+<caption>Table 2. The 13 types of finance, all borrowers (SBP data)<small>Rs bn outstanding; sorted by share of the increase in business credit, Dec 2013 → Jun 2026.</small></caption>
+<thead><tr><th>SBP type of finance</th><th>What it is</th><th>Facility</th><th class="r">Dec-13</th><th class="r">Jun-26</th><th class="r">CAGR %</th><th class="r">Share of growth</th></tr></thead>
+<tbody>
+<tr><td>Working capital, other</td><td>Running and cash finance (overdraft-style lines)</td><td>Working capital</td><td class="r">1,165.2</td><td class="r">3,432.7</td><td class="r">9.0</td><td class="r">32.7%</td></tr>
+<tr><td>Fixed investment, other</td><td>Commercial long-term loans for plant, machinery, projects</td><td>Fixed investment</td><td class="r">788.5</td><td class="r">2,933.9</td><td class="r">11.1</td><td class="r">30.9%</td></tr>
+<tr><td>Export finance, other</td><td>Export loans at commercial rates</td><td>Trade finance</td><td class="r">79.2</td><td class="r">925.7</td><td class="r">21.7</td><td class="r">12.2%</td></tr>
+<tr><td>LTFF &amp; TERF</td><td>SBP-refinanced long-term loans for machinery and new investment</td><td>Fixed investment</td><td class="r">35.3</td><td class="r">431.9</td><td class="r">22.2</td><td class="r">5.7%</td></tr>
+<tr><td>Small loans (working capital)</td><td>Small short-term loans</td><td>Working capital</td><td class="r">186.2</td><td class="r">444.9</td><td class="r">7.2</td><td class="r">3.7%</td></tr>
+<tr><td>Import financing</td><td>Loans to pay for imports (FIM, FATR)</td><td>Trade finance</td><td class="r">160.0</td><td class="r">411.1</td><td class="r">7.8</td><td class="r">3.6%</td></tr>
+<tr><td>Small loans (fixed investment)</td><td>Small long-term loans</td><td>Fixed investment</td><td class="r">59.1</td><td class="r">234.5</td><td class="r">11.7</td><td class="r">2.5%</td></tr>
+<tr><td>Govt self-employment schemes</td><td>Youth and self-employment programmes</td><td>Fixed investment</td><td class="r">0.9</td><td class="r">165.3</td><td class="r">52.4</td><td class="r">2.4%</td></tr>
+<tr><td>Export Finance Scheme (EFS)</td><td>SBP-refinanced, below-market loans to exporters</td><td>Trade finance</td><td class="r">209.8</td><td class="r">332.8</td><td class="r">3.8</td><td class="r">1.8%</td></tr>
+<tr><td>Construction financing</td><td>Construction and housing loans (from Jun 2020)</td><td>Fixed investment</td><td class="r">0.0</td><td class="r">108.0</td><td class="r">n/a</td><td class="r">1.6%</td></tr>
+<tr><td>Inland bills purchased &amp; discounted</td><td>Bank discounts domestic trade bills</td><td>Working capital</td><td class="r">34.7</td><td class="r">132.8</td><td class="r">11.3</td><td class="r">1.4%</td></tr>
+<tr><td>Foreign bills purchased &amp; discounted</td><td>Bank buys an exporter's foreign bill before maturity</td><td>Trade finance</td><td class="r">130.4</td><td class="r">214.0</td><td class="r">4.0</td><td class="r">1.2%</td></tr>
+<tr><td>Import bills purchased &amp; discounted</td><td>Bank settles an import bill early</td><td>Trade finance</td><td class="r">20.1</td><td class="r">43.8</td><td class="r">6.4</td><td class="r">0.3%</td></tr>
+<tr class="sub"><td>Total business credit</td><td></td><td></td><td class="r">2,869.4</td><td class="r">9,811.3</td><td class="r">10.3</td><td class="r">100%</td></tr>
+</tbody></table><div class="tnote">EFS: Export Finance Scheme. LTFF: Long-Term Financing Facility. TERF: Temporary Economic Refinance Facility. Source: SBP monetary statistics; output workbook, sheet Types_All_Borrowers.</div></div>
+<div class="box">
+<h4>Estimate: SME credit by type of finance</h4>
+<p>SBP data give SME credit only by the three facilities. The figures below distribute each facility's SME amount across its types in proportion to their size: SME<sub>type</sub> ≈ SME<sub>facility</sub> × Type ÷ Total<sub>facility</sub> (Section 7.6). They probably overstate SME use of large commercial long-term loans and understate small loans and government schemes. They are not used in any headline figure.</p>
+<div class="tbl" style="margin-bottom:10px"><table>
+<caption>Table 3. Estimated SME credit by type of finance, June 2026 (modelled)<small>Rs bn; share of the Rs775bn increase in SME credit since Dec 2013.</small></caption>
+<thead><tr><th>SBP type of finance</th><th class="r">Est. SME, Jun-26</th><th class="r">Est. share of SME growth</th></tr></thead>
+<tbody>
+<tr><td>Fixed investment, other</td><td class="r">418.5</td><td class="r">50.3%</td></tr>
+<tr><td>Working capital, other</td><td class="r">381.7</td><td class="r">26.2%</td></tr>
+<tr><td>LTFF &amp; TERF</td><td class="r">61.6</td><td class="r">7.8%</td></tr>
+<tr><td>Small loans (working capital)</td><td class="r">49.5</td><td class="r">2.7%</td></tr>
+<tr><td>Small loans (fixed investment)</td><td class="r">33.5</td><td class="r">4.0%</td></tr>
+<tr><td>Govt self-employment schemes</td><td class="r">23.6</td><td class="r">3.0%</td></tr>
+<tr><td>Export finance, other</td><td class="r">23.0</td><td class="r">2.5%</td></tr>
+<tr><td>Construction financing</td><td class="r">15.4</td><td class="r">2.0%</td></tr>
+<tr><td>Inland bills purchased &amp; discounted</td><td class="r">14.8</td><td class="r">1.2%</td></tr>
+<tr><td>Import financing</td><td class="r">10.2</td><td class="r">0.4%</td></tr>
+<tr><td>Export Finance Scheme (EFS)</td><td class="r">8.3</td><td class="r">−0.1%</td></tr>
+<tr><td>Foreign bills purchased &amp; discounted</td><td class="r">5.3</td><td class="r">−0.1%</td></tr>
+<tr><td>Import bills purchased &amp; discounted</td><td class="r">1.1</td><td class="r">0.0%</td></tr>
+<tr class="sub"><td>SME total (SBP)</td><td class="r">1,046.4</td><td class="r">100%</td></tr>
+</tbody></table><div class="tnote">Source: output workbook <a href="https://pern-my.sharepoint.com/:x:/g/personal/25250023_lums_edu_pk/IQB7AD7njicDQ5o2asEPbPU6AdF9Zwp9fHQYOA3PvQC6ZRY?e=8N9sOm" target="_blank" rel="noopener"><em>SME vs Corporate - finance by facility type.xlsx</em></a>, sheet <strong>SME_by_Type_ESTIMATE</strong> (formula in each cell: SME facility from sheet Calc_Facility × type from sheet Data_Quarterly ÷ facility total).</div></div>
+</div>
+<figure>
+<div class="fig-h"><div class="t">Figure 5. <b>Where business credit growth came from, by type</b></div><div class="s">Share of the Rs6,942bn increase in business credit, Dec 2013 → Jun 2026, all borrowers, %</div></div>
+<div class="chart" id="f8"></div>
+<figcaption>Bar colour shows facility (legend as Figure 3). Exact SBP data. Source: output workbook, sheet Types_All_Borrowers.</figcaption>
+</figure>
+
+<!-- ================= 4 ================= -->
+<h2 id="s4"><span class="n">4</span>How it has changed since 2013</h2>
+<h3>4.1 Two periods</h3>
+<figure>
+<div class="fig-h"><div class="t">Figure 6. <b>SME share of new business credit</b></div><div class="s">SME increase ÷ total increase in business credit over each period, %</div></div>
+<div class="chart" id="f4"></div>
+<figcaption>Sub-periods chosen so that none crosses the June 2019 break except the full period. Source: output workbook, sheet Contribution.</figcaption>
+</figure>
+<div class="tbl"><table>
+<caption>Table 4. Growth by period (compound annual growth rate, nominal, %)</caption>
+<thead><tr><th>Period</th><th class="r">Business credit</th><th class="r">Corporate</th><th class="r">SME</th><th class="r">SME fixed inv.</th><th class="r">SME working cap.</th><th class="r">SME trade fin.</th><th class="r">SME share of new credit</th></tr></thead>
+<tbody>
+<tr><td>Dec-13 → Mar-19</td><td class="r">12.2</td><td class="r">12.4</td><td class="r">9.8</td><td class="r">27.3</td><td class="r">5.9</td><td class="r">9.2</td><td class="r">7.2</td></tr>
+<tr><td>Jun-19 → Jun-22</td><td class="r">10.6</td><td class="r">11.2</td><td class="r">4.1</td><td class="r">10.2</td><td class="r">2.0</td><td class="r">1.0</td><td class="r">3.4</td></tr>
+<tr><td>Jun-22 → Jun-26</td><td class="r">8.2</td><td class="r">7.4</td><td class="r">17.1</td><td class="r">34.5</td><td class="r">7.2</td><td class="r">−1.2</td><td class="r">18.4</td></tr>
+<tr class="sub"><td>Dec-13 → Jun-26</td><td class="r">10.3</td><td class="r">10.2</td><td class="r">11.4</td><td class="r">25.5</td><td class="r">6.1</td><td class="r">4.9</td><td class="r">11.2</td></tr>
+</tbody></table><div class="tnote">Full-period SME CAGR adjusted for the June 2019 reclassification: 11.0%. Source: output workbook, sheets Growth and Contribution.</div></div>
+<p><strong>December 2013 to June 2022.</strong> Corporates took 93% of new business credit before 2019 and 97% between 2019 and 2022. SME credit grew 9.8% and then 4.1% a year, below business credit in both sub-periods. The 2020–22 years include the Temporary Economic Refinance Facility (TERF): LTFF/TERF rose from Rs35bn (2013) to Rs629bn (June 2022), and subsidised schemes reached 19.5% of business credit (Figure 8). The SME share fell to 7.8% by June 2022.</p>
+<p><strong>June 2022 to June 2026.</strong> SMEs took 18.4% of the Rs2,659bn increase. SME credit grew 17.1% a year against 8.2% for business credit and 7.4% for corporate credit. SME fixed-investment credit grew 34.5% a year and supplied 78.3% of SME growth; SME trade finance fell 1.2% a year.</p>
+
+<h3>4.2 Long-term finance: from 3.7% to 14.3% of the market</h3>
+<p>SME fixed-investment credit rose from Rs32bn (December 2013) to Rs553bn (June 2026), a CAGR of 25.5%. It explains 67.1% of all SME credit growth since 2013. SME penetration of long-term finance was 5.5–7.0% from 2016 to 2023 and rose to 9.2% (December 2024) and 14.3% (June 2026), while corporate long-term credit growth slowed to 7.4% a year in 2022–26 from 14.2% in 2019–22.</p>
+
+<h3>4.3 Working capital: from 78% to 43% of the SME book</h3>
+<p>SME working capital rose from Rs213bn to Rs446bn (6.1% a year), slower than working capital overall (8.9%), so SME penetration fell from 15.3% to 11.1%. In December 2024 it dropped to 7.5%: the "working capital, other" line rose Rs1,594bn between September and December 2024, almost entirely corporate, and corporate credit fell back Rs1,013bn by March 2025.</p>
+
+<h3>4.4 Trade finance: from 4.4% to 2.5%</h3>
+<figure>
+<div class="fig-h"><div class="t">Figure 7. <b>Export finance: concessional vs commercial</b></div><div class="s">Export finance outstanding, all borrowers, Rs bn, quarter-ends</div></div>
+<div class="legend"><span><i style="background:var(--amber)"></i>Export Finance Scheme (concessional)</span><span><i style="background:var(--oxford)"></i>Export finance, other (commercial)</span></div>
+<div class="chart" id="f7"></div>
+<figcaption>Dashed line: 8 July 2022, SBP links the EFS rate to the policy rate at a 500bp discount. Source: SBP monetary statistics.</figcaption>
+</figure>
+<p>Trade finance tripled (Rs600bn → Rs1,927bn) while SME trade finance rose only from Rs26bn to Rs48bn, and fell after 2022. The main movement inside trade finance followed the July 2022 change to the Export Finance Scheme: EFS fell from Rs728bn (June 2022) to Rs333bn (June 2026) while commercial export finance rose from Rs149bn to Rs926bn. On the pro-rata estimate, SMEs account for about Rs23bn of the commercial export book.</p>
+
+<h3>4.5 Subsidised finance</h3>
+<figure>
+<div class="fig-h"><div class="t">Figure 8. <b>Subsidised finance as a share of business credit</b></div><div class="s">EFS + LTFF/TERF + government self-employment schemes, %, quarter-ends</div></div>
+<div class="chart" id="f9"></div>
+<figcaption>Source: SBP; output workbook, sheet Calc_Facility, column AG.</figcaption>
+</figure>
+<p>Subsidised schemes rose from 8.6% of business credit (December 2013) to 19.5% (June 2022) and returned to 9.5% (June 2026). On the pro-rata estimate, about Rs62bn of the Rs432bn LTFF/TERF stock is SME credit; given TERF's focus on large projects (up to Rs5bn each), the true figure is likely lower.</p>
+
+<!-- ================= 5 ================= -->
+<h2 id="s5"><span class="n">5</span>Data sources</h2>
+<div class="tbl"><table>
+<caption>Table 5. The two SBP sources and what each contributes</caption>
+<thead><tr><th></th><th>Source 1: Monetary statistics</th><th>Source 2: SME Finance Review</th></tr></thead>
+<tbody>
+<tr><td><strong>Title</strong></td><td>Loans to Private Sector Business by Type of Finance (Loans Classified by Borrowers)</td><td>Quarterly SME Finance Review / SME Financing Data Tables</td></tr>
+<tr><td><strong>Publisher</strong></td><td>SBP Statistics &amp; Data Services Department</td><td>SBP Infrastructure, Housing &amp; SME Finance Department</td></tr>
+<tr><td><strong>Frequency, unit</strong></td><td>Monthly, Rs million</td><td>Quarterly, Rs billion</td></tr>
+<tr><td><strong>Coverage used</strong></td><td>Feb 2013 – Aug 2026 (163 months)</td><td>Mar 2013 – Jun 2026 (54 quarters, 42 issues)</td></tr>
+<tr><td><strong>Provides</strong></td><td>13 types of finance; total; SMEs; "other than SMEs" (corporate)</td><td>SME total; SME split by 3 facilities and 3 sectors; NPL ratio; borrowers</td></tr>
+<tr><td><strong>Missing</strong></td><td>SME split by type of finance</td><td>Detail below 3 facilities; corporate credit</td></tr>
+<tr><td><strong>Used for</strong></td><td>All levels: totals, SME, corporate, 13 types</td><td>SME mix across the three facilities</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Stocks:</strong> both sources report outstanding balances at the end of the period, not new lending. A change in the stock is new lending minus repayments and write-offs.</li>
+<li><strong>SME definition:</strong> banks classify borrowers under the SBP Prudential Regulations for SMEs (turnover and employment). The definition was revised in 2021; the regulations in January and November 2025; turnover limits rise from 17 July 2026 (after the sample).</li>
+<li><strong>Nominal rupees:</strong> no inflation adjustment.</li>
+</ul>
+<div class="tbl"><table>
+<caption>Table 6. The assembled dataset</caption>
+<thead><tr><th>Feature</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Monthly observations (Source 1)</td><td class="num">163 months × 16 series (13 types, total, SME, corporate)</td></tr>
+<tr><td>Quarter-ends in the core calculation</td><td class="num">54 (Mar 2013 – Jun 2026)</td></tr>
+<tr><td>SME Finance Review issues parsed</td><td class="num">42 PDFs (Mar 2015 – Jun 2026); each reports three quarters</td></tr>
+<tr><td>Values extracted from PDFs, with page and line reference</td><td class="num">2,604 table values + 270 chart labels</td></tr>
+<tr><td>Consistency checks on extracted values</td><td class="num">555 (2 breaches, both inside the SBP's own tables)</td></tr>
+<tr><td>Cells compared with the SBP official archive</td><td class="num">1,984 (96% identical; every difference explained)</td></tr>
+<tr><td>Live formulas in the output workbook</td><td class="num">3,233</td></tr>
+</tbody></table></div>
+
+<!-- ================= 6 ================= -->
+<h2 id="s6"><span class="n">6</span>Reconciliation of the data</h2>
+<h3>6.1 The compiled Excel file</h3>
+<p>The compiled monthly file (158 months, Feb 2013 – Mar 2026) was tested against two identities that must hold every month: the 13 types sum to the total, and SME plus corporate equals the total.</p>
+<ul>
+<li><strong>Stale values:</strong> foreign bills in July 2016 and May 2019 were exact copies of the previous month; each was replaced with the total minus the other 12 types.</li>
+<li><strong>Short total:</strong> August 2025 total was Rs826m short; both identities gave the same corrected value.</li>
+<li><strong>2025 gap:</strong> January–June 2025 SME plus corporate exceeded the total by Rs13–57bn; resolved by the official file (6.3).</li>
+<li><strong>Wrong labels:</strong> "Short-term advances" is SBP small loans (working capital); "Small loans" is small loans (fixed investment); "Factoring" is inland bills purchased and discounted.</li>
+</ul>
+<div class="box">
+<h4>Correction: foreign bills, May 2019</h4>
+<p>Total business credit Rs5,231,256.6m − other 12 types Rs5,125,048.4m = <strong>Rs106,208.2m</strong> (the file showed Rs102,943.3m, April's value). SBP official archive: <strong>Rs106,208.21m</strong>.</p>
+</div>
+
+<h3>6.2 The SME Finance Review: 42 PDF issues</h3>
+<ul>
+<li><strong>Coverage:</strong> no PDF on the SBP site for December 2016 or December 2021; no issue for September 2015 or September 2016. These quarters come from the comparison columns of later issues.</li>
+<li><strong>Formats:</strong> 12–23 page reports (2015–16) and one-page data tables (2017 onward). Tables identified by title, as numbering changed (June 2017). Split digits in the PDF text ("3 67.25" = 367.25; "9 .51" = 9.51) repaired.</li>
+<li><strong>2013–15:</strong> the facility and sector split exists only as chart labels. Each label was assigned to a quarter and series by its position on the page. Validation: the three facility values summed to the Table 1 SME total in 64 of 64 cases and matched exact tables in 18 of 18 overlapping quarters.</li>
+<li><strong>Revisions:</strong> where a quarter appears in several issues, the latest issue is used. Seven items were revised by more than 0.5%; the largest is December 2016 SME credit (Rs401.00bn → Rs394.65bn).</li>
+</ul>
+
+<h3>6.3 The SBP official archive</h3>
+<p>129 monthly sheets (December 2015 – August 2026, three column layouts) were compared with the compiled file: 96% of 1,984 cells identical; all three corrections in 6.1 matched to the decimal. In 2025, the compiled file's SME and corporate figures were correct and its total (and some types, chiefly LTFF/TERF) were provisional values later revised upward. The official archive is used from December 2015; the join is exact (difference 0.0).</p>
+
+<h3>6.4 The June 2019 reclassification</h3>
+<p>The archive holds June 2019 on the old industry classification and under ISIC Rev. 4. On the new basis SME credit is <strong>Rs48.4bn higher</strong> (Rs444.7bn → Rs493.1bn) and corporate credit Rs44.2bn lower, with no change in lending. The break is marked on every chart; growth is quoted for sub-periods that avoid it; a break-adjusted SME series is provided (Calc_Facility, column AH).</p>
+
+<!-- ================= 7 ================= -->
+<h2 id="s7"><span class="n">7</span>Method and calculations</h2>
+<h3>7.1 Conversions and alignment</h3>
+<ul>
+<li><strong>Units:</strong> Source 1 (Rs million) ÷ 1,000 = Rs billion. Example: Rs9,811,334m → Rs9,811.3bn.</li>
+<li><strong>Frequency:</strong> quarter-end values (March, June, September, December), not averages or sums of months.</li>
+<li><strong>Facilities</strong> (SBP grouping, July 2022 layout):
+<br>Trade finance = EFS + export finance other + import financing + import bills + foreign bills.
+<br>Working capital = small loans (WC) + working capital other + inland bills.
+<br>Fixed investment = LTFF/TERF + small loans (FI) + fixed investment other + construction + govt self-employment schemes.</li>
+</ul>
+
+<h3>7.2 The core identity</h3>
+<div class="eq">SME<sub><em>f,t</em></sub> = SME<sub><em>t</em></sub><sup>(Source 1)</sup> × [ SME<sub><em>f,t</em></sub><sup>(Review)</sup> ÷ SME<sub><em>total,t</em></sub><sup>(Review)</sup> ]<br>Corporate<sub><em>f,t</em></sub> = Total<sub><em>f,t</em></sub><sup>(Source 1)</sup> − SME<sub><em>f,t</em></sub><br>Penetration<sub><em>f,t</em></sub> = SME<sub><em>f,t</em></sub> ÷ Total<sub><em>f,t</em></sub></div>
+<p>SME levels come from Source 1, so that SME plus corporate equals the SBP total exactly; Source 2 supplies only the mix across facilities. The two SME series differ by up to 20% in level (Section 8.1), so using Review levels would push that difference into corporate credit.</p>
+
+<div class="box">
+<h4>June 2026 (workbook sheet Calc_Facility, row 58)</h4>
+<ol>
+<li><strong>Facility totals</strong>, Rs bn: trade finance 1,927.4 (B58); working capital 4,010.3 (C58); fixed investment 3,873.6 (D58); total 9,811.3 (E58).</li>
+<li><strong>SME total</strong> (Source 1): 1,046.4 (G58).</li>
+<li><strong>Review mix:</strong> fixed investment 478.83 ÷ 906.71 = 52.81% (K58); working capital 386.38 ÷ 906.71 = 42.61% (J58); trade finance 41.50 ÷ 906.71 = 4.58% (I58).</li>
+<li><strong>SME by facility:</strong> 1,046.4 × 52.81% = <strong>552.6</strong>; × 42.61% = <strong>445.9</strong>; × 4.58% = <strong>47.9</strong> (N58, M58, L58).</li>
+<li><strong>Corporate by facility:</strong> 3,873.6 − 552.6 = 3,321.0; 4,010.3 − 445.9 = 3,564.4; 1,927.4 − 47.9 = 1,879.5 (Q58, P58, O58).</li>
+<li><strong>Penetration:</strong> 552.6 ÷ 3,873.6 = <strong>14.3%</strong>; 445.9 ÷ 4,010.3 = <strong>11.1%</strong>; 47.9 ÷ 1,927.4 = <strong>2.5%</strong> (T58, S58, R58).</li>
+<li><strong>Check:</strong> 552.6 + 445.9 + 47.9 − 1,046.4 = 0 (AI58).</li>
+</ol>
+<p><strong>December 2013 (row 8):</strong> SME total 271.3; Review mix for fixed investment 32.5 ÷ 272.6 = 11.9%; SME fixed investment 32.3; penetration 32.3 ÷ 883.8 = <strong>3.7%</strong>.</p>
+</div>
+
+<h3>7.3 Growth and contribution</h3>
+<div class="eq">CAGR = (End ÷ Start)<sup>1/years</sup> − 1 &nbsp;·&nbsp; years = months between quarters ÷ 12<br>Contribution = ΔSegment ÷ ΔTotal between two dates</div>
+<div class="box">
+<h4>Calculations (workbook sheets Growth and Contribution)</h4>
+<ul>
+<li><strong>SME CAGR, Dec 2013 → Jun 2026 (12.5 years):</strong> (1,046.4 ÷ 271.3)<sup>1/12.5</sup> − 1 = 3.857<sup>0.08</sup> − 1 = <strong>11.4%</strong>.</li>
+<li><strong>Break-adjusted:</strong> ((1,046.4 − 48.4) ÷ 271.3)<sup>1/12.5</sup> − 1 = <strong>11.0%</strong>.</li>
+<li><strong>SME share of new credit, Jun 2022 → Jun 2026:</strong> (1,046.4 − 556.7) ÷ (9,811.3 − 7,152.7) = 489.7 ÷ 2,658.5 = <strong>18.4%</strong>.</li>
+<li><strong>Fixed investment's share of SME growth, same period:</strong> (552.6 − 168.9) ÷ 489.7 = <strong>78.3%</strong>.</li>
+<li><strong>SME growth in 2025:</strong> 952.5 ÷ 669.8 − 1 = <strong>+42.2%</strong>.</li>
+<li><strong>Commercial export finance CAGR:</strong> (925.7 ÷ 79.2)<sup>1/12.5</sup> − 1 = <strong>21.7%</strong>; share of total growth (925.7 − 79.2) ÷ 6,941.9 = <strong>12.2%</strong>.</li>
+</ul>
+</div>
+<p>Sub-periods: Dec 2013 – Mar 2019 (old classification), Jun 2019 – Jun 2022 and Jun 2022 – Jun 2026 (new classification). None crosses the June 2019 break; the full period is shown raw and break-adjusted.</p>
+
+<h3>7.4 Mix and penetration</h3>
+<ul>
+<li><strong>Mix</strong> = facility ÷ SME total. Example: 552.6 ÷ 1,046.4 = 52.8% of SME credit is fixed investment.</li>
+<li><strong>Penetration</strong> = SME ÷ facility total. A rise can come from SME growth or corporate decline, so it is read with levels.</li>
+</ul>
+
+<h3>7.5 Checks and sensitivity</h3>
+<ul>
+<li>SME by facility sums to SME total, and corporate by facility to corporate total: largest difference Rs0.01bn across 54 quarters.</li>
+<li>No negative corporate value and no penetration above 50% in any quarter.</li>
+<li>Inland bills counted as trade finance instead of working capital (June 2026): trade finance penetration 2.5% → 2.3%; working capital 11.1% → 11.5%.</li>
+</ul>
+
+<h3>7.6 Type-level SME estimate</h3>
+<div class="eq">SME<sub>type</sub> ≈ SME<sub>facility</sub> × Type ÷ Total<sub>facility</sub></div>
+<p>Example, fixed investment other, June 2026: 552.6 × 2,933.9 ÷ 3,873.6 ≈ <strong>Rs418.5bn</strong>. The allocation assumes SMEs use each type in the same proportion as all borrowers within the facility; SME use of large commercial long-term loans is probably overstated and of small loans and government schemes understated.</p>
+
+<!-- ================= 8 ================= -->
+<h2 id="s8"><span class="n">8</span>Robustness of the results</h2>
+<h3>8.1 Two official SME series</h3>
+<figure>
+<div class="fig-h"><div class="t">Figure 9. <b>Two SBP measures of SME credit</b></div><div class="s">SME credit outstanding, Rs bn (upper); gap between the series, % (lower)</div></div>
+<div class="legend"><span><i style="background:var(--claret)"></i>Monetary statistics (Source 1)</span><span><i style="background:var(--oxford)"></i>SME Finance Review (Source 2)</span></div>
+<div class="chart" id="f1"></div>
+<div class="chart" id="f1b" style="margin-top:6px"></div>
+<figcaption>Gap = Source 1 ÷ Source 2 − 1. Band: ±2%. Dashed line: June 2019 reclassification. Source: SBP; output workbook, sheet Calc_Facility, columns AB–AD.</figcaption>
+</figure>
+<p>The gap ranges from −8.1% (December 2018) to +19.7% (September 2024) and was +15.4% in June 2026. It changes sign at the June 2019 reclassification and narrows every December. On the SME Review's level, the SME share of business credit in June 2026 would be 9.2% instead of 10.7%. The facility mix, and hence the answer to "through which types", is common to both.</p>
+
+<h3>8.2 The June 2019 reclassification</h3>
+<p>Rs48.4bn of the SME stock is a relabelling of borrowers, not lending. It raises the full-period SME CAGR from 11.0% to 11.4%.</p>
+
+<h3>8.3 Year-end lending</h3>
+<figure>
+<div class="fig-h"><div class="t">Figure 10. <b>September-to-December growth in outstanding credit</b></div><div class="s">%, by year</div></div>
+<div class="legend"><span><i class="sq" style="background:var(--claret)"></i>SME</span><span><i class="sq" style="background:var(--oxford)"></i>Corporate</span></div>
+<div class="chart" id="f10"></div>
+<figcaption>2024 corporate figure reflects the ADR tax test on 31 December. Source: SBP monthly data; output workbook, sheet Year_End_Effect.</figcaption>
+</figure>
+<p>SME credit rose between September and December in all 13 years (average +15.9%, against +9.6% for corporates) and fell back by March in 12 of them (average −5.9%), consistent with year-end SME lending targets introduced in January 2016. December SME figures therefore overstate the underlying stock; June and September values are the cleaner comparison. In 2025 the March reversal did not occur (+2.5%).</p>
+
+<h3>8.4 The 2025 increase</h3>
+<figure>
+<div class="fig-h"><div class="t">Figure 11. <b>SME borrowers and non-performing loans</b></div><div class="s">SME borrowers, thousands (left); SME NPL ratio, % (right). SBP SME Finance Review</div></div>
+<div class="legend"><span><i style="background:var(--oxford)"></i>SME borrowers ('000)</span><span><i style="background:var(--claret)"></i>NPL ratio (%)</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px"><div class="chart" id="f11a"></div><div class="chart" id="f11b"></div></div>
+<figcaption>Separate charts, each on its own scale. Source: SBP Quarterly SME Finance Review.</figcaption>
+</figure>
+<p>Business credit fell 0.7% in 2025 while SME credit rose 42.2%. Both SBP series rose; SME borrowers rose from 184,000 (December 2024) to 303,000 (December 2025); the SME NPL ratio fell from 14% to 10%; the March 2026 reversal did not occur. Against this, borrowers rose 36% in one quarter (March–June 2025), the gap between the two series widened to 15%, and the SME regulations were revised twice in 2025. The direction of the 2025 change is firm; its size may include reclassification.</p>
+
+<!-- ================= 9 ================= -->
+<h2 id="s9"><span class="n">9</span>Limitations</h2>
+<ol>
+<li><strong>Nominal values;</strong> part of every growth rate is inflation.</li>
+<li><strong>Stocks, not flows;</strong> disbursements, loan terms and prices are not observed.</li>
+<li><strong>Supply and demand</strong> cannot be separated.</li>
+<li><strong>Levels depend on the SME series used</strong> (up to 20% difference); the facility mix is taken from the SME Review.</li>
+<li><strong>Definition changes</strong> other than June 2019 are not quantifiable from the data.</li>
+<li><strong>Type-level SME figures are estimates.</strong></li>
+<li><strong>2013–15 SME detail</strong> comes from chart labels (one decimal place).</li>
+<li><strong>Monthly data before December 2015</strong> come from the compiled file and cannot be checked against an SBP archive.</li>
+</ol>
+
+<!-- ================= Appendix A ================= -->
+<h2 id="appA"><span class="n">Appendix A</span>The workbook</h2>
+<p>File: <em>SME vs Corporate - finance by facility type.xlsx</em> (16 sheets, 3,233 live formulas). Blue text is source data; green is a link to another sheet; black is a calculation; yellow fill is an editable assumption. Quarterly sheets start on row 5 (March 2013 = row 5, December 2013 = row 8, June 2026 = row 58).</p>
+<div class="tbl"><table>
+<caption>Table A1. Sheets and example calculations</caption>
+<thead><tr><th>Sheet</th><th>Contents</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td>README</td><td>Purpose, sources, units, method, caveats</td><td>—</td></tr>
+<tr><td>Exec_Summary</td><td>10 key figures (formula-linked) and findings</td><td>SME change: 1,046.4 ÷ 271.3 = 3.9×</td></tr>
+<tr><td>Charts</td><td>7 native Excel charts</td><td>June 2019 break marked</td></tr>
+<tr><td>Growth</td><td>Levels, annual growth, CAGR by editable period</td><td>SME CAGR 2013–26 = 11.4%</td></tr>
+<tr><td>Contribution</td><td>Shares of new credit by borrower and facility</td><td>Jun-22→Jun-26: 489.7 ÷ 2,658.5 = 18.4%</td></tr>
+<tr><td>Calc_Facility</td><td>Core identity for 54 quarters, checks, cross-check RAG</td><td>Row 58 as in Section 7.2</td></tr>
+<tr><td>Types_All_Borrowers</td><td>13 types, exact, editable period</td><td>(925.7 ÷ 79.2)<sup>1/12.5</sup> − 1 = 21.7%</td></tr>
+<tr><td>SME_by_Type_ESTIMATE</td><td>Modelled type-level SME credit</td><td>552.6 × 2,933.9 ÷ 3,873.6 = 418.5</td></tr>
+<tr><td>Year_End_Effect</td><td>December rise and March reversal</td><td>2025: 952.5 ÷ 773.9 − 1 = 23.1%</td></tr>
+<tr><td>SME_Review_Detail</td><td>Sectors, bank groups, NPLs, borrowers, average loan</td><td>906.71 × 1,000 ÷ 319,166 = Rs2.84m per borrower</td></tr>
+<tr><td>Reconciliation, Audit_Log</td><td>Every mismatch, correction and break</td><td>May 2019: 102,943.3 → 106,208.2</td></tr>
+<tr><td>Assumptions</td><td>RAG thresholds, break size</td><td>Green ≤2%, amber ≤5%</td></tr>
+<tr><td>Data_Quarterly, Data_Monthly</td><td>Source data</td><td>Edited only at data refresh</td></tr>
+<tr><td>Dashboard_Data</td><td>Long-format table for Power BI/Tableau</td><td>1,566 rows</td></tr>
+</tbody></table></div>
+
+<!-- ================= Appendix B ================= -->
+<h2 id="appB"><span class="n">Appendix B</span>Data, documents and code</h2>
+<h3>B.1 Project files (NCGCL SharePoint)</h3>
+<ul>
+<li>Output workbook: <a href="https://pern-my.sharepoint.com/:x:/g/personal/25250023_lums_edu_pk/IQB7AD7njicDQ5o2asEPbPU6AdF9Zwp9fHQYOA3PvQC6ZRY?e=8N9sOm" target="_blank" rel="noopener">SME vs Corporate - finance by facility type.xlsx</a></li>
+<li>Raw data, the 42 SBP PDFs and their extracted text: <a href="https://pern-my.sharepoint.com/:f:/g/personal/25250023_lums_edu_pk/IgBqkvmemehySoHk02wPtexEAePUR74defasUjXb9RhJbYE?e=GsRNVP" target="_blank" rel="noopener">PDFs and raw data folder</a></li>
+<li>Analysis tables and outputs: <a href="https://pern-my.sharepoint.com/:f:/g/personal/25250023_lums_edu_pk/IgCH-0J8fSNRTJ0VbzWTVe0dAeCv1KhauKhzhQ6Oh_7qOXE?e=0LkzVx" target="_blank" rel="noopener">outputs folder</a></li>
+<li>Reusable code: <a href="https://pern-my.sharepoint.com/:u:/g/personal/25250023_lums_edu_pk/IQACoNHknUHsS4mKYLNIjAQ6AeDu-7hPGYfK0H6uAc5K7iI?e=zSFxbS" target="_blank" rel="noopener">Private Credit Sector Analysis.ipynb</a> (Jupyter notebook, runnable top to bottom in VS Code; each stage is a cell). Stages: inspect and correct the compiled Excel; download the SBP SME Reviews; extract tables; read 2013–16 chart labels; parse and verify the SBP official archive; build the master dataset; produce analysis tables; build the workbook. A quarterly refresh re-runs the last seven stages.</li>
+</ul>
+<h3>B.2 Official sources</h3>
+<ul>
+<li>SBP, Loans to Private Sector Business by Type of Finance, archive <a href="https://www.sbp.org.pk/assets/document/By-type-of-finance-arch.xls" target="_blank" rel="noopener">By-type-of-finance-arch.xls</a>; index at <a href="https://www.sbp.org.pk/ecodata/index2.asp" target="_blank" rel="noopener">SBP Economic Data</a>.</li>
+<li>SBP, <a href="https://www.sbp.org.pk/our-operations/publications/quarterly-sme-finance-review/389" target="_blank" rel="noopener">Quarterly SME Finance Review</a> (all issues).</li>
+<li>SBP, <a href="https://www.sbp.org.pk/publications/prudential/SME-PRs-Updtd-Jan-2025.pdf" target="_blank" rel="noopener">Prudential Regulations for SME Financing</a> (updated January 2025); <a href="https://www.sbp.org.pk/circulars/ih-smefd-circular-no-01-of-2020" target="_blank" rel="noopener">TERF circular</a> (IH&amp;SMEFD No. 01 of 2020).</li>
+<li>SMEDA, <a href="https://smeda.org/phocadownload/Publicatoins/SME%20Policy%202021.pdf" target="_blank" rel="noopener">National SME Policy 2021</a>.</li>
+<li>Business Recorder, <a href="https://www.brecorder.com/news/40185079/efs-ltff-rates-linked-with-policy-rate" target="_blank" rel="noopener">EFS, LTFF rates linked with policy rate</a> (8 July 2022); <a href="https://www.brecorder.com/news/40430456/annual-sales-turnover-enhanced-sbp-revises-regulations-for-smes-financing" target="_blank" rel="noopener">SBP revises regulations for SMEs financing</a> (2026).</li>
+<li>Dawn, <a href="https://www.dawn.com/news/1874361" target="_blank" rel="noopener">Is ADR tax distorting banking market?</a> (24 November 2024).</li>
+<li>Express Tribune, <a href="https://tribune.com.pk/story/2294566/rs4357b-extended-to-businesses-under-terf" target="_blank" rel="noopener">Rs435.7b extended to businesses under TERF</a> (14 April 2021).</li>
+</ul>
+
+<!-- ================= Appendix C ================= -->
+<h2 id="appC"><span class="n">Appendix C</span>Glossary</h2>
+<dl class="gloss">
+<dt>ADR tax</dt><dd>Extra tax (up to 16%) on banks whose advance-to-deposit ratio is below 50% at 31 December; binding at end-2024.</dd>
+<dt>CAGR</dt><dd>Compound annual growth rate: the constant yearly rate that takes a value from start to end.</dd>
+<dt>Contribution</dt><dd>A segment's share of the total change in a stock between two dates.</dd>
+<dt>Corporate</dt><dd>SBP category "other than SMEs".</dd>
+<dt>EFS</dt><dd>Export Finance Scheme: SBP-refinanced concessional export finance; since July 2022 priced at the policy rate minus 5 points.</dd>
+<dt>Facility</dt><dd>The SME Review's three groups: working capital, fixed investment, trade finance.</dd>
+<dt>ISIC Rev. 4</dt><dd>UN industrial classification adopted by the SBP in June 2019.</dd>
+<dt>LTFF / TERF</dt><dd>Long-Term Financing Facility / Temporary Economic Refinance Facility (2020–21): SBP refinance for long-term investment.</dd>
+<dt>Mix</dt><dd>A facility's share of the SME (or corporate) loan book.</dd>
+<dt>NPL ratio</dt><dd>Non-performing loans as a percentage of outstanding loans.</dd>
+<dt>Outstanding (stock)</dt><dd>Balance owed on a given date.</dd>
+<dt>Penetration</dt><dd>SME credit as a share of all business credit in a facility.</dd>
+<dt>RAG</dt><dd>Red / amber / green flag for a cross-check gap (≤2%, ≤5%, &gt;5%).</dd>
+<dt>Series break</dt><dd>A jump caused by a change in measurement or classification.</dd>
+<dt>SME</dt><dd>Small and medium enterprise as classified by banks under the SBP Prudential Regulations for SMEs.</dd>
+</dl>
+
+<div class="foot">NCGCL Research · September 2026 · Data to August 2026 (monthly) and June 2026 (quarterly). Figures in nominal Pakistani rupees.</div>
+</div>
+
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+const D = {"x":["2013-03","2013-06","2013-09","2013-12","2014-03","2014-06","2014-09","2014-12","2015-03","2015-06","2015-09","2015-12","2016-03","2016-06","2016-09","2016-12","2017-03","2017-06","2017-09","2017-12","2018-03","2018-06","2018-09","2018-12","2019-03","2019-06","2019-09","2019-12","2020-03","2020-06","2020-09","2020-12","2021-03","2021-06","2021-09","2021-12","2022-03","2022-06","2022-09","2022-12","2023-03","2023-06","2023-09","2023-12","2024-03","2024-06","2024-09","2024-12","2025-03","2025-06","2025-09","2025-12","2026-03","2026-06"],"total":[2733.1,2593.1,2586.7,2869.4,2867.2,2886.5,2890.0,3096.2,3061.1,3051.8,3012.9,3335.3,3362.8,3441.4,3311.8,3746.1,3794.6,4034.3,4005.6,4289.1,4444.9,4698.8,4787.0,5207.8,5249.9,5285.8,5204.2,5414.5,5483.3,5364.1,5276.9,5610.3,5680.2,5853.3,6043.2,6757.7,6901.3,7152.7,7234.5,7658.5,7387.5,7163.5,7112.0,7624.4,7483.9,7632.7,7510.3,9574.7,8550.7,8650.6,8586.2,9508.2,9451.3,9811.3],"corp":[2496.0,2358.3,2357.4,2598.0,2619.5,2623.4,2636.6,2814.8,2797.4,2782.6,2744.5,3043.4,3090.4,3147.7,2991.5,3365.0,3437.2,3666.0,3638.0,3871.4,4054.1,4305.6,4404.2,4736.0,4806.7,4792.7,4743.1,4900.4,5032.3,4922.9,4861.5,5119.7,5207.7,5384.2,5573.0,6215.6,6376.1,6596.0,6703.7,7071.5,6860.8,6643.3,6594.3,7018.6,6924.4,7058.1,6937.6,8904.8,7892.3,7889.0,7812.3,8555.7,8475.0,8764.9],"sme":[237.1,234.8,229.2,271.3,247.6,263.0,253.4,281.5,263.7,269.2,268.4,291.9,272.4,293.7,320.4,381.1,357.4,368.3,367.6,417.8,390.8,393.2,382.8,471.9,443.2,493.1,461.1,514.1,451.0,441.2,415.4,490.6,472.4,469.2,470.2,542.1,525.2,556.7,530.8,587.0,526.7,520.2,517.7,605.8,559.5,574.6,572.7,669.8,658.5,761.6,773.9,952.5,976.3,1046.4],"rev":[233.5,233.6,224.4,272.6,250.6,252.7,240.7,287.9,261.8,260.8,260.8,305.1,283.6,297.4,325.1,394.6,367.2,379.7,368.8,442.5,408.5,412.1,411.4,513.5,470.1,464.9,422.1,477.2,420.1,401.1,386.0,481.8,443.8,437.6,437.7,524.1,499.7,484.8,460.2,540.5,479.1,457.1,438.1,542.5,488.8,491.0,478.4,641.4,584.4,691.0,686.2,882.4,853.9,906.7],"share":[8.67,9.05,8.86,9.46,8.64,9.11,8.77,9.09,8.61,8.82,8.91,8.75,8.1,8.53,9.67,10.17,9.42,9.13,9.18,9.74,8.79,8.37,8.0,9.06,8.44,9.33,8.86,9.5,8.22,8.22,7.87,8.74,8.32,8.02,7.78,8.02,7.61,7.78,7.34,7.66,7.13,7.26,7.28,7.95,7.48,7.53,7.63,7.0,7.7,8.8,9.01,10.02,10.33,10.67],"gap":[1.5,0.5,2.2,-0.5,-1.2,4.1,5.3,-2.2,0.7,3.2,2.9,-4.3,-3.9,-1.3,-1.4,-3.4,-2.7,-3.0,-0.3,-5.6,-4.3,-4.6,-7.0,-8.1,-5.7,6.1,9.2,7.7,7.3,10.0,7.6,1.8,6.5,7.2,7.4,3.4,5.1,14.8,15.3,8.6,9.9,13.8,18.2,11.7,14.5,17.0,19.7,4.4,12.7,10.2,12.8,7.9,14.3,15.4],"mix":{"trade_finance":[9.4,10.0,11.0,9.7,12.6,11.9,12.4,13.1,11.8,11.2,11.5,9.2,10.0,10.9,12.2,10.9,12.7,12.5,14.2,9.1,9.9,10.6,11.2,9.5,9.4,9.9,12.5,8.8,10.2,10.7,10.5,8.8,8.5,9.1,9.5,8.0,8.4,9.0,8.7,7.2,7.5,7.0,7.0,5.5,5.8,5.5,4.8,4.8,5.3,4.4,4.1,4.0,4.5,4.6],"working_capital":[79.5,74.7,73.9,78.4,73.8,75.3,72.9,73.8,72.2,70.7,66.8,67.5,65.8,65.6,64.5,66.6,63.4,63.5,60.0,68.7,64.8,63.5,61.8,66.5,64.7,64.5,60.9,68.3,66.3,63.7,62.3,67.6,66.0,64.0,63.4,67.1,63.9,60.6,60.7,66.0,62.1,60.2,60.2,63.4,57.8,54.0,51.9,51.9,53.3,51.4,46.3,49.6,46.2,42.6],"fixed_investment":[11.1,15.3,15.2,11.9,13.6,12.8,14.7,13.1,16.0,18.1,21.7,23.3,24.3,23.5,23.3,22.4,23.8,24.0,25.8,22.3,25.4,26.0,27.1,24.0,25.9,25.6,26.5,22.9,23.5,25.5,27.2,23.7,25.5,26.9,27.1,24.9,27.6,30.3,30.6,26.7,30.4,32.8,32.8,31.1,36.4,40.5,43.3,43.3,41.5,44.2,49.6,46.3,49.2,52.8]},"pen":{"trade_finance":[4.18,4.33,4.6,4.38,5.3,5.44,5.01,5.54,5.05,5.09,5.37,4.26,4.29,5.0,6.46,6.35,6.62,6.34,7.35,4.97,5.0,5.01,5.1,4.84,4.52,5.16,6.05,4.42,4.12,4.51,4.27,3.91,3.55,3.6,3.53,3.05,3.03,3.17,2.91,2.87,2.74,2.62,2.43,2.17,2.14,2.09,1.75,1.84,1.96,1.93,1.8,2.07,2.31,2.48],"working_capital":[14.04,14.39,14.25,15.35,13.08,14.07,13.33,13.96,13.08,13.34,13.01,12.49,11.57,12.1,14.16,14.64,12.96,13.01,12.74,14.76,12.56,11.58,10.75,12.4,11.34,12.56,11.57,13.61,11.66,11.55,11.21,13.34,12.5,11.94,11.88,12.43,11.6,11.64,11.2,11.74,10.5,10.69,11.17,12.14,10.49,9.72,9.97,7.47,9.74,10.93,10.22,11.56,11.61,11.12],"fixed_investment":[3.07,4.31,4.08,3.66,3.82,3.73,4.24,3.91,4.26,4.72,5.5,6.04,5.59,5.7,5.98,6.3,6.27,5.85,6.06,5.87,5.98,5.96,5.92,6.47,6.38,6.98,6.72,6.51,5.88,5.99,5.8,5.73,5.88,5.87,5.63,5.61,5.7,6.33,5.87,5.46,5.66,6.0,5.99,6.45,7.08,7.92,8.37,9.15,8.58,10.12,11.62,12.41,13.18,14.27]},"smef":{"trade_finance":[22.2,23.4,25.1,26.3,31.1,31.2,31.5,37.0,31.1,30.2,31.0,27.0,27.2,31.9,39.1,41.6,45.5,46.0,52.2,37.9,38.5,41.5,42.7,44.9,41.8,48.9,57.8,45.5,46.1,47.3,43.7,43.1,40.3,42.7,44.8,43.5,44.3,50.3,46.3,42.5,39.6,36.3,36.1,33.5,32.6,31.4,27.5,32.1,34.6,33.6,32.0,38.6,44.2,47.9],"working_capital":[188.4,175.5,169.4,212.7,182.8,198.1,184.7,207.8,190.4,190.4,179.3,196.9,179.2,192.6,206.6,254.0,226.7,233.9,220.6,286.8,253.1,249.5,236.5,313.7,286.7,318.1,280.9,351.1,298.9,281.2,258.9,331.4,311.6,300.2,297.9,363.7,335.8,337.4,322.0,387.6,327.1,313.3,311.7,384.0,323.1,310.4,297.1,347.5,350.8,391.1,358.2,472.8,451.3,445.9],"fixed_investment":[26.4,35.9,34.7,32.3,33.7,33.7,37.2,36.8,42.1,48.6,58.1,68.0,66.1,69.1,74.7,85.5,85.2,88.4,94.8,93.1,99.2,102.2,103.6,113.3,114.7,126.1,122.4,117.5,105.9,112.7,112.8,116.1,120.5,126.3,127.5,134.9,145.1,168.9,162.6,156.9,160.0,170.7,169.8,188.2,203.8,232.7,248.1,290.2,273.1,336.8,383.8,441.1,480.7,552.6]},"subs":[8.85,8.9,8.13,8.57,8.19,7.28,7.88,8.58,8.13,7.89,7.83,8.37,7.73,8.01,8.49,9.19,8.88,8.58,9.17,9.72,9.64,9.17,9.02,9.7,10.12,10.49,11.03,11.4,12.75,13.49,14.83,15.68,16.09,17.0,17.84,17.87,19.02,19.47,19.11,18.07,18.31,18.74,18.18,17.0,16.72,15.87,16.25,14.04,15.36,15.17,13.32,10.61,9.81,9.48],"efs":[199.5,189.4,175.4,209.8,196.9,175.0,189.5,223.8,213.4,199.1,199.7,247.1,224.9,222.4,220.6,259.9,249.8,249.9,256.5,299.8,304.4,300.5,294.8,358.5,371.2,382.6,387.3,425.1,491.8,496.3,512.1,574.5,565.0,587.4,607.9,661.8,688.5,728.1,698.2,712.9,675.8,688.4,652.8,662.1,635.7,613.6,640.4,737.9,741.2,739.6,586.7,442.7,367.5,332.8],"expo":[66.5,71.9,76.5,79.2,91.5,101.0,95.0,96.8,95.5,83.2,71.8,69.6,86.8,79.9,66.5,82.3,98.6,91.7,83.9,89.9,93.2,88.8,107.2,106.5,120.4,104.3,110.1,140.3,140.2,100.6,87.0,83.1,87.5,92.7,105.3,126.9,164.5,148.6,164.2,151.6,170.5,150.8,208.7,248.5,258.6,248.0,263.0,327.0,338.3,329.3,524.4,756.4,906.3,925.7],"npl":[null,null,null,null,35.21,33.83,null,33.83,33.83,31.36,30.74,25.29,29.0,27.33,25.83,20.28,22.11,20.72,21.08,17.08,18.27,18.06,18.64,14.69,16.57,17.04,18.95,16.7,20.1,21.85,22.45,15.62,18.64,19.11,19.1,15.85,16.01,16.52,17.53,14.63,16.99,17.12,17.66,14.53,16.63,16.58,17.36,14.16,15.39,12.76,12.97,10.05,9.93,9.58],"borrow":[null,null,null,null,134.2,133.0,null,134.5,145.0,152.5,168.4,158.4,163.6,164.7,164.6,177.6,176.0,176.8,173.9,163.7,170.6,169.5,175.7,180.7,181.7,183.6,182.1,185.0,189.5,188.8,178.8,179.9,178.0,172.9,163.6,164.8,169.2,168.8,160.7,157.1,155.4,154.2,165.1,172.3,174.9,176.2,177.8,184.0,203.1,276.6,295.3,302.9,312.4,319.2],"ye":{"years":["2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"],"sme":[18.4,11.1,8.7,19.0,13.7,23.3,11.5,18.1,15.3,10.6,17.0,17.0,23.1],"corp":[10.2,6.8,10.9,12.5,6.4,7.5,3.3,5.3,11.5,5.5,6.4,28.4,9.5],"smeMar":[-8.7,-6.3,-6.7,-6.2,-6.4,-6.1,-12.3,-3.7,-3.1,-10.3,-7.6,-1.7,2.5]},"types":[{"k":"export_efs","label":"Export Finance Scheme (SBP, concessional)","fac":"trade_finance","v0":209.8,"v1":332.8,"cagr":3.8,"sg":1.8,"sn":3.4},{"k":"export_other","label":"Export finance - other (commercial)","fac":"trade_finance","v0":79.2,"v1":925.7,"cagr":21.7,"sg":12.2,"sn":9.4},{"k":"import_financing","label":"Import financing","fac":"trade_finance","v0":160.0,"v1":411.1,"cagr":7.8,"sg":3.6,"sn":4.2},{"k":"import_bills","label":"Import bills purchased & discounted","fac":"trade_finance","v0":20.1,"v1":43.8,"cagr":6.4,"sg":0.3,"sn":0.4},{"k":"foreign_bills","label":"Foreign bills purchased & discounted","fac":"trade_finance","v0":130.4,"v1":214.0,"cagr":4.0,"sg":1.2,"sn":2.2},{"k":"wc_small_loans","label":"Small loans - working capital","fac":"working_capital","v0":186.2,"v1":444.9,"cagr":7.2,"sg":3.7,"sn":4.5},{"k":"wc_others","label":"Working capital - other (running/cash finance)","fac":"working_capital","v0":1165.2,"v1":3432.7,"cagr":9.0,"sg":32.7,"sn":35.0},{"k":"inland_bills","label":"Inland bills purchased & discounted","fac":"working_capital","v0":34.7,"v1":132.8,"cagr":11.3,"sg":1.4,"sn":1.4},{"k":"ltff_terf","label":"LTFF & TERF (SBP refinance)","fac":"fixed_investment","v0":35.3,"v1":431.9,"cagr":22.2,"sg":5.7,"sn":4.4},{"k":"fi_small_loans","label":"Small loans - fixed investment","fac":"fixed_investment","v0":59.1,"v1":234.5,"cagr":11.7,"sg":2.5,"sn":2.4},{"k":"fi_others","label":"Fixed investment - other (commercial long-term)","fac":"fixed_investment","v0":788.5,"v1":2933.9,"cagr":11.1,"sg":30.9,"sn":29.9},{"k":"construction","label":"Construction financing","fac":"fixed_investment","v0":0.0,"v1":108.0,"cagr":null,"sg":1.6,"sn":1.1},{"k":"govt_self_employment","label":"Govt self-employment schemes","fac":"fixed_investment","v0":0.9,"v1":165.3,"cagr":52.4,"sg":2.4,"sn":1.7}],"contrib":{"per":["2013-12..2019-03","2019-06..2022-06","2022-06..2026-06","2013-12..2026-06"],"sme":[7.2,3.4,18.4,11.2],"fi":[47.9,67.3,78.3,67.1],"wc":[43.1,30.4,22.2,30.1],"tf":[9.0,2.3,-0.5,2.8]}};
+const C = {ink:"#33302E", muted:"#66605C", rule:"#E6D9CE", claret:"#990F3D", oxford:"#0F5499", teal:"#008C80", amber:"#A87400", paper:"#FFF1E5"};
+const FAC = {fixed_investment:["Fixed investment",C.claret], working_capital:["Working capital",C.oxford], trade_finance:["Trade finance",C.teal]};
+const NS = "http://www.w3.org/2000/svg";
+const tip = document.getElementById("tip");
+function el(tag, attrs, parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function lab(p){const [y,m]=p.split("-");return ({"03":"Mar","06":"Jun","09":"Sep","12":"Dec"}[m]||m)+" "+y;}
+function niceTicks(lo,hi,n){const span=hi-lo;const step0=span/n;const mag=Math.pow(10,Math.floor(Math.log10(step0)));const err=step0/mag;const step=(err>=7.5?10:err>=3.5?5:err>=1.5?2:1)*mag;const t=[];for(let v=Math.ceil(lo/step)*step;v<=hi+1e-9;v+=step)t.push(+v.toFixed(10));return t;}
+function showTip(host, html, x, y){tip.innerHTML=html;tip.hidden=false;const r=host.getBoundingClientRect();const w=tip.offsetWidth;let left=r.left+window.scrollX+x+14;if(left+w>window.scrollX+document.documentElement.clientWidth-8)left=r.left+window.scrollX+x-w-14;tip.style.left=left+"px";tip.style.top=(r.top+window.scrollY+y-10)+"px";}
+function hideTip(){tip.hidden=true;}
+
+function lineChart(id, o){
+  const host=document.getElementById(id);const W=o.W||680,H=o.h||280,m={l:46,r:o.rpad||18,t:14,b:28};
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":o.aria||""},host);
+  const n=D.x.length, xs=i=>m.l+i*(W-m.l-m.r)/(n-1);
+  const all=o.series.flatMap(s=>s.v.filter(v=>v!=null));
+  let lo=o.ymin!=null?o.ymin:Math.min(...all), hi=o.ymax!=null?o.ymax:Math.max(...all);
+  const ticks=niceTicks(lo,hi,4); lo=Math.min(lo,ticks[0]); hi=Math.max(hi,ticks[ticks.length-1]);
+  const ys=v=>m.t+(H-m.t-m.b)*(1-(v-lo)/(hi-lo));
+  if(o.band){el("rect",{x:m.l,y:ys(o.band[1]),width:W-m.l-m.r,height:ys(o.band[0])-ys(o.band[1]),fill:"#E3EEDC"},svg);}
+  ticks.forEach(t=>{el("line",{x1:m.l,x2:W-m.r,y1:ys(t),y2:ys(t),stroke:t===0?C.muted:C.rule,"stroke-width":1},svg);const tx=el("text",{x:m.l-6,y:ys(t)+4,"text-anchor":"end"},svg);tx.textContent=o.fmt(t);});
+  D.x.forEach((p,i)=>{if(p.endsWith("-06")&&(+p.slice(0,4))%(W<500?4:2)===0){el("line",{x1:xs(i),x2:xs(i),y1:H-m.b,y2:H-m.b+4,stroke:C.muted},svg);const tx=el("text",{x:xs(i),y:H-m.b+17,"text-anchor":"middle"},svg);tx.textContent=p.slice(0,4);}});
+  (o.marks||[]).forEach(mk=>{const i=D.x.indexOf(mk.x);if(i<0)return;const x=xs(i)+(mk.dx||0);el("line",{x1:x,x2:x,y1:m.t,y2:H-m.b,stroke:C.muted,"stroke-dasharray":"3 3","stroke-width":1},svg);if(mk.t){const tx=el("text",{x:mk.a==="end"?x-5:x+4,y:m.t+10,"font-size":"11","text-anchor":mk.a||"start"},svg);tx.textContent=mk.t;}});
+  o.series.forEach(s=>{let d="";s.v.forEach((v,i)=>{if(v==null)return;d+=(d&&s.v[i-1]!=null?"L":"M")+xs(i).toFixed(1)+","+ys(v).toFixed(1);});el("path",{d,fill:"none",stroke:s.c,"stroke-width":2,"stroke-linejoin":"round","stroke-linecap":"round"},svg);});
+  (o.labels||[]).forEach(L=>{const i=D.x.indexOf(L.x);const s=o.series[L.s||0];const v=s.v[i];el("circle",{cx:xs(i),cy:ys(v),r:4,fill:s.c,stroke:C.paper,"stroke-width":2},svg);const tx=el("text",{x:xs(i)+(L.dx||0),y:ys(v)+(L.dy||-9),"text-anchor":L.a||"middle",fill:C.ink,"font-weight":"600"},svg);tx.textContent=L.t;});
+  const g=el("g",{},svg);const vl=el("line",{y1:m.t,y2:H-m.b,stroke:C.ink,"stroke-width":1,opacity:0},g);const dots=o.series.map(s=>el("circle",{r:4,fill:s.c,stroke:C.paper,"stroke-width":2,opacity:0},g));
+  const ov=el("rect",{x:m.l,y:m.t,width:W-m.l-m.r,height:H-m.t-m.b,fill:"transparent"},svg);
+  function mv(ev){const pt=svg.getBoundingClientRect();const sx=(ev.clientX-pt.left)*W/pt.width;let i=Math.round((sx-m.l)/((W-m.l-m.r)/(n-1)));i=Math.max(0,Math.min(n-1,i));vl.setAttribute("x1",xs(i));vl.setAttribute("x2",xs(i));vl.setAttribute("opacity",.35);let h=`<b>${lab(D.x[i])}</b>`;o.series.forEach((s,k)=>{const v=s.v[i];if(v==null){dots[k].setAttribute("opacity",0);return;}dots[k].setAttribute("cx",xs(i));dots[k].setAttribute("cy",ys(v));dots[k].setAttribute("opacity",1);h+=`<div><span class="sw" style="background:${s.c}"></span>${s.n}: ${o.tf(v)}</div>`;});showTip(host,h,(xs(i))*pt.width/W,(ev.clientY-pt.top));}
+  ov.addEventListener("mousemove",mv);ov.addEventListener("mouseleave",()=>{hideTip();vl.setAttribute("opacity",0);dots.forEach(d=>d.setAttribute("opacity",0));});
+}
+
+function barChart(id,o){
+  const host=document.getElementById(id);const W=680,H=o.h||260,m={l:o.l||46,r:12,t:18,b:o.b||30};
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":o.aria||""},host);
+  const cats=o.cats, ns=o.series.length, band=(W-m.l-m.r)/cats.length, bw=Math.min(o.maxw||38,(band*0.7)/ns);
+  const all=o.series.flatMap(s=>s.v);let lo=Math.min(0,...all),hi=Math.max(...all);const ticks=niceTicks(lo,hi,4);lo=Math.min(lo,ticks[0]);hi=Math.max(hi,ticks[ticks.length-1]);
+  const ys=v=>m.t+(H-m.t-m.b)*(1-(v-lo)/(hi-lo));
+  ticks.forEach(t=>{el("line",{x1:m.l,x2:W-m.r,y1:ys(t),y2:ys(t),stroke:t===0?C.muted:C.rule},svg);const tx=el("text",{x:m.l-6,y:ys(t)+4,"text-anchor":"end"},svg);tx.textContent=o.fmt(t);});
+  cats.forEach((c,ci)=>{const x0=m.l+ci*band+(band-bw*ns-2*(ns-1))/2;const tx=el("text",{x:m.l+ci*band+band/2,y:H-m.b+16,"text-anchor":"middle"},svg);tx.textContent=o.catlab?o.catlab(c):c;
+    o.series.forEach((s,si)=>{const v=s.v[ci];const x=x0+si*(bw+2);const y=Math.min(ys(v),ys(0)),h=Math.max(1,Math.abs(ys(v)-ys(0)));const r=el("rect",{x,y,width:bw,height:h,fill:s.c,rx:1.5},svg);
+      if(o.vl){const t2=el("text",{x:x+bw/2,y:(v>=0?y-4:y+h+12),"text-anchor":"middle",fill:C.ink,"font-weight":"600"},svg);t2.textContent=o.fmt(v);}
+      const hit=el("rect",{x:x-2,y:m.t,width:bw+4,height:H-m.t-m.b,fill:"transparent"},svg);
+      hit.addEventListener("mousemove",ev=>{const pt=svg.getBoundingClientRect();showTip(host,`<b>${o.catlab?o.catlab(c):c}</b><div><span class="sw" style="background:${s.c}"></span>${s.n}: ${o.tf(v)}</div>`,(x+bw/2)*pt.width/W,ev.clientY-pt.top);});
+      hit.addEventListener("mouseleave",hideTip);});});
+}
+
+function stack100(id){
+  const host=document.getElementById(id);const W=680,H=260,m={l:46,r:12,t:10,b:28};
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"SME credit mix by facility"},host);
+  const n=D.x.length,band=(W-m.l-m.r)/n,bw=band-2;const ys=v=>m.t+(H-m.t-m.b)*(1-v/100);
+  [0,25,50,75,100].forEach(t=>{el("line",{x1:m.l,x2:W-m.r,y1:ys(t),y2:ys(t),stroke:C.rule},svg);const tx=el("text",{x:m.l-6,y:ys(t)+4,"text-anchor":"end"},svg);tx.textContent=t+"%";});
+  const keys=["fixed_investment","working_capital","trade_finance"];
+  D.x.forEach((p,i)=>{let acc=0;const x=m.l+i*band+1;keys.forEach(k=>{const v=D.mix[k][i];el("rect",{x,y:ys(acc+v),width:bw,height:Math.max(0,ys(acc)-ys(acc+v)-1),fill:FAC[k][1]},svg);acc+=v;});
+    if(p.endsWith("-06")&&(+p.slice(0,4))%2===0){const tx=el("text",{x:x+bw/2,y:H-m.b+17,"text-anchor":"middle"},svg);tx.textContent=p.slice(0,4);}
+    const hit=el("rect",{x:x-1,y:m.t,width:band,height:H-m.t-m.b,fill:"transparent"},svg);
+    hit.addEventListener("mousemove",ev=>{const pt=svg.getBoundingClientRect();let h=`<b>${lab(p)}</b>`;keys.forEach(k=>h+=`<div><span class="sw" style="background:${FAC[k][1]}"></span>${FAC[k][0]}: ${D.mix[k][i].toFixed(1)}% (Rs${D.smef[k][i].toFixed(0)}bn)</div>`);showTip(host,h,(x+bw/2)*pt.width/W,ev.clientY-pt.top);});
+    hit.addEventListener("mouseleave",hideTip);});
+}
+
+function hbars(id){
+  const host=document.getElementById(id);const rows=D.types.slice().sort((a,b)=>b.sg-a.sg);const W=680,rh=24,m={l:300,r:52,t:6,b:8},H=m.t+m.b+rows.length*rh;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"Share of credit growth by type"},host);
+  const mx=Math.max(...rows.map(r=>r.sg));const xs=v=>m.l+(W-m.l-m.r)*v/mx;
+  const names={export_efs:"Export Finance Scheme (concessional)",export_other:"Export finance, other (commercial)",import_financing:"Import financing",import_bills:"Import bills P&D",foreign_bills:"Foreign bills P&D",wc_small_loans:"Small loans (working capital)",wc_others:"Working capital, other",inland_bills:"Inland bills P&D",ltff_terf:"LTFF & TERF",fi_small_loans:"Small loans (fixed investment)",fi_others:"Fixed investment, other",construction:"Construction financing",govt_self_employment:"Govt self-employment schemes"};
+  rows.forEach((r,i)=>{const y=m.t+i*rh;const col=FAC[r.fac][1];const t=el("text",{x:m.l-8,y:y+rh/2+4,"text-anchor":"end",fill:C.ink},svg);t.textContent=names[r.k];
+    el("rect",{x:m.l,y:y+5,width:Math.max(1,xs(r.sg)-m.l),height:rh-10,fill:col,rx:1.5},svg);const v=el("text",{x:xs(r.sg)+5,y:y+rh/2+4,fill:C.ink},svg);v.textContent=r.sg.toFixed(1)+"%";
+    const hit=el("rect",{x:0,y,width:W,height:rh,fill:"transparent"},svg);hit.addEventListener("mousemove",ev=>{const pt=svg.getBoundingClientRect();showTip(host,`<b>${names[r.k]}</b><div>Dec-13: Rs${r.v0.toFixed(1)}bn → Jun-26: Rs${r.v1.toFixed(1)}bn</div><div>CAGR: ${r.cagr==null?"n/a (new)":r.cagr.toFixed(1)+"%"}</div><div>Share of growth: ${r.sg.toFixed(1)}%</div>`,(ev.clientX-pt.left),ev.clientY-pt.top);});hit.addEventListener("mouseleave",hideTip);});
+}
+
+const bn=v=>"Rs"+Math.round(v).toLocaleString("en-US")+"bn";
+const pct1=v=>v.toFixed(1)+"%";
+const brk=[{x:"2019-06",t:"Reclassification"}];
+// Figure 1
+lineChart("f1",{series:[{n:"Monetary statistics",c:C.claret,v:D.sme},{n:"SME Review",c:C.oxford,v:D.rev}],fmt:v=>v.toLocaleString("en-US"),tf:bn,ymin:0,marks:brk,aria:"SME credit, two SBP series"});
+lineChart("f1b",{h:170,series:[{n:"Gap",c:C.claret,v:D.gap}],fmt:v=>v+"%",tf:v=>(v>0?"+":"")+v.toFixed(1)+"%",band:[-2,2],marks:[{x:"2019-06"}],labels:[{x:"2024-09",t:"+19.7%",dy:-9},{x:"2018-12",t:"−8.1%",dy:18}],aria:"Gap between the two SME series"});
+// Figure 2
+lineChart("f2",{series:[{n:"Total",c:C.ink,v:D.total},{n:"Corporate",c:C.oxford,v:D.corp},{n:"SME",c:C.claret,v:D.sme}],fmt:v=>v.toLocaleString("en-US"),tf:bn,ymin:0,marks:brk,aria:"Business credit by borrower"});
+// Figure 3
+lineChart("f3",{series:[{n:"SME share",c:C.claret,v:D.share}],fmt:v=>v+"%",tf:v=>v.toFixed(2)+"%",ymin:6,ymax:11,marks:brk,labels:[{x:"2016-12",t:"10.2%"},{x:"2024-12",t:"7.0%",dy:18},{x:"2026-06",t:"10.7%",a:"end",dx:-6}],aria:"SME share of business credit"});
+// Figure 4
+barChart("f4",{cats:D.contrib.per,catlab:c=>c.replace("..","→").replace(/20(\d\d)-(\d\d)/g,(a,y,mm)=>({"03":"Mar","06":"Jun","09":"Sep","12":"Dec"}[mm])+"-"+y),series:[{n:"SME share of new credit",c:C.claret,v:D.contrib.sme}],fmt:v=>v+"%",tf:pct1,vl:true,maxw:70,h:230,aria:"SME share of new business credit"});
+// Figure 5
+stack100("f5");
+// Figure 6
+lineChart("f6",{series:[{n:"Fixed investment",c:C.claret,v:D.pen.fixed_investment},{n:"Working capital",c:C.oxford,v:D.pen.working_capital},{n:"Trade finance",c:C.teal,v:D.pen.trade_finance}],fmt:v=>v+"%",tf:v=>v.toFixed(1)+"%",ymin:0,marks:brk,labels:[{x:"2026-06",s:0,t:"14.3%",a:"end",dx:-6},{x:"2024-12",s:1,t:"7.5%",dy:18},{x:"2026-06",s:2,t:"2.5%",a:"end",dx:-6,dy:-8}],aria:"SME penetration by facility"});
+// Figure 7
+lineChart("f7",{series:[{n:"EFS (concessional)",c:C.amber,v:D.efs},{n:"Export finance, other",c:C.oxford,v:D.expo}],fmt:v=>v.toLocaleString("en-US"),tf:bn,ymin:0,ymax:1000,marks:[{x:"2022-06",dx:6,a:"end",t:"Jul 2022: EFS rate linked to policy rate"}],labels:[{x:"2022-06",s:0,t:"728",dy:-9},{x:"2026-06",s:1,t:"926",a:"end",dx:-6},{x:"2026-06",s:0,t:"333",a:"end",dx:-6,dy:16}],aria:"Export finance by type"});
+// Figure 8
+hbars("f8");
+// Figure 9
+lineChart("f9",{series:[{n:"Subsidised share",c:C.amber,v:D.subs}],fmt:v=>v+"%",tf:v=>v.toFixed(1)+"%",ymin:0,labels:[{x:"2013-12",t:"8.6%"},{x:"2022-06",t:"19.5%"},{x:"2026-06",t:"9.5%",a:"end",dx:-6}],aria:"Subsidised credit share"});
+// Figure 10
+barChart("f10",{cats:D.ye.years,series:[{n:"SME",c:C.claret,v:D.ye.sme},{n:"Corporate",c:C.oxford,v:D.ye.corp}],fmt:v=>v+"%",tf:v=>(v>0?"+":"")+v.toFixed(1)+"%",catlab:c=>"'"+c.slice(2),aria:"December bump"});
+// Figure 11
+(function(){const save=D.x;const idx=D.x.map((p,i)=>i).filter(i=>D.borrow[i]!=null);
+  const sub=k=>idx.map(i=>D[k][i]);const px=idx.map(i=>save[i]);
+  D.x=px; lineChart("f11a",{W:360,h:240,series:[{n:"SME borrowers ('000)",c:C.oxford,v:sub("borrow")}],fmt:v=>v+"k",tf:v=>v.toFixed(1)+"k",ymin:0,labels:[{x:"2026-06",t:"319k",a:"end",dx:-6}],aria:"SME borrowers"});
+  lineChart("f11b",{W:360,h:240,series:[{n:"NPL ratio",c:C.claret,v:sub("npl")}],fmt:v=>v+"%",tf:v=>v.toFixed(1)+"%",ymin:0,labels:[{x:"2026-06",t:"9.6%",a:"end",dx:-6,dy:-9}],aria:"SME NPL ratio"});
+  D.x=save;})();
+
+// tables
+(function(){const desc={export_efs:["Export Finance Scheme (EFS)","SBP-refinanced, below-market loans to exporters"],export_other:["Export financing, other","Export loans at commercial rates"],import_financing:["Import financing","Loans to pay for imports (FIM, FATR)"],import_bills:["Import bills purchased & discounted","Bank settles an import bill early"],foreign_bills:["Foreign bills purchased & discounted","Bank buys an exporter's foreign bill before maturity"],wc_small_loans:["Small loans (working capital)","Small short-term loans"],wc_others:["Working capital, other","Running finance and cash finance (overdraft-style lines)"],inland_bills:["Inland bills purchased & discounted","Bank discounts domestic trade bills"],ltff_terf:["LTFF & TERF","SBP-refinanced long-term loans for machinery and new investment"],fi_small_loans:["Small loans (fixed investment)","Small long-term loans"],fi_others:["Fixed investment, other","Commercial long-term loans for plant, machinery and projects"],construction:["Construction financing","Loans for construction and housing (from Jun 2020)"],govt_self_employment:["Govt self-employment schemes","Youth and self-employment programmes"]};
+  const tb=document.getElementById("typesTbody");if(tb)D.types.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${desc[r.k][0]}</td><td>${desc[r.k][1]}</td><td>${FAC[r.fac][0]}</td><td class="r">${r.v0.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})}</td><td class="r">${r.v1.toLocaleString("en-US",{minimumFractionDigits:1,maximumFractionDigits:1})}</td>`;tb.appendChild(tr);});
+})();
+</script>
+
+</body></html>
