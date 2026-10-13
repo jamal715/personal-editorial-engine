@@ -1,0 +1,687 @@
+<div class="wrap wrap-before">
+<header class="mast">
+<span class="org">Product Structuring</span>
+<span class="kicker">Working paper</span>
+<h1>The price of a promise
+<span class="sub">What it costs to fix the price of electricity for a year, and who pays when the fund runs out</span></h1>
+</header>
+<p class="standfirst">On 21 September 2026 Pakistan opened bidding on its first 400 MW electricity wheeling auction. For the first time, large industrial buyers can contract directly with generators — and carry the price risk themselves. This paper prices the instrument that would take that risk back off them: a prefunded pool, one year long, backtested hour by hour on the market’s own 2025 data.</p>
+<div class="byline">
+<span><b>Product Structuring</b></span>
+<span>22 September 2026</span>
+<span>Backtest window: calendar 2025</span>
+<span>Source: ISMO hourly demand and marginal-cost tables</span>
+</div>
+<h2>Summary of findings</h2>
+<p class="lead">Six results, each reproducible from the published data and the accompanying workbook.</p>
+<p><b>One.</b> The fixed price at the centre of the proposal, 16,350.30 rupees per megawatt hour, is not a negotiated number. It is the load-weighted average market price of calendar 2025, computed to four decimal places and then written into the contract. It contains no margin of any kind. Anything the guarantee costs must therefore be recovered somewhere else.</p>
+<p><b>Two.</b> Almost the entire cost of the product comes from one design choice: the buyer keeps the benefit of cheap hours and is protected in dear ones. Run the same contract two-sided — refunding the fund when the market prices below the fixed price — and the net cost across 2025 is 138,233 rupees on an energy bill of 57.29 billion. That is two ten-thousandths of one per cent. Run it one-sided and the cost is 8.71 billion rupees. The promise is almost free; the asymmetry is the whole price.</p>
+<p><b>Three.</b> How finely the no-refund rule is applied matters as much as the rule itself. Applied month by month it costs 4.35 billion rupees. Applied hour by hour on the same data it costs 8.71 billion — almost exactly double. Any valuation built on monthly averages understates the liability by roughly half, and understates it in the same direction every time.</p>
+<p><b>Four.</b> Raising the fixed price is a weak defence. It reduces what the fund expects to pay in an ordinary year, but it barely touches the extreme hours that create the tail, because those hours price far above any plausible strike. Prefunding the pool more heavily does more for less.</p>
+<p><b>Five.</b> At a pool loading of 67 per cent the structure absorbs the worst twelve consecutive months anywhere in the record without calling on the guarantor. That figure is solved for, not chosen. It buys protection at an all-in price of 20,301.0 rupees per megawatt hour, against a 2025 market average of 16,350.3.</p>
+<p><b>Six.</b> In a year resembling 2025 the pool ends with 6.20 billion rupees — 45 per cent of everything collected. It is retained, not refunded. Carried into a second year it cuts the top-up required to 7.65 billion and the all-in price to 18,532.6 rupees per megawatt hour, 8.7 per cent lower. The 67 per cent is the cost of starting from nothing, not a standing surcharge.</p>
+<div class="stats">
+<div><div class="lab">Expected cost</div><div class="val">2,365.7</div><div class="cap">PKR/MWh · present value of the 2025 payouts</div></div>
+<div><div class="lab">Premium at 67%</div><div class="val">3,950.7</div><div class="cap">PKR/MWh · paid once, on day one</div></div>
+<div><div class="lab">All-in price</div><div class="val">20,301.0</div><div class="cap">PKR/MWh · before network charges and fees</div></div>
+<div><div class="lab">Retained buffer</div><div class="val">6.20bn</div><div class="cap">PKR · carried into year two</div></div>
+</div>
+<h2>1 · Why this exists now</h2>
+<p>For almost thirty years Pakistan bought its electricity through a single buyer. The Central Power Purchasing Agency contracted with generators on behalf of the distribution companies, and every consumer — a household in Multan, a textile mill in Faisalabad — paid a tariff that the regulator determined after the fact.<sup class="fn">1</sup> Whatever the market cost, it was socialised. Nobody chose their supplier and nobody carried a price.</p>
+<p>That arrangement ended in stages. The National Electric Power Regulatory Authority approved the Competitive Trading Bilateral Contracts Market in November 2020; the market operator was licensed in May 2022; a trial run followed.<sup class="fn">1</sup> The Cabinet Committee on Energy approved the formation of an Independent System and Market Operator in October 2024, folding the market function of CPPA-G together with the National Power Control Centre into one body.<sup class="fn">2</sup> On 20 September 2026 the federal government announced that the market was open. The following day, bidding began on the first tranche: 400 megawatts, with 800 megawatts to be released over five years, available to consumers drawing more than one megawatt.<sup class="fn">3,4</sup></p>
+<p>The regulator had already cleared the tolls. Use of System Charges for open-access bulk consumers were approved at between 6.23 and 19.62 rupees per unit depending on the consumer category, with a fixed grid charge of one rupee per kilowatt per month.<sup class="fn">5</sup> Those charges sit on top of whatever the buyer pays for the energy itself.</p>
+<p>What changed, for the buyer, is not the price level. It is who owns the variance. A mill that signs a bilateral contract indexed to the market now has an input cost that moves hour by hour with the marginal plant on the system — which in Pakistan means with the price of imported fuel, the availability of hydrology, and the weather. A finance director who could previously budget from a notified tariff now has to budget from a curve.</p>
+<p class="pull">The competitive market did not create price risk. It moved it, from a public balance sheet onto private ones, and it did so for a class of buyer that has never had to manage it.</p>
+<p>This is the gap the proposal addresses. A guarantor can absorb variance where the underlying risk would otherwise stop a transaction, and charge for doing so.<sup class="fn">6</sup> A price guarantee is not a credit guarantee, but the logic is the same one: a party better placed to absorb variance absorbs it, and charges for doing so, and the transaction that would not otherwise happen happens.</p>
+<p>The question this paper answers is narrow and practical. If a guarantor offers such a guarantee, what does it cost, who pays it, and what is left over for the guarantor to carry?</p>
+<h2>2 · The instrument</h2>
+<p>Strip away the machinery and there are four moving parts.</p>
+<p><b>A fixed price.</b> Buyers are guaranteed a rate per unit for one year. Call it <em>K</em>. In the case studied here <em>K</em> is 16,350.30 rupees per megawatt hour. The buyer budgets on that number and only that number.</p>
+<p><b>A single upfront payment.</b> Before the year starts, buyers pay once into a common pool. Nothing is collected during the year. The pool is a bucket that is filled at the beginning and drawn down as the year goes on, earning a return on whatever is still in it.</p>
+<p><b>A one-sided payout.</b> In any hour where the market price exceeds <em>K</em>, the pool pays the difference on the electricity the buyer consumed in that hour. In any hour where the market price is below <em>K</em>, nothing happens. The buyer still pays <em>K</em>, and the surplus stays with the fund.</p>
+<p><b>An uncapped tail.</b> If claims in a year exhaust the pool, the guarantor pays the remainder. There is no ceiling on that obligation in the structure as currently proposed.</p>
+<p>Four features of this deserve to be named clearly at the outset, because each of them is a decision rather than a fact.</p>
+<p>The pool is <b>shared</b>. Contributions are not ring-fenced by buyer; a claim from any participant is paid from the common balance. The tenor is <b>one year</b>, chosen for tractability rather than for any market reason. The fund’s investment return <b>stays in the fund</b> rather than being distributed. And the closing balance is <b>retained</b>, carried into the following year rather than refunded.</p>
+<p>Those four choices are what make the instrument a mutual rather than a policy. They also, as Section 12 shows, are what make it cheaper in year two than in year one.</p>
+<div class="note">
+<h4>What this is not</h4>
+<p>It is not a hedge in the trading sense: there is no counterparty taking the other side and no position to unwind. It is not insurance against generation failure, transmission constraint, or non-payment — only against the market price of energy. And it is not a subsidy: every rupee the pool pays out was contributed by the buyers themselves, except in the tail, where the guarantor pays.</p>
+</div>
+<h2>3 · Precedent and literature</h2>
+<p>Nothing in this structure is new in isolation. Every element of it — the fixed price, the prefunding, the mutualisation, the retained surplus — exists somewhere in the world, usually with a long enough record to say what goes wrong. The combination is what is unusual, and the combination is where the risk sits.</p>
+<h3>3.1 Two-sided contracts: the British model</h3>
+<p>The closest institutional relative is the British Contract for Difference. A generator and the Low Carbon Contracts Company agree a strike price. When the market reference price falls below the strike, the LCCC pays the generator the difference. When the reference price rises above the strike, <em>the generator pays the difference back</em>. The contract is two-way, which means consumers who fund the shortfall in cheap years receive the surplus in dear ones.<sup class="fn">7</sup></p>
+<p>The scheme is large and operational: allocation round seven awarded roughly 8.4 gigawatts of offshore wind at about £91 per megawatt hour in January 2026, with a further 6.2 gigawatts in a supplementary round.<sup class="fn">7</sup> The mechanism is well understood and the settlement is routine.</p>
+<p>The proposal is a one-sided version of the same idea, and Section 8 quantifies exactly what that costs. The short answer is: nearly all of it.</p>
+<h3>3.2 Prefunding: the municipal energy prepay market</h3>
+<p>American public power utilities have raised money in the tax-exempt bond market for decades to prepay for gas and, more recently, renewable energy. A bank receives bond proceeds, makes an upfront payment to a supplier, and the utility takes delivery over time at a discount.<sup class="fn">8</sup> The savings are real and documented — the Turlock Irrigation District reported 93.3 million dollars over ten years on one transaction; CPS Energy reported eight per cent against direct power purchase agreements.<sup class="fn">8</sup></p>
+<p>The relevant lesson is not the tax arbitrage, which has no Pakistani equivalent. It is that a large upfront payment converts a stream of uncertain future costs into a single present one, and that the discount the payer receives is essentially the time value of the money they have handed over. The guarantor pool works the same way in reverse: the fund earns the return on money the buyer has parted with, and that return is what allows the premium to be smaller than the claims it covers. In 2025 the pool earns 1.06 billion rupees, 12.2 per cent of the claims it pays.</p>
+<p>The corollary, taken up in Section 14, is that the buyer’s own cost of money is the hidden term in the pricing. If they fund the premium at a rate above what the pool earns, some of the saving is illusory.</p>
+<h3>3.3 Mutualisation: the nuclear and marine pools</h3>
+<p>Mutual insurance is the oldest answer to a risk that commercial markets will not price. Nuclear Electric Insurance Limited was formed in 1980, after Three Mile Island, precisely because conventional insurers would not write the cover; it is owned by the utilities it insures and has covered essentially the whole American nuclear fleet since.<sup class="fn">9</sup> Marine protection and indemnity clubs work on the same principle: members are simultaneously the insured and the insurer, premiums are calls rather than prices, and surpluses are retained or returned by decision of the members.<sup class="fn">10</sup></p>
+<p>Two features of that model carry across directly. First, retained surplus lowers future calls, which is exactly the mechanism in Section 12. Second, and less comfortably, mutuals can and do make supplementary calls when a year goes badly. The guarantee structure as proposed has no supplementary call: the tail falls on the guarantor instead. That is a substantive difference and it is where the balance sheet risk lives.</p>
+<h3>3.4 Stabilisation funds that ran out</h3>
+<p>The cautionary literature is unambiguous and it is regional. Chile froze electricity prices in late 2019 following social unrest, reversing a 9.2 per cent increase. Distribution companies could not pay generators in full, and the unpaid balance accumulated. By February 2021 the state had to issue the region’s first tariff stabilisation bond — 489 million dollars, followed days later by a further 139 million — to buy the receivables and keep the generation sector solvent.<sup class="fn">11</sup></p>
+<p>Chile’s fuel price mechanism, MEPCO, has a parallel history of accumulating deferred balances that eventually had to be released, with sharp price increases when they were.<sup class="fn">12</sup></p>
+<p>The failure mode in both cases is the same and it is simple: a stabilisation mechanism that is not funded to the level of the stress it is meant to absorb does not eliminate the cost. It defers it, converts it into a claim on a public balance sheet, and then releases it in a lump at the worst possible moment. Pakistan has its own well-documented version of this pattern in the power sector’s circular debt, where a debt servicing surcharge of roughly 233 billion rupees was being levied on consumers as of the regulator’s 2025 State of Industry Report.<sup class="fn">13</sup></p>
+<p class="pull">A fund that is underpriced does not fail loudly. It works for two or three ordinary years and then arrives, all at once, as a fiscal problem.</p>
+<p>This is the single strongest argument for a loading calibrated against the worst observed window rather than the average one, and it is the reason Section 11 treats the loading rather than the strike as the real safety lever.</p>
+<h3>3.5 What happens when nobody hedges</h3>
+<p>Winter Storm Uri in February 2021 is the standing example of unhedged retail exposure to a wholesale market. Texas prices were administratively held at the 9,000 dollar per megawatt hour cap for days. Retail customers on pass-through products received bills in the thousands; their supplier filed for bankruptcy protection, attributing it to the market’s pricing.<sup class="fn">14</sup> Litigation over those prices continued for years.<sup class="fn">15</sup></p>
+<p>The instructive detail is that the extreme cost was concentrated in a very small number of hours. That concentration is precisely what makes a strike-price defence weak and a funding defence strong, and it is visible, in miniature, in the Pakistani data examined here.</p>
+<h3>3.6 The pricing theory</h3>
+<p>Two standard results from actuarial science frame everything that follows.</p>
+<p>The first is the <b>expected value premium principle</b>. A premium is written as <em>P</em> = (1 + α) × <em>E</em>[X], where <em>E</em>[X] is the expected loss and α ≥ 0 is the loading. The loading is not profit. It compensates for the fact that claims are random and may exceed expectation, for the capital that must be held against that possibility, and for expenses.<sup class="fn">16</sup> The 67 per cent in this paper is α, and nothing more.</p>
+<p>The second is <b>Jensen’s inequality</b>, which states that for a convex function <em>f</em>, the expectation of <em>f</em>(X) is at least <em>f</em> of the expectation.<sup class="fn">17</sup> The payout rule here, max(price − <em>K</em>, 0), is convex. Averaging prices before applying it therefore understates the payout, always, and never overstates it. Section 8 measures the size of that understatement on real data: it is a factor of two.</p>
+<p>There is also a compact way to describe the instrument in market terms. A payout of max(price − <em>K</em>, 0) on a quantity of electricity in a given hour is a call option on that hour’s energy struck at <em>K</em>. What is being sold here is a strip of 8,760 such options, one per hour, prepaid as a bundle. This paper does not price them with an option model — there is no liquid forward curve or implied volatility surface for Pakistani hourly power to calibrate one — but the framing is worth holding, because it explains why the cost is so sensitive to how finely the hours are cut.</p>
+<h3>3.7 Where this structure is genuinely novel</h3>
+<p>Prefunded, one-sided, mutualised, with the tail on a guarantee company rather than on members, applied to hourly wholesale power in a market that opened this week. Each component has a precedent. The assembly does not, as far as the sources reviewed here show, and that is a reason for caution rather than for pride. Novel assemblies fail in the joints.</p>
+<h2>4 · The data</h2>
+<p>Everything in this paper comes from one source: the ISMO master database of hourly system demand and hourly marginal cost, covering February 2024 to April 2026.</p>
+<p>The file is organised as month-by-hour blocks. For each calendar month there are twenty-four numbers for demand, one per hour of the day, expressed in megawatts, and twenty-four numbers for marginal cost, one per hour, expressed in rupees per kilowatt hour. Each figure is an average across all the days in that month at that hour: the entry for July at 20:00 is the mean of thirty-one readings.</p>
+<p>Twelve months by twenty-four hours gives <b>288 cells</b> of demand and 288 of price. That grid is the entire input. Section 13 returns to what is lost by holding the data at that resolution rather than at all 8,760 individual hours, because it matters more than it first appears.</p>
+<h4>Why calendar 2025</h4>
+<p>The database spans twenty-seven months, which permits sixteen overlapping twelve-month windows. Calendar 2025 is used as the base case for one reason: it is the only complete calendar year in the file, and a contract year that runs January to December is what a regulator and a finance department will both expect to see.</p>
+<p>Rolling windows are used elsewhere, and deliberately. The loading in Section 10 is calibrated not against 2025 but against the worst twelve consecutive months anywhere in the record, which runs from May 2025 to April 2026. Presenting a structure that is calibrated on a harder window than the one displayed is the honest way round; the reverse would be circular.</p>
+<h4>The market picture</h4>
+<p>Over calendar 2025 the system averaged <b>14,271.91 MW</b>, which is 125,021,932 megawatt hours of energy, or 125.02 terawatt hours. The load-weighted average marginal cost across that energy was 16,350.34 rupees per megawatt hour. The 400 MW book studied here draws 3,504,000 megawatt hours of that, and would have paid <b>57.29 billion rupees</b> for it at market prices. That figure recurs throughout and is worth holding on to.</p>
+<figure id="fig-demand"><svg aria-label="Energy drawn by a 400 MW book, by month. Monthly energy in gigawatt hours, following the national demand shape." preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 760 290">
+<line stroke="#c8c2b8" stroke-width="1" x1="78" x2="742" y1="256.00" y2="256.00"></line>
+<text class="ax" text-anchor="end" x="70" y="259.50">0</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="208.00" y2="208.00"></line>
+<text class="ax" text-anchor="end" x="70" y="211.50">100</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="160.00" y2="160.00"></line>
+<text class="ax" text-anchor="end" x="70" y="163.50">200</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="112.00" y2="112.00"></line>
+<text class="ax" text-anchor="end" x="70" y="115.50">300</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="64.00" y2="64.00"></line>
+<text class="ax" text-anchor="end" x="70" y="67.50">400</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="16.00" y2="16.00"></line>
+<text class="ax" text-anchor="end" x="70" y="19.50">500</text>
+<text class="ax unit" text-anchor="end" x="70" y="10">GWh</text>
+<text class="ax" text-anchor="middle" x="105.67" y="272">Jan</text>
+<text class="ax" text-anchor="middle" x="161.00" y="272">Feb</text>
+<text class="ax" text-anchor="middle" x="216.33" y="272">Mar</text>
+<text class="ax" text-anchor="middle" x="271.67" y="272">Apr</text>
+<text class="ax" text-anchor="middle" x="327.00" y="272">May</text>
+<text class="ax" text-anchor="middle" x="382.33" y="272">Jun</text>
+<text class="ax" text-anchor="middle" x="437.67" y="272">Jul</text>
+<text class="ax" text-anchor="middle" x="493.00" y="272">Aug</text>
+<text class="ax" text-anchor="middle" x="548.33" y="272">Sep</text>
+<text class="ax" text-anchor="middle" x="603.67" y="272">Oct</text>
+<text class="ax" text-anchor="middle" x="659.00" y="272">Nov</text>
+<text class="ax" text-anchor="middle" x="714.33" y="272">Dec</text>
+<rect class="bar" fill="#004d73" height="105.14" rx="3" width="53.33" x="79.00" y="150.86"><title>Jan: 219 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="89.68" rx="3" width="53.33" x="134.33" y="166.32"><title>Feb: 187 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="109.54" rx="3" width="53.33" x="189.67" y="146.46"><title>Mar: 228 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="137.62" rx="3" width="53.33" x="245.00" y="118.38"><title>Apr: 287 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="167.26" rx="3" width="53.33" x="300.33" y="88.74"><title>May: 348 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="179.46" rx="3" width="53.33" x="355.67" y="76.54"><title>Jun: 374 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="185.09" rx="3" width="53.33" x="411.00" y="70.91"><title>Jul: 386 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="182.66" rx="3" width="53.33" x="466.33" y="73.34"><title>Aug: 381 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="172.03" rx="3" width="53.33" x="521.67" y="83.97"><title>Sep: 358 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="137.53" rx="3" width="53.33" x="577.00" y="118.47"><title>Oct: 287 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="108.08" rx="3" width="53.33" x="632.33" y="147.92"><title>Nov: 225 GWh</title></rect>
+<rect class="bar" fill="#004d73" height="107.81" rx="3" width="53.33" x="687.67" y="148.19"><title>Dec: 225 GWh</title></rect>
+</svg><figcaption><b>Energy drawn by a 400 MW book, by month</b>Gigawatt hours. The book follows the national demand shape, so June carries 10.7 per cent of the year’s energy and February 5.3 per cent. 1 GWh = 1,000 MWh = 1,000,000 kWh.</figcaption></figure>
+<figure id="fig-price"><svg aria-label="Average market price, by month. Monthly average marginal cost in rupees per megawatt hour, against the fixed price." preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 760 290">
+<line stroke="#c8c2b8" stroke-width="1" x1="78" x2="742" y1="256.00" y2="256.00"></line>
+<text class="ax" text-anchor="end" x="70" y="259.50">0</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="208.00" y2="208.00"></line>
+<text class="ax" text-anchor="end" x="70" y="211.50">5,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="160.00" y2="160.00"></line>
+<text class="ax" text-anchor="end" x="70" y="163.50">10,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="112.00" y2="112.00"></line>
+<text class="ax" text-anchor="end" x="70" y="115.50">15,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="64.00" y2="64.00"></line>
+<text class="ax" text-anchor="end" x="70" y="67.50">20,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="16.00" y2="16.00"></line>
+<text class="ax" text-anchor="end" x="70" y="19.50">25,000</text>
+<text class="ax unit" text-anchor="end" x="70" y="10">PKR/MWh</text>
+<text class="ax" text-anchor="middle" x="105.67" y="272">Jan</text>
+<text class="ax" text-anchor="middle" x="161.00" y="272">Feb</text>
+<text class="ax" text-anchor="middle" x="216.33" y="272">Mar</text>
+<text class="ax" text-anchor="middle" x="271.67" y="272">Apr</text>
+<text class="ax" text-anchor="middle" x="327.00" y="272">May</text>
+<text class="ax" text-anchor="middle" x="382.33" y="272">Jun</text>
+<text class="ax" text-anchor="middle" x="437.67" y="272">Jul</text>
+<text class="ax" text-anchor="middle" x="493.00" y="272">Aug</text>
+<text class="ax" text-anchor="middle" x="548.33" y="272">Sep</text>
+<text class="ax" text-anchor="middle" x="603.67" y="272">Oct</text>
+<text class="ax" text-anchor="middle" x="659.00" y="272">Nov</text>
+<text class="ax" text-anchor="middle" x="714.33" y="272">Dec</text>
+<rect class="bar" fill="#004d73" height="216.16" rx="3" width="53.33" x="79.00" y="39.84"><title>Jan: 22,517 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="111.79" rx="3" width="53.33" x="134.33" y="144.21"><title>Feb: 11,645 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="168.90" rx="3" width="53.33" x="189.67" y="87.10"><title>Mar: 17,594 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="215.48" rx="3" width="53.33" x="245.00" y="40.52"><title>Apr: 22,446 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="153.14" rx="3" width="53.33" x="300.33" y="102.86"><title>May: 15,952 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="162.37" rx="3" width="53.33" x="355.67" y="93.63"><title>Jun: 16,914 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="154.60" rx="3" width="53.33" x="411.00" y="101.40"><title>Jul: 16,104 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="133.88" rx="3" width="53.33" x="466.33" y="122.12"><title>Aug: 13,946 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="147.15" rx="3" width="53.33" x="521.67" y="108.85"><title>Sep: 15,328 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="182.45" rx="3" width="53.33" x="577.00" y="73.55"><title>Oct: 19,005 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="98.21" rx="3" width="53.33" x="632.33" y="157.79"><title>Nov: 10,230 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="132.13" rx="3" width="53.33" x="687.67" y="123.87"><title>Dec: 13,764 PKR/MWh</title></rect>
+<line stroke="#9f3b3b" stroke-dasharray="5 3" stroke-width="1.6" x1="78" x2="742" y1="99.04" y2="99.04"></line>
+<text class="ax ref" text-anchor="end" x="740" y="93.04">K = 16,350 PKR/MWh</text>
+</svg><figcaption><b>Average market price, by month</b>Rupees per megawatt hour, load-weighted within each month. The dashed line is the contract fixed price, which is also the year’s load-weighted average. Five months sit above it, seven below.</figcaption></figure>
+<p>The two charts above are the whole market in one view, and two features of them drive every result in this paper.</p>
+<p>Demand is strongly seasonal. June is 129.8 per cent of the annual mean; February is 69.5 per cent. The system nearly doubles between winter and summer.</p>
+<p>Price is seasonal too — but not in the same direction, and not with the same shape. November, the cheapest month at 10,230 rupees per megawatt hour, is a low-demand month. January, the dearest at 22,517, is also a low-demand month. April, the second dearest at 22,446, sits at almost exactly average demand. The correlation between monthly demand and monthly price across these twelve points is weak.</p>
+<p>That matters because it means the expensive hours are not simply the busy hours. A structure that protected only against peak demand would miss most of the cost.</p>
+<h2>5 · Units, and why this paper reports megawatt hours</h2>
+<p>The source data is priced in rupees per kilowatt hour, which is how Pakistani tariffs are quoted and how a consumer bill reads. Wholesale contracting, auctions and regulatory filings work in megawatt hours. Both appear below; the conversions are arithmetic and are set out here once so that every later figure can be checked in either unit.</p>
+<div class="calc">
+1 MW held for 1 hour <span class="op">=</span> <span class="r">1 MWh</span> <span class="op">=</span> <span class="r">1,000 kWh</span><br/>
+1 MW held for 1 year <span class="op">=</span> 1 × 8,760 <span class="op">=</span> <span class="r">8,760 MWh</span> <span class="op">=</span> <span class="r">8,760,000 kWh</span><br/>
+400 MW held for 1 year <span class="op">=</span> 400 × 8,760 <span class="op">=</span> <span class="r">3,504,000 MWh</span> <span class="op">=</span> <span class="r">3,504,000,000 kWh</span><br/>
+<br/>
+16.3503 PKR/kWh <span class="op">× 1,000 =</span> <span class="r">16,350.30 PKR/MWh</span><br/>
+20.3010 PKR/kWh <span class="op">× 1,000 =</span> <span class="r">20,301.00 PKR/MWh</span>
+</div>
+<h4>A worked conversion: what a fixed price of 16 costs for a year</h4>
+<p>Take the headline question directly. If the fixed price is 16,350.30 rupees per megawatt hour and the book is 400 MW, what is the annual energy bill?</p>
+<div class="calc">
+Annual energy <span class="op">=</span> 400 MW <span class="op">×</span> 8,760 h <span class="op">=</span> <span class="r">3,504,000 MWh</span><br/>
+Annual bill <span class="op">=</span> 3,504,000 MWh <span class="op">×</span> 16,350.30 PKR/MWh <span class="op">=</span> <span class="r">PKR 57,291,451,200</span><br/>
+<span class="cm">— the same sum in consumer units —</span><br/>
+3,504,000,000 kWh <span class="op">×</span> 16.3503 PKR/kWh <span class="op">=</span> <span class="r">PKR 57,291,451,200</span><br/>
+<span class="cm">— per megawatt of book —</span><br/>
+8,760 MWh <span class="op">×</span> 16,350.30 <span class="op">=</span> <span class="r">PKR 143,228,628 per MW per year</span>
+</div>
+<p>Fifty-seven billion rupees is the scale of the thing being guaranteed. The guarantee itself, as Section 9 shows, costs 13.84 billion — a quarter of the energy bill. Keeping those two numbers side by side is the fastest way to judge whether the price of certainty is reasonable.</p>
+<div class="note">
+<h4>One caution on “all-in”</h4>
+<p>The all-in price quoted throughout is energy plus guarantee. It excludes Use of System Charges, which the regulator has set at 6.23 to 19.62 rupees per unit depending on consumer category,<sup class="fn">5</sup> and it excludes administration, capital charges and any the guarantor fee. On a delivered-cost basis the network charge is the larger number. Nothing in this paper should be read as a delivered tariff.</p>
+</div>
+<h2>6 · Method</h2>
+<p>The model has four steps. Each is stated as a formula and then worked on a real month, so that any figure in the paper can be reproduced by hand.</p>
+<h3>6.1 Shaping the book</h3>
+<p>A buyer’s exposure depends not only on how much electricity they use but on <em>when</em>. Until real meter data is available, the book is assumed to follow the national consumption pattern exactly: the buyer draws the same fixed percentage of system demand in every hour of the year.</p>
+<p>That percentage follows from the book size:</p>
+<div class="eq">share <span style="color:#6d7375">=</span> book size ÷ system annual average <span style="color:#6d7375">=</span> 400 ÷ 14,271.91 <span style="color:#004d73;font-weight:600">= 0.0280271</span> <span style="color:#6d7375">(2.8027%)</span></div>
+<p>Energy for any month then follows in one line. The long form sums the twenty-four hourly slots; the short form, which gives the identical answer, multiplies the month’s average demand by the share and by the hours in the month. The long form is what the model computes, because the next step needs the hours kept apart.</p>
+<div class="calc">
+<span class="cm">January 2025, long form — per hour slot, then summed</span><br/>
+system MW in hour <em>h</em> <span class="op">×</span> 0.0280271 <span class="op">×</span> 31 days <span class="op">=</span> MWh from that slot<br/>
+<span class="op">Σ</span> over <em>h</em> = 0 … 23 <span class="op">=</span> <span class="r">219,049 MWh</span><br/>
+<br/>
+<span class="cm">January 2025, short form — identical result</span><br/>
+10,504.85 MW <span class="op">×</span> 0.0280271 <span class="op">=</span> 294.42 MW <span class="cm">(the book’s average draw in January)</span><br/>
+294.42 MW <span class="op">×</span> 744 h <span class="op">=</span> <span class="r">219,049 MWh</span> <span class="op">=</span> 219,048,787 kWh
+</div>
+<p>The identity that validates the whole scaling is annual. If the book is 2.8027 per cent of the system in every hour, it must be 2.8027 per cent of the system’s energy across the year:</p>
+<div class="calc">
+125,021,932 MWh <span class="op">×</span> 0.0280271 <span class="op">=</span> <span class="r">3,504,000 MWh</span><br/>
+3,504,000 MWh <span class="op">÷</span> 8,760 h <span class="op">=</span> <span class="r">400.0 MW</span> <span class="cm">✓ closes on the book size</span>
+</div>
+<figure id="fig-shape"><svg aria-label="The book is 400 MW on average, not 400 MW every hour. Average megawatts drawn each month against the 400 MW annual mean." preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 760 290">
+<line stroke="#c8c2b8" stroke-width="1" x1="78" x2="742" y1="256.00" y2="256.00"></line>
+<text class="ax" text-anchor="end" x="70" y="259.50">0</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="176.00" y2="176.00"></line>
+<text class="ax" text-anchor="end" x="70" y="179.50">200</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="96.00" y2="96.00"></line>
+<text class="ax" text-anchor="end" x="70" y="99.50">400</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="16.00" y2="16.00"></line>
+<text class="ax" text-anchor="end" x="70" y="19.50">600</text>
+<text class="ax unit" text-anchor="end" x="70" y="10">MW</text>
+<text class="ax" text-anchor="middle" x="105.67" y="272">Jan</text>
+<text class="ax" text-anchor="middle" x="161.00" y="272">Feb</text>
+<text class="ax" text-anchor="middle" x="216.33" y="272">Mar</text>
+<text class="ax" text-anchor="middle" x="271.67" y="272">Apr</text>
+<text class="ax" text-anchor="middle" x="327.00" y="272">May</text>
+<text class="ax" text-anchor="middle" x="382.33" y="272">Jun</text>
+<text class="ax" text-anchor="middle" x="437.67" y="272">Jul</text>
+<text class="ax" text-anchor="middle" x="493.00" y="272">Aug</text>
+<text class="ax" text-anchor="middle" x="548.33" y="272">Sep</text>
+<text class="ax" text-anchor="middle" x="603.67" y="272">Oct</text>
+<text class="ax" text-anchor="middle" x="659.00" y="272">Nov</text>
+<text class="ax" text-anchor="middle" x="714.33" y="272">Dec</text>
+<rect class="bar" fill="#004d73" height="117.77" rx="3" width="53.33" x="79.00" y="138.23"><title>Jan: 294 MW</title></rect>
+<rect class="bar" fill="#004d73" height="111.21" rx="3" width="53.33" x="134.33" y="144.79"><title>Feb: 278 MW</title></rect>
+<rect class="bar" fill="#004d73" height="122.69" rx="3" width="53.33" x="189.67" y="133.31"><title>Mar: 307 MW</title></rect>
+<rect class="bar" fill="#004d73" height="159.29" rx="3" width="53.33" x="245.00" y="96.71"><title>Apr: 398 MW</title></rect>
+<rect class="bar" fill="#004d73" height="187.34" rx="3" width="53.33" x="300.33" y="68.66"><title>May: 468 MW</title></rect>
+<rect class="bar" fill="#004d73" height="207.71" rx="3" width="53.33" x="355.67" y="48.29"><title>Jun: 519 MW</title></rect>
+<rect class="bar" fill="#004d73" height="207.31" rx="3" width="53.33" x="411.00" y="48.69"><title>Jul: 518 MW</title></rect>
+<rect class="bar" fill="#004d73" height="204.60" rx="3" width="53.33" x="466.33" y="51.40"><title>Aug: 511 MW</title></rect>
+<rect class="bar" fill="#004d73" height="199.11" rx="3" width="53.33" x="521.67" y="56.89"><title>Sep: 498 MW</title></rect>
+<rect class="bar" fill="#004d73" height="154.05" rx="3" width="53.33" x="577.00" y="101.95"><title>Oct: 385 MW</title></rect>
+<rect class="bar" fill="#004d73" height="125.09" rx="3" width="53.33" x="632.33" y="130.91"><title>Nov: 313 MW</title></rect>
+<rect class="bar" fill="#004d73" height="120.76" rx="3" width="53.33" x="687.67" y="135.24"><title>Dec: 302 MW</title></rect>
+<line stroke="#9f3b3b" stroke-dasharray="5 3" stroke-width="1.6" x1="78" x2="742" y1="96.00" y2="96.00"></line>
+<text class="ax ref" text-anchor="end" x="740" y="90.00">400 MW annual average</text>
+</svg><figcaption><b>The book is 400 MW on average, not 400 MW every hour</b>Average megawatts drawn in each month. January runs at 294 MW and June at 519 MW. Assuming a flat 400 MW block misstates January volume by 36 per cent.</figcaption></figure>
+<p>This is the most commonly misread figure in the whole model, so it is worth being blunt about it. <b>400 MW is an annual average, not a constant block.</b> The book draws 294 MW in January and 519 MW in June. A reviewer who assumes a flat 400 MW will compute January at 297,600 MWh, find the model says 219,049, and conclude there is a 36 per cent error. There is not; the assumption is different.</p>
+<h3>6.2 The payout rule</h3>
+<p>For each hour of each month, the pool owes the difference between the market price and the fixed price, on the energy consumed in that hour, but never less than zero:</p>
+<div class="eq">payout<sub>month</sub> <span style="color:#6d7375">=</span> <span style="font-size:19px">Σ</span><sub>h=0…23</sub>   MWh<sub>h</sub> <span style="color:#6d7375">×</span> max( price<sub>h</sub> − <em>K</em> , 0 )</div>
+<p>The max( ⋅ , 0 ) is not a detail. It is the product. An hour priced below <em>K</em> contributes nothing: it does not offset a dear hour, it is not carried forward, and it is not refunded at the end of the year. The buyer keeps the benefit of that hour by having already agreed to pay <em>K</em> for it.</p>
+<p>The consequence shows up immediately when the January figure is checked against the January average price:</p>
+<div class="calc">
+<span class="cm">the obvious calculation, using the monthly average</span><br/>
+(22,516.6 <span class="op">−</span> 16,350.3) <span class="op">×</span> 219,049 MWh <span class="op">=</span> <span class="r">PKR 1,350,720,535</span><br/>
+<br/>
+<span class="cm">what the model actually computes, hour by hour</span><br/>
+<span class="op">Σ</span><sub>h</sub> MWh<sub>h</sub> <span class="op">×</span> max(price<sub>h</sub> − 16,350.3, 0) <span class="op">=</span> <span class="r">PKR 1,478,570,172</span><br/>
+<br/>
+difference <span class="op">=</span> <span class="r">PKR 127,849,637</span> <span class="cm">· 9.5% higher</span><br/>
+effective gap <span class="op">=</span> 1,478,570,172 <span class="op">÷</span> 219,049 <span class="op">=</span> <span class="r">6,750.0 PKR/MWh</span><br/>
+naive gap <span class="op">=</span> <span class="r">6,166.3 PKR/MWh</span>
+</div>
+<p>January’s cheap hours were netted out of the monthly average. They are not netted out of the payout. The gap between 6,750.0 and 6,166.3 is the arithmetic signature of the one-sided rule, and it appears in every month.</p>
+<h3>6.3 The pool</h3>
+<p>The pool is a single balance, drawn down in month order, earning a monthly return on what remains. Four lines describe it completely. For month <em>t</em>:</p>
+<div class="calc">
+interest<sub>t</sub> <span class="op">=</span> balance<sub>t−1</sub> <span class="op">×</span> 11% <span class="op">÷</span> 12<br/>
+fund pays<sub>t</sub> <span class="op">=</span> min( balance<sub>t−1</sub> <span class="op">+</span> interest<sub>t</sub> , payout<sub>t</sub> )<br/>
+the guarantor pays<sub>t</sub> <span class="op">=</span> payout<sub>t</sub> <span class="op">−</span> fund pays<sub>t</sub><br/>
+balance<sub>t</sub> <span class="op">=</span> balance<sub>t−1</sub> <span class="op">+</span> interest<sub>t</sub> <span class="op">−</span> fund pays<sub>t</sub>
+</div>
+<p>Two conventions are embedded here and both should be stated rather than discovered. Interest accrues on the opening balance for the full month before any claim is taken, which is mildly generous to the fund. And month order matters: the same twelve claims arriving in a different sequence would drain the pool at a different speed. Calendar 2025 front-loads its two largest claims into January and April, which is the harder arrangement.</p>
+<h3>6.4 The premium, and an identity that makes it checkable</h3>
+<p>The minimum premium that lets the pool meet every claim without calling on the guarantor can be found by search: guess a premium, run the twelve months, see whether the balance ever goes negative, and bisect. That is what the model does, and it converges in eighty iterations.</p>
+<p>It also has a closed form. The minimum premium is exactly the present value of the twelve monthly payouts, discounted at the fund’s own monthly return:</p>
+<div class="eq">premium<sub>min</sub> <span style="color:#6d7375">=</span> <span style="font-size:19px">Σ</span><sub>t=1…12</sub>   payout<sub>t</sub> ∕ (1 + <em>i</em>)<sup>t</sup>   <span style="color:#6d7375">where</span> <em>i</em> = 0.11/12</div>
+<p>The two agree to a fraction of a rupee on an eight-billion-rupee figure. This is not a coincidence — a balance that earns <em>i</em> and is drawn to exactly zero is the definition of a present value — but it is useful, because it means the entire model can be written in a spreadsheet with an <span style="font-family:var(--sans);font-size:15px">NPV()</span> function and audited by anyone, without simulation.</p>
+<div class="calc">
+undiscounted claims, 2025 <span class="op">=</span> <span class="r">PKR 8,707,836,471</span><br/>
+NPV at <em>i</em> = 0.00916667 <span class="op">=</span> <span class="r">PKR 8,289,298,538</span><br/>
+<span class="cm">difference = the 418.5m of interest the pool earns while holding the money</span>
+</div>
+<h3>6.5 The loading</h3>
+<p>The present value above is the <em>expected cost</em> in a year that looks exactly like 2025. Charging exactly that produces a pool that finishes the year at zero — adequate if next year is also 2025, and inadequate otherwise. The loading is the multiple applied on top:</p>
+<div class="eq">premium <span style="color:#6d7375">=</span> expected cost <span style="color:#6d7375">×</span> (1 + α)</div>
+<p>Setting α is the central commercial decision in the product, and Section 10 derives the 67 per cent from the data rather than from judgement.</p>
+</div>
+<!-- LIVE_SIMULATION -->
+<div class="wrap wrap-after"><h2>7 · The fixed price is the average price</h2>
+<p>The contract rate of 16,350.30 rupees per megawatt hour looks like a negotiated figure. It is not. It is a computed one, and identifying what it is computed from changes how the whole structure should be read.</p>
+<p>Weight each month’s market price by the energy the book consumes in that month, and sum:</p>
+<div class="calc">
+<span class="op">Σ</span> ( MWh<sub>m</sub> <span class="op">×</span> price<sub>m</sub> ) <span class="op">=</span> <span class="r">PKR 57,291,589,433</span><br/>
+<span class="op">÷</span> 3,504,000 MWh <span class="op">=</span> <span class="r">16,350.34 PKR/MWh</span><br/>
+<br/>
+contract fixed price <em>K</em> <span class="op">=</span> <span class="r">16,350.30 PKR/MWh</span><br/>
+difference <span class="op">=</span> <span class="r">0.04 PKR/MWh</span> <span class="cm">· four decimal places in consumer units</span>
+</div>
+<p><b>The fixed price is the 2025 load-weighted average market price, rounded.</b> It is the break-even rate: the rate at which, across the year as a whole, the buyer pays neither more nor less than the market would have charged. It carries no margin, no risk premium and no contingency.</p>
+<p class="pull">If the tariff is the average, the tariff cannot pay for the guarantee. Everything the guarantee costs has to come from the premium, and that is a structural fact, not a pricing choice.</p>
+<h4>Why the weighting matters</h4>
+<p>A simple average of the twelve monthly prices gives 16,286.97 rupees per megawatt hour — 63.37 lower, or 0.39 per cent. The difference arises because the dear months are not the heavy months: January prices at 22,517 but carries only 6.3 per cent of annual energy, while June carries 10.7 per cent at 16,914. Averaging the twelve prices treats a light January as equal in weight to a heavy June, which it is not.</p>
+<p>Nought point three nine per cent is small, but on a 57 billion rupee bill it is 222 million rupees, and it runs in the direction that would have understated the fair rate. Any recalculation of <em>K</em> should use the load weighting.</p>
+<h2>8 · The asymmetry is the entire cost</h2>
+<p>This is the central analytical result of the paper, and it can be stated in two numbers.</p>
+<p>Suppose the contract were two-sided, as a British CfD is: when the market prices above <em>K</em> the fund pays the buyer, and when it prices below <em>K</em> the buyer pays the fund. Over calendar 2025, what would that have cost?</p>
+<div class="calc">
+buyer’s bill at market price <span class="op">=</span> <span class="r">PKR 57,291,589,433</span><br/>
+buyer’s bill at fixed price <span class="op">=</span> <span class="r">PKR 57,291,451,200</span><br/>
+net across the year <span class="op">=</span> <span class="r">PKR 138,233</span> <span class="cm">· 0.00024% of the bill</span>
+</div>
+<p>One hundred and thirty-eight thousand rupees. On a fifty-seven billion rupee contract, a two-sided guarantee at this strike is free to within a rounding error — which is exactly what it should be, because <em>K</em> was set at the average price and the average is what a two-sided contract settles against.</p>
+<p>Now the same contract one-sided:</p>
+<div class="calc">
+one-sided payout, hour by hour <span class="op">=</span> <span class="r">PKR 8,707,836,471</span> <span class="cm">· 15.20% of the bill</span><br/>
+ratio to the two-sided cost <span class="op">=</span> <span class="r">62,994 : 1</span>
+</div>
+<figure id="fig-diverge"><svg aria-label="Where the buyer gains and where the buyer overpays. Monthly difference between the market bill and the fixed-price bill, in PKR billion." preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 760 300">
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="252.00" y2="252.00"></line>
+<text class="ax" text-anchor="end" x="70" y="255.50">-2</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="193.00" y2="193.00"></line>
+<text class="ax" text-anchor="end" x="70" y="196.50">-1</text>
+<line stroke="#c8c2b8" stroke-width="1" x1="78" x2="742" y1="134.00" y2="134.00"></line>
+<text class="ax" text-anchor="end" x="70" y="137.50">0</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="75.00" y2="75.00"></line>
+<text class="ax" text-anchor="end" x="70" y="78.50">1</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="16.00" y2="16.00"></line>
+<text class="ax" text-anchor="end" x="70" y="19.50">2</text>
+<text class="ax unit" text-anchor="end" x="70" y="10">PKR bn</text>
+<text class="ax" text-anchor="middle" x="105.67" y="268">Jan</text>
+<text class="ax" text-anchor="middle" x="161.00" y="268">Feb</text>
+<text class="ax" text-anchor="middle" x="216.33" y="268">Mar</text>
+<text class="ax" text-anchor="middle" x="271.67" y="268">Apr</text>
+<text class="ax" text-anchor="middle" x="327.00" y="268">May</text>
+<text class="ax" text-anchor="middle" x="382.33" y="268">Jun</text>
+<text class="ax" text-anchor="middle" x="437.67" y="268">Jul</text>
+<text class="ax" text-anchor="middle" x="493.00" y="268">Aug</text>
+<text class="ax" text-anchor="middle" x="548.33" y="268">Sep</text>
+<text class="ax" text-anchor="middle" x="603.67" y="268">Oct</text>
+<text class="ax" text-anchor="middle" x="659.00" y="268">Nov</text>
+<text class="ax" text-anchor="middle" x="714.33" y="268">Dec</text>
+<rect class="bar" fill="#004d73" height="79.69" rx="3" width="53.33" x="79.00" y="54.31"><title>Jan: 1 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="51.87" rx="3" width="53.33" x="134.33" y="134.00"><title>Feb: -1 PKR bn</title></rect>
+<rect class="bar" fill="#004d73" height="16.75" rx="3" width="53.33" x="189.67" y="117.25"><title>Mar: 0 PKR bn</title></rect>
+<rect class="bar" fill="#004d73" height="103.12" rx="3" width="53.33" x="245.00" y="30.88"><title>Apr: 2 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="8.19" rx="3" width="53.33" x="300.33" y="134.00"><title>May: -0 PKR bn</title></rect>
+<rect class="bar" fill="#004d73" height="12.43" rx="3" width="53.33" x="355.67" y="121.57"><title>Jun: 0 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="5.61" rx="3" width="53.33" x="411.00" y="134.00"><title>Jul: -0 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="53.99" rx="3" width="53.33" x="466.33" y="134.00"><title>Aug: -1 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="21.62" rx="3" width="53.33" x="521.67" y="134.00"><title>Sep: -0 PKR bn</title></rect>
+<rect class="bar" fill="#004d73" height="44.88" rx="3" width="53.33" x="577.00" y="89.12"><title>Oct: 1 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="81.31" rx="3" width="53.33" x="632.33" y="134.00"><title>Nov: -1 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="34.28" rx="3" width="53.33" x="687.67" y="134.00"><title>Dec: -1 PKR bn</title></rect>
+<rect fill="#004d73" height="10" rx="2" width="10" x="78" y="284"></rect>
+<text class="ax lg" x="93" y="293">Market above K: buyer gains</text>
+<rect fill="#C25A1E" height="10" rx="2" width="10" x="294.5" y="284"></rect>
+<text class="ax lg" x="309.5" y="293">Market below K: buyer overpays</text>
+</svg><figcaption><b>Where the buyer gains, and where the buyer overpays</b>PKR billion. Five months above the fixed price are worth 4.354bn to the buyer; seven months below cost them 4.354bn. The two columns cancel to within 138,233 rupees, because the fixed price is the year’s average. A two-sided contract nets these. A one-sided contract keeps only the gains.</figcaption></figure>
+<p>The chart above shows why. In five months the market ran above the fixed price and the buyer gained 4.354 billion rupees. In seven months it ran below and the buyer overpaid 4.354 billion. Those two figures agree to within 138,233 rupees, and that near-perfect cancellation <em>is</em> the fact that <em>K</em> is the average.</p>
+<p>A two-sided contract lets those two columns offset. A one-sided contract keeps the left column and discards the right. The cost of the product is the right column.</p>
+<h4>And then granularity doubles it again</h4>
+<p>The 4.354 billion above is the cost of applying the no-refund rule at <em>monthly</em> resolution — net within a month, then keep only the positive months. Applying the same rule hour by hour on the same data gives a materially different answer.</p>
+<div class="calc">
+no-refund applied monthly <span class="op">=</span> <span class="r">PKR 4,353,718,004</span><br/>
+no-refund applied hourly <span class="op">=</span> <span class="r">PKR 8,707,836,471</span><br/>
+understatement <span class="op">=</span> <span class="r">PKR 4,354,118,467</span> <span class="cm">· the monthly method is 50.0% too low</span>
+</div>
+<figure id="fig-gap"><svg aria-label="What the guarantee costs per unit, two ways of measuring. The monthly-average method misses every hour that priced above the fixed price inside a cheap month." preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 760 310">
+<line stroke="#c8c2b8" stroke-width="1" x1="78" x2="742" y1="262.00" y2="262.00"></line>
+<text class="ax" text-anchor="end" x="70" y="265.50">0</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="200.50" y2="200.50"></line>
+<text class="ax" text-anchor="end" x="70" y="204.00">2,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="139.00" y2="139.00"></line>
+<text class="ax" text-anchor="end" x="70" y="142.50">4,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="77.50" y2="77.50"></line>
+<text class="ax" text-anchor="end" x="70" y="81.00">6,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="16.00" y2="16.00"></line>
+<text class="ax" text-anchor="end" x="70" y="19.50">8,000</text>
+<text class="ax unit" text-anchor="end" x="70" y="10">PKR/MWh</text>
+<text class="ax" text-anchor="middle" x="105.67" y="278">Jan</text>
+<text class="ax" text-anchor="middle" x="161.00" y="278">Feb</text>
+<text class="ax" text-anchor="middle" x="216.33" y="278">Mar</text>
+<text class="ax" text-anchor="middle" x="271.67" y="278">Apr</text>
+<text class="ax" text-anchor="middle" x="327.00" y="278">May</text>
+<text class="ax" text-anchor="middle" x="382.33" y="278">Jun</text>
+<text class="ax" text-anchor="middle" x="437.67" y="278">Jul</text>
+<text class="ax" text-anchor="middle" x="493.00" y="278">Aug</text>
+<text class="ax" text-anchor="middle" x="548.33" y="278">Sep</text>
+<text class="ax" text-anchor="middle" x="603.67" y="278">Oct</text>
+<text class="ax" text-anchor="middle" x="659.00" y="278">Nov</text>
+<text class="ax" text-anchor="middle" x="714.33" y="278">Dec</text>
+<rect class="bar" fill="#C25A1E" height="189.61" rx="3" width="24.67" x="80.00" y="72.39"><title>Jan · Monthly-average method: 6,166 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="207.56" rx="3" width="24.67" x="106.67" y="54.44"><title>Jan · Hour-by-hour method: 6,750 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="0.40" rx="3" width="24.67" x="135.33" y="262.00"><title>Feb · Monthly-average method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="0.40" rx="3" width="24.67" x="162.00" y="262.00"><title>Feb · Hour-by-hour method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="38.24" rx="3" width="24.67" x="190.67" y="223.76"><title>Mar · Monthly-average method: 1,244 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="80.99" rx="3" width="24.67" x="217.33" y="181.01"><title>Mar · Hour-by-hour method: 2,634 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="187.45" rx="3" width="24.67" x="246.00" y="74.55"><title>Apr · Monthly-average method: 6,096 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="193.34" rx="3" width="24.67" x="272.67" y="68.66"><title>Apr · Hour-by-hour method: 6,287 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="0.40" rx="3" width="24.67" x="301.33" y="262.00"><title>May · Monthly-average method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="53.57" rx="3" width="24.67" x="328.00" y="208.43"><title>May · Hour-by-hour method: 1,742 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="17.32" rx="3" width="24.67" x="356.67" y="244.68"><title>Jun · Monthly-average method: 563 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="91.10" rx="3" width="24.67" x="383.33" y="170.90"><title>Jun · Hour-by-hour method: 2,963 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="0.40" rx="3" width="24.67" x="412.00" y="262.00"><title>Jul · Monthly-average method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="69.15" rx="3" width="24.67" x="438.67" y="192.85"><title>Jul · Hour-by-hour method: 2,249 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="0.40" rx="3" width="24.67" x="467.33" y="262.00"><title>Aug · Monthly-average method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="36.58" rx="3" width="24.67" x="494.00" y="225.42"><title>Aug · Hour-by-hour method: 1,190 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="0.40" rx="3" width="24.67" x="522.67" y="262.00"><title>Sep · Monthly-average method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="49.28" rx="3" width="24.67" x="549.33" y="212.72"><title>Sep · Hour-by-hour method: 1,603 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="81.64" rx="3" width="24.67" x="578.00" y="180.36"><title>Oct · Monthly-average method: 2,655 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="122.30" rx="3" width="24.67" x="604.67" y="139.70"><title>Oct · Hour-by-hour method: 3,977 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="0.40" rx="3" width="24.67" x="633.33" y="262.00"><title>Nov · Monthly-average method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="0.40" rx="3" width="24.67" x="660.00" y="262.00"><title>Nov · Hour-by-hour method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#C25A1E" height="0.40" rx="3" width="24.67" x="688.67" y="262.00"><title>Dec · Monthly-average method: 0 PKR/MWh</title></rect>
+<rect class="bar" fill="#004d73" height="10.53" rx="3" width="24.67" x="715.33" y="251.47"><title>Dec · Hour-by-hour method: 342 PKR/MWh</title></rect>
+<rect fill="#C25A1E" height="10" rx="2" width="10" x="78" y="294"></rect>
+<text class="ax lg" x="93" y="303">Monthly-average method</text>
+<rect fill="#004d73" height="10" rx="2" width="10" x="262.0" y="294"></rect>
+<text class="ax lg" x="277.0" y="303">Hour-by-hour method</text>
+</svg><figcaption><b>What the guarantee costs per unit, measured two ways</b>Rupees per megawatt hour. The monthly-average method nets cheap hours against dear ones inside a month and reports zero for May, July, August, September and December. The hour-by-hour method, which is what the contract actually pays, reports between 342 and 2,249 in those same months.</figcaption></figure>
+<p>The chart makes the mechanism visible. Five months — May, July, August, September and December — show a naive gap of zero and a real gap of between 342 and 2,249 rupees per megawatt hour. In every one of those months the average price sat below <em>K</em>, and in every one of them there were individual hours that did not. July averages 16,104 against a strike of 16,350 and still costs the fund 867 million rupees.</p>
+<p>This is Jensen’s inequality doing its work on real data: the payout function is convex, so averaging the inputs understates the output.<sup class="fn">17</sup> The direction of the error is not random. It is always downward, and here it is a factor of two.</p>
+<div class="note">
+<h4>The coincidence, and what it is not</h4>
+<p>That the hourly figure is almost exactly double the monthly one is arithmetic accident, not structure. The ratio depends on how much intra-month price dispersion there is, and there is no reason for it to be 2.00 in another year or another market. What <em>is</em> structural is the sign: the coarser method is always the lower one.</p>
+<p>The same logic applies one level further down, and it runs against the guarantor. The 288-cell grid is itself an average of roughly thirty same-hour readings. Applying the rule to all 8,760 actual hours would raise the figure again. The 8.71 billion is a floor.</p>
+</div>
+<h2>9 · The worked case, end to end</h2>
+<p>Everything above comes together in a single configuration, and it is the configuration the live model opens on. A 400 megawatt book. A fixed price of 16,350.30 rupees per megawatt hour. A pool loading of 67 per cent. A fund return of 11 per cent a year. The national load shape, and a price path in which 2025 simply repeats.</p>
+<p>The premium follows in three lines:</p>
+<div class="calc">
+expected cost <span class="op">=</span> NPV of the twelve 2025 payouts at 11%/12 <span class="op">=</span> <span class="r">PKR 8,289,298,538</span><br/>
+premium <span class="op">=</span> 8,289,298,538 <span class="op">×</span> 1.67 <span class="op">=</span> <span class="r">PKR 13,843,128,560</span><br/>
+<br/>
+per unit <span class="op">=</span> 13,843,128,560 <span class="op">÷</span> 3,504,000 MWh <span class="op">=</span> <span class="r">3,950.7 PKR/MWh</span><br/>
+all-in <span class="op">=</span> 16,350.30 <span class="op">+</span> 3,950.7 <span class="op">=</span> <span class="r">20,301.0 PKR/MWh</span> <span class="cm">· 20.3010 PKR/kWh</span><br/>
+per MW of book <span class="op">=</span> 13,843,128,560 <span class="op">÷</span> 400 <span class="op">=</span> <span class="r">PKR 34,607,821 per MW</span>
+</div>
+<p>Run the year and the pool never empties.</p>
+<div class="tw wide"><table><caption>Calendar 2025 · 400 MW book · K = 16,350.30 PKR/MWh · loading 67% · fund return 11%. All money columns in PKR million.</caption><thead><tr><th>Month</th><th>Energy<br/>MWh</th><th>Market price<br/>PKR/MWh</th><th>Payout</th><th>Interest</th><th>Pool at<br/>start</th><th>Fund<br/>pays</th><th>the guarantor<br/>pays</th><th>Pool at<br/>end</th></tr></thead><tbody><tr><td>Jan-25</td><td>219,049</td><td>22,516.6</td><td>1,478.6</td><td>126.9</td><td>13,843.1</td><td>1,478.6</td><td class="z">—</td><td>12,491.5</td></tr><tr><td>Feb-25</td><td>186,836</td><td>11,644.6</td><td class="z">—</td><td>114.5</td><td>12,491.5</td><td class="z">—</td><td class="z">—</td><td>12,606.0</td></tr><tr><td>Mar-25</td><td>228,206</td><td>17,594.0</td><td>601.0</td><td>115.6</td><td>12,606.0</td><td>601.0</td><td class="z">—</td><td>12,120.5</td></tr><tr><td>Apr-25</td><td>286,713</td><td>22,446.3</td><td>1,802.7</td><td>111.1</td><td>12,120.5</td><td>1,802.7</td><td class="z">—</td><td>10,428.9</td></tr><tr><td>May-25</td><td>348,459</td><td>15,952.0</td><td>607.1</td><td>95.6</td><td>10,428.9</td><td>607.1</td><td class="z">—</td><td>9,917.4</td></tr><tr><td>Jun-25</td><td>373,879</td><td>16,913.7</td><td>1,107.7</td><td>90.9</td><td>9,917.4</td><td>1,107.7</td><td class="z">—</td><td>8,900.7</td></tr><tr><td>Jul-25</td><td>385,605</td><td>16,103.7</td><td>867.2</td><td>81.6</td><td>8,900.7</td><td>867.2</td><td class="z">—</td><td>8,115.1</td></tr><tr><td>Aug-25</td><td>380,550</td><td>13,945.8</td><td>452.8</td><td>74.4</td><td>8,115.1</td><td>452.8</td><td class="z">—</td><td>7,736.7</td></tr><tr><td>Sep-25</td><td>358,401</td><td>15,328.0</td><td>574.4</td><td>70.9</td><td>7,736.7</td><td>574.4</td><td class="z">—</td><td>7,233.3</td></tr><tr><td>Oct-25</td><td>286,528</td><td>19,005.3</td><td>1,139.6</td><td>66.3</td><td>7,233.3</td><td>1,139.6</td><td class="z">—</td><td>6,160.0</td></tr><tr><td>Nov-25</td><td>225,166</td><td>10,230.1</td><td class="z">—</td><td>56.5</td><td>6,160.0</td><td class="z">—</td><td class="z">—</td><td>6,216.4</td></tr><tr><td>Dec-25</td><td>224,608</td><td>13,763.5</td><td>76.9</td><td>57.0</td><td>6,216.4</td><td>76.9</td><td class="z">—</td><td>6,196.5</td></tr></tbody><tfoot><tr><td>Total</td><td>3,504,000</td><td>16,350.3</td><td>8,707.8</td><td>1,061.2</td><td>—</td><td>8,707.8</td><td>—</td><td>6,196.5</td></tr></tfoot></table></div>
+<p>Four things in that table are worth reading slowly.</p>
+<p><b>February and November pay nothing at all.</b> Not a reduced amount — nothing. In both months every hour priced below the fixed price. The buyer paid 16,350.30 anyway, and the pool grew by its interest alone. This is what the guarantee looks like from the buyer’s side in a cheap month, and it is the honest answer to anyone who asks what they are getting: in those months, nothing. They bought certainty, and certainty in a cheap month looks like a loss.</p>
+<p><b>The two largest claims arrive first.</b> January at 1.479 billion and April at 1.803 billion, together 37.7 per cent of the year’s claims, inside the first four months. Because the pool is drawn in sequence, this is the harder ordering. The same twelve claims with the heavy months at the end would leave a larger average balance and earn more interest.</p>
+<p><b>The pool earns 1.061 billion rupees.</b> That is 12.2 per cent of what it pays out. The return is not decoration; it is a material component of the protection, and Section 14 notes that the assumption behind it is the guarantor’s risk and not the buyer’s.</p>
+<p><b>The closing balance is 6.197 billion.</b> Forty-five per cent of everything collected. It does not refund.</p>
+<figure id="fig-pool"><svg aria-label="The pool through 2025. Monthly payouts as bars and the pool balance as a line, both in PKR billion." preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 760 330">
+<line stroke="#c8c2b8" stroke-width="1" x1="78" x2="742" y1="282.00" y2="282.00"></line>
+<text class="ax" text-anchor="end" x="70" y="285.50">0</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="193.33" y2="193.33"></line>
+<text class="ax" text-anchor="end" x="70" y="196.83">5</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="104.67" y2="104.67"></line>
+<text class="ax" text-anchor="end" x="70" y="108.17">10</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="16.00" y2="16.00"></line>
+<text class="ax" text-anchor="end" x="70" y="19.50">15</text>
+<text class="ax unit" text-anchor="end" x="70" y="10">PKR bn</text>
+<text class="ax" text-anchor="middle" x="105.67" y="298">Jan</text>
+<text class="ax" text-anchor="middle" x="161.00" y="298">Feb</text>
+<text class="ax" text-anchor="middle" x="216.33" y="298">Mar</text>
+<text class="ax" text-anchor="middle" x="271.67" y="298">Apr</text>
+<text class="ax" text-anchor="middle" x="327.00" y="298">May</text>
+<text class="ax" text-anchor="middle" x="382.33" y="298">Jun</text>
+<text class="ax" text-anchor="middle" x="437.67" y="298">Jul</text>
+<text class="ax" text-anchor="middle" x="493.00" y="298">Aug</text>
+<text class="ax" text-anchor="middle" x="548.33" y="298">Sep</text>
+<text class="ax" text-anchor="middle" x="603.67" y="298">Oct</text>
+<text class="ax" text-anchor="middle" x="659.00" y="298">Nov</text>
+<text class="ax" text-anchor="middle" x="714.33" y="298">Dec</text>
+<rect class="bar" fill="#C25A1E" height="26.22" rx="3" width="51.33" x="80.00" y="255.78"><title>Jan · paid out: 1.48 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="10.66" rx="3" width="51.33" x="190.67" y="271.34"><title>Mar · paid out: 0.60 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="31.97" rx="3" width="51.33" x="246.00" y="250.03"><title>Apr · paid out: 1.80 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="10.77" rx="3" width="51.33" x="301.33" y="271.23"><title>May · paid out: 0.61 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="19.64" rx="3" width="51.33" x="356.67" y="262.36"><title>Jun · paid out: 1.11 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="15.38" rx="3" width="51.33" x="412.00" y="266.62"><title>Jul · paid out: 0.87 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="8.03" rx="3" width="51.33" x="467.33" y="273.97"><title>Aug · paid out: 0.45 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="10.19" rx="3" width="51.33" x="522.67" y="271.81"><title>Sep · paid out: 0.57 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="20.21" rx="3" width="51.33" x="578.00" y="261.79"><title>Oct · paid out: 1.14 PKR bn</title></rect>
+<rect class="bar" fill="#C25A1E" height="1.36" rx="3" width="51.33" x="688.67" y="280.64"><title>Dec · paid out: 0.08 PKR bn</title></rect>
+<path d="M78.00,36.52 L133.33,60.48 L188.67,58.45 L244.00,67.06 L299.33,97.06 L354.67,106.13 L410.00,124.16 L465.33,138.09 L520.67,144.80 L576.00,153.73 L631.33,172.76 L686.67,171.76 L742.00,172.12" fill="none" stroke="#004d73" stroke-linejoin="round" stroke-width="2.2"></path>
+<circle class="bar" cx="133.33" cy="60.48" data-l="Jan · pool at end" data-v="12.49 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="188.67" cy="58.45" data-l="Feb · pool at end" data-v="12.61 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="244.00" cy="67.06" data-l="Mar · pool at end" data-v="12.12 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="299.33" cy="97.06" data-l="Apr · pool at end" data-v="10.43 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="354.67" cy="106.13" data-l="May · pool at end" data-v="9.92 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="410.00" cy="124.16" data-l="Jun · pool at end" data-v="8.90 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="465.33" cy="138.09" data-l="Jul · pool at end" data-v="8.12 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="520.67" cy="144.80" data-l="Aug · pool at end" data-v="7.74 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="576.00" cy="153.73" data-l="Sep · pool at end" data-v="7.23 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="631.33" cy="172.76" data-l="Oct · pool at end" data-v="6.16 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="686.67" cy="171.76" data-l="Nov · pool at end" data-v="6.22 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="742.00" cy="172.12" data-l="Dec · pool at end" data-v="6.20 PKR bn" fill="#004d73" r="4" stroke="#FFF1E5" stroke-width="2"></circle>
+<text class="ax ref2" x="82" y="27.52">opening pool 13.84</text>
+<text class="ax ref2" text-anchor="end" x="740" y="161.12">closing 6.20</text>
+<rect fill="#C25A1E" height="10" rx="2" width="10" x="78" y="314"></rect>
+<text class="ax lg" x="93" y="323">Paid out in the month</text>
+<line stroke="#004d73" stroke-width="2.2" x1="336" x2="348" y1="319" y2="319"></line>
+<circle cx="342" cy="319" fill="#004d73" r="3.5"></circle>
+<text class="ax lg" x="354" y="323">Pool balance at month end</text>
+</svg><figcaption><b>The pool through 2025</b>PKR billion. The pool opens at 13.84bn, pays 8.71bn across the year, earns 1.06bn, and closes at 6.20bn. February and November take nothing at all: in both months every hour priced below the fixed price.</figcaption></figure>
+<h2>10 · Reverse-engineering the pool: where 67 per cent comes from</h2>
+<p>The loading is the only number in the structure that looks arbitrary, and it is the one number that is not.</p>
+<p>Start from the wrong answer. Charge the expected cost exactly — a loading of zero — and the buyer pays 8.289 billion rupees, or 2,365.7 per megawatt hour, for an all-in price of 18,716.0. In a repeat of 2025 that works: the pool pays every claim and finishes at almost precisely zero.</p>
+<p>But 2025 is not the question. The question is what happens in a bad year, and the record contains one. Scanning all sixteen overlapping twelve-month windows in the database, the worst runs from <b>May 2025 to April 2026</b>, where claims at this book size reach approximately <b>14.98 billion rupees</b> — about 1.7 times the calendar-2025 figure. At zero loading, that window costs the guarantor roughly 6.2 billion rupees, or about 15.5 million per megawatt of book.</p>
+<p>The loading is then defined by a question rather than chosen by judgement: <em>at what multiple of expected cost does the premium, plus the interest it earns while being drawn down, exactly absorb the worst window in the record?</em></p>
+<div class="eq">solve α  such that  expected cost × (1 + α)  +  interest earned  =  worst-window claims</div>
+<p>The answer is <b>α = 0.67</b>. Not a round number, because it was not picked; it is where the guarantor’s cheque goes to zero in the hardest twelve months the market has produced.</p>
+<figure id="fig-exposure"><svg aria-label="guarantor exposure in the worst twelve-month window. Approximate residual exposure falls to nil at a loading of 67 per cent." preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 760 280">
+<line stroke="#c8c2b8" stroke-width="1" x1="78" x2="742" y1="236.00" y2="236.00"></line>
+<text class="ax" text-anchor="end" x="70" y="239.50">0</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="181.00" y2="181.00"></line>
+<text class="ax" text-anchor="end" x="70" y="184.50">2</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="126.00" y2="126.00"></line>
+<text class="ax" text-anchor="end" x="70" y="129.50">4</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="71.00" y2="71.00"></line>
+<text class="ax" text-anchor="end" x="70" y="74.50">6</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="78" x2="742" y1="16.00" y2="16.00"></line>
+<text class="ax" text-anchor="end" x="70" y="19.50">8</text>
+<text class="ax unit" text-anchor="end" x="70" y="10">PKR bn</text>
+<rect class="bar" fill="#C25A1E" height="169.95" rx="3" width="67.00" x="86.00" y="66.05"><title>loading 0%: 6.18 PKR bn</title></rect>
+<text class="ax" text-anchor="middle" x="119.50" y="252">0%</text>
+<rect class="bar" fill="#C25A1E" height="144.58" rx="3" width="67.00" x="169.00" y="91.42"><title>loading 10%: 5.26 PKR bn</title></rect>
+<text class="ax" text-anchor="middle" x="202.50" y="252">10%</text>
+<rect class="bar" fill="#C25A1E" height="119.22" rx="3" width="67.00" x="252.00" y="116.78"><title>loading 20%: 4.34 PKR bn</title></rect>
+<text class="ax" text-anchor="middle" x="285.50" y="252">20%</text>
+<rect class="bar" fill="#C25A1E" height="93.85" rx="3" width="67.00" x="335.00" y="142.15"><title>loading 30%: 3.41 PKR bn</title></rect>
+<text class="ax" text-anchor="middle" x="368.50" y="252">30%</text>
+<rect class="bar" fill="#C25A1E" height="68.49" rx="3" width="67.00" x="418.00" y="167.51"><title>loading 40%: 2.49 PKR bn</title></rect>
+<text class="ax" text-anchor="middle" x="451.50" y="252">40%</text>
+<rect class="bar" fill="#C25A1E" height="43.12" rx="3" width="67.00" x="501.00" y="192.88"><title>loading 50%: 1.57 PKR bn</title></rect>
+<text class="ax" text-anchor="middle" x="534.50" y="252">50%</text>
+<rect class="bar" fill="#C25A1E" height="17.76" rx="3" width="67.00" x="584.00" y="218.24"><title>loading 60%: 0.65 PKR bn</title></rect>
+<text class="ax" text-anchor="middle" x="617.50" y="252">60%</text>
+<rect class="bar" fill="#C25A1E" height="0.60" rx="3" width="67.00" x="667.00" y="236.00"><title>loading 67%: 0.00 PKR bn</title></rect>
+<text class="ax" text-anchor="middle" x="700.50" y="252">67%</text>
+<text class="ax lg" text-anchor="middle" x="410.00" y="274">Pool loading</text>
+</svg><figcaption><b>the guarantor’s residual exposure in the worst twelve-month window</b>PKR billion. Two points are computed: exposure is about 6.2bn at zero loading, and nil at 67 per cent, which is how 67 per cent was solved. The bars between them are a straight-line interpolation, so each percentage point of loading removes roughly 92 million.</figcaption></figure>
+<p>The relationship is close to linear on both sides, which gives two rules of thumb that hold well enough for a meeting.</p>
+<div class="calc">
+every 10 points of loading <span class="op">=</span> <span class="r">+236.6 PKR/MWh</span> on the all-in price<br/>
+every 10 points of loading <span class="op">=</span> <span class="r">≈ −0.92bn</span> of worst-case exposure<br/>
+<span class="cm">— so one percentage point of loading buys roughly 92 million rupees of protection for 23.7 PKR/MWh. The first line is exact; the second is a straight line drawn between two computed points</span>
+</div>
+<p>That is the trade in its simplest form, and it is the trade the board is actually being asked to make.</p>
+<figure id="fig-loading"><svg aria-label="All-in price against pool loading. The buyer's all-in price rises linearly with the loading charged on the pool." preserveaspectratio="xMidYMid meet" role="img" viewbox="0 0 760 300">
+<line stroke="#e6e1d8" stroke-width="0.8" x1="86" x2="742" y1="256.00" y2="256.00"></line>
+<text class="ax" text-anchor="end" x="78" y="259.50">18,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="86" x2="742" y1="196.00" y2="196.00"></line>
+<text class="ax" text-anchor="end" x="78" y="199.50">19,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="86" x2="742" y1="136.00" y2="136.00"></line>
+<text class="ax" text-anchor="end" x="78" y="139.50">20,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="86" x2="742" y1="76.00" y2="76.00"></line>
+<text class="ax" text-anchor="end" x="78" y="79.50">21,000</text>
+<line stroke="#e6e1d8" stroke-width="0.8" x1="86" x2="742" y1="16.00" y2="16.00"></line>
+<text class="ax" text-anchor="end" x="78" y="19.50">22,000</text>
+<text class="ax unit" text-anchor="end" x="78" y="10">PKR/MWh</text>
+<text class="ax" text-anchor="middle" x="86.00" y="272">0%</text>
+<text class="ax" text-anchor="middle" x="151.60" y="272">10%</text>
+<text class="ax" text-anchor="middle" x="217.20" y="272">20%</text>
+<text class="ax" text-anchor="middle" x="282.80" y="272">30%</text>
+<text class="ax" text-anchor="middle" x="348.40" y="272">40%</text>
+<text class="ax" text-anchor="middle" x="414.00" y="272">50%</text>
+<text class="ax" text-anchor="middle" x="479.60" y="272">60%</text>
+<text class="ax" text-anchor="middle" x="525.52" y="272">67%</text>
+<text class="ax" text-anchor="middle" x="610.80" y="272">80%</text>
+<text class="ax" text-anchor="middle" x="742.00" y="272">100%</text>
+<path d="M86.00,213.04 L151.60,198.85 L217.20,184.65 L282.80,170.46 L348.40,156.27 L414.00,142.07 L479.60,127.88 L525.52,117.94 L610.80,99.49 L742.00,71.10" fill="none" stroke="#004d73" stroke-width="2.4"></path>
+<circle class="bar" cx="86.00" cy="213.04" data-l="loading 0%" data-v="18,716 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="151.60" cy="198.85" data-l="loading 10%" data-v="18,953 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="217.20" cy="184.65" data-l="loading 20%" data-v="19,189 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="282.80" cy="170.46" data-l="loading 30%" data-v="19,426 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="348.40" cy="156.27" data-l="loading 40%" data-v="19,662 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="414.00" cy="142.07" data-l="loading 50%" data-v="19,899 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="479.60" cy="127.88" data-l="loading 60%" data-v="20,135 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="525.52" cy="117.94" data-l="loading 67%" data-v="20,301 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="610.80" cy="99.49" data-l="loading 80%" data-v="20,609 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<circle class="bar" cx="742.00" cy="71.10" data-l="loading 100%" data-v="21,082 PKR/MWh" fill="#004d73" r="4.2" stroke="#FFF1E5" stroke-width="2"></circle>
+<line stroke="#9f3b3b" stroke-dasharray="5 3" stroke-width="1.4" x1="525.52" x2="525.52" y1="16" y2="256"></line>
+<text class="ax ref" text-anchor="end" x="518.52" y="32">67% · the solved level</text>
+<text class="ax lg" text-anchor="middle" x="414.00" y="294">Pool loading</text>
+</svg><figcaption><b>The all-in price rises in a straight line with the loading</b>Rupees per megawatt hour. Each 10 points of loading adds 236.6 to the buyer’s all-in price. The 67 per cent mark is the level that absorbs the worst twelve months in the record.</figcaption></figure>
+<h2>11 · What each lever actually does</h2>
+<p>Three inputs can be changed. They do not behave alike, and the differences are not intuitive.</p>
+<h3>Book size: exactly linear, and per-unit invariant</h3>
+<p>Everything scales with megawatts. Claims, premium, exposure, all of it. What does <em>not</em> change is any per-unit figure. A 250 MW book pays 250 × 34,607,821 = 8.65 billion rupees, and its all-in price is still 20,301.0 per megawatt hour. This is what makes the structure a product rather than a negotiation: the price list is per megawatt, and it is the same for everyone.</p>
+<h3>Loading: linear, and the real safety lever</h3>
+<p>Premium is expected cost times (1 + α), so the all-in price is a straight line in α. Every rupee of loading goes into the pool and stays available. Nothing about it is clever, which is precisely its merit.</p>
+<h3>Fixed price: non-linear, and much weaker than instinct suggests</h3>
+<p>Raising <em>K</em> reduces the premium substantially. It does much less to the tail. In the sensitivity runs behind this paper, a large increase in the strike removed only about a fifth of the worst-case exposure.</p>
+<p>The reason is structural and is visible in the data. Most covered hours price close to <em>K</em>, so a shift in the strike removes them from the payout entirely — a large effect on the expected cost. The hours that generate the tail price far above any plausible strike, and moving <em>K</em> by a few hundred rupees per megawatt hour barely dents them. The same concentration that made Winter Storm Uri so expensive in so few hours<sup class="fn">14</sup> makes a strike-price defence weak here.</p>
+<p class="pull">Raising the tariff protects the average year. It does not protect the bad one. Funding the pool protects the bad one, which is the only year in which protection is needed.</p>
+<p>This runs against the instinct of a guarantee business, where price is usually the first lever reached for. It is worth stating plainly because the analysis initially pointed the other way, and the data corrected it.</p>
+<h2>12 · The surplus, and why year two is cheaper</h2>
+<p>The 6.197 billion rupees left in the pool at the end of 2025 is not a profit and it is not a refund. It is next year’s opening balance.</p>
+<p>If the structure is to offer the same protection in year two — the same total pool capacity — the top-up required is the difference:</p>
+<div class="calc">
+target pool <span class="op">=</span> <span class="r">PKR 13,843,128,560</span><br/>
+carried forward <span class="op">=</span> <span class="r">PKR 6,196,512,767</span><br/>
+year-two top-up <span class="op">=</span> <span class="r">PKR 7,646,615,793</span> <span class="op">=</span> <span class="r">2,182.3 PKR/MWh</span><br/>
+<br/>
+implied year-two loading <span class="op">=</span> 7,646,615,793 <span class="op">÷</span> 8,289,298,538 <span class="op">−</span> 1 <span class="op">=</span> <span class="r">−7.8%</span><br/>
+year-two all-in <span class="op">=</span> 16,350.30 <span class="op">+</span> 2,182.3 <span class="op">=</span> <span class="r">18,532.6 PKR/MWh</span><br/>
+reduction <span class="op">=</span> <span class="r">1,768.4 PKR/MWh</span> <span class="cm">· 8.7% off the all-in price</span>
+</div>
+<p>The loading turns negative. Buyers in year two would contribute less than the expected cost of their own cover, because the fund already holds the difference.</p>
+<p>This is the mutual argument, and it is the strongest commercial point in the structure. The 67 per cent is the price of starting from nothing. In a mutual with retained surplus, that cost is paid once by the first cohort — which raises a question of fairness that Section 14 takes up, because the first cohort capitalises the fund for everyone who follows.</p>
+<p>Two conditions attach. Year one must actually resemble 2025; a first year like the May-2025 window leaves nothing to carry. And the arrangement only works if the surplus is genuinely retained and not distributed, which is a governance commitment rather than an arithmetic one.</p>
+<h2>13 · Limitations</h2>
+<p>The results above are only as good as five assumptions, and each of them can be wrong in a way that matters.</p>
+<h4>1. The data is 288 averages, not 8,760 hours</h4>
+<p>Every price in the model is the mean of roughly thirty same-hour readings. A single extreme day is averaged into the other thirty and largely disappears. Because the payout function is convex, this understates the liability, and it understates it always.<sup class="fn">17</sup> Section 8 measured the same effect one level up and found a factor of two between monthly and hourly resolution; the step from 288 cells to 8,760 hours will move the number again in the same direction. <b>The 8.71 billion should be read as a floor, not an estimate.</b> This is the most significant limitation in the paper, and rerunning the model on the full hourly series is the single highest-value next step.</p>
+<h4>2. The buyer is assumed to consume like the country</h4>
+<p>The book is scaled from the national curve in every hour. A real industrial buyer does not consume like the national grid: a three-shift plant is far flatter, a single-shift plant is concentrated in daylight hours, and a seasonal processor may be absent for months. Aggregation at DISCO level does not reveal this — regional shapes price within about four per cent of the national curve, because aggregation washes out individual variation — but synthetic archetypes built to represent real consumption patterns span a range of roughly 2.07 times in cost. <b>The load shape is the largest untested assumption in the model, and it cannot be resolved from published data.</b> It requires meter data from the actual buyers, which is why the collection template is part of the accompanying materials.</p>
+<h4>3. One year of complete data, sixteen overlapping windows</h4>
+<p>The database covers twenty-seven months. Calibrating a tail against sixteen overlapping twelve-month windows drawn from twenty-seven months of history is not the same as calibrating against a distribution. The worst window observed is not the worst window possible, and nothing in the data constrains how much worse a genuine fuel shock, a currency event or a hydrological failure could be. The 67 per cent absorbs the worst thing that has happened. It does not absorb the worst thing that can.</p>
+<h4>4. Pooling does not diversify this risk</h4>
+<p>It is natural to assume that adding buyers makes the pool safer. It does not. Every participant faces the same system price on the same day, so their claims are near-perfectly correlated. The risk is systematic, not idiosyncratic, and the law of large numbers does not apply to it. What pooling provides is scale, a shared buffer and lower unit administration — real benefits, but not diversification. A larger book means a proportionally larger tail, not a smaller one.</p>
+<h4>5. The fund return is an assumption, and the guarantor bears it</h4>
+<p>The 11 per cent contributes 1.061 billion rupees to the 2025 protection. If the pool earns 8 per cent instead, it contributes 759 million, and the missing 302 million lands in the tail — which is to say, on the guarantor. Unless the product documentation says otherwise, the investment return assumption is the guarantor’s risk and not the buyer’s. Each percentage point of fund return is worth approximately 102 million rupees a year at this pool size, or about 29 rupees per megawatt hour.</p>
+<h4>Lesser caveats</h4>
+<ul>
+<li><b>Interest timing.</b> Interest accrues on the opening balance for the full month before claims are deducted, which flatters the fund slightly. The effect is small — on the order of a month of carry — but it is a convention, not a fact.</li>
+<li><b>Marginal cost is not the settlement price.</b> The model uses ISMO’s marginal-cost series. What a bilateral contract actually settles against will be defined by the Market Commercial Code and may differ, particularly in hours where the marginal plant is constrained.</li>
+<li><b>No credit risk.</b> The model assumes buyers pay the premium and that the pool’s assets are sound. Neither is automatic in a sector with Pakistan’s payment history.<sup class="fn">13</sup></li>
+<li><b>No network charges.</b> Use of System Charges of 6.23 to 19.62 rupees per unit<sup class="fn">5</sup> sit on top of everything quoted here and are, for most consumer categories, larger than the guarantee itself.</li>
+<li><b>Sequence risk within the year.</b> The model runs one ordering of twelve months. A reordering changes the drawdown path and therefore the interest earned and the point of exhaustion.</li>
+</ul>
+<h2>14 · Open design questions</h2>
+<p>Five questions are not answered by the analysis and must be settled commercially before this becomes a product.</p>
+<p><b>What does the guarantor earn?</b> In the base case the guarantor carries an uncapped tail and receives nothing. There is no fee line in the model. Options include a fixed arrangement fee, a share of the pool’s investment income, or a claim on part of the retained surplus. Any of them raises the all-in price; none of them can be avoided by leaving the question open.</p>
+<p><b>Who owns the retained surplus?</b> The 6.20 billion carried into year two belongs to somebody. If a buyer leaves after year one, do they take a share? Are contributions tracked as units, or is it a common pot? Mutual insurers have well-worn answers to this,<sup class="fn">9,10</sup> and the choice determines whether the first cohort is subsidising the second or investing in it.</p>
+<p><b>Should the tail be capped?</b> An uncapped obligation on a guarantee company’s balance sheet is a capital question before it is a pricing question. A cap, a reinsurance layer, or a supplementary call on members are the three standard answers, and mutuals typically use the third.</p>
+<p><b>How is the premium financed?</b> The buyer hands over 13.84 billion rupees on day one, and the pool earns 11 per cent on it. If the buyer’s own cost of money is materially above that, the transaction destroys value for them even while the arithmetic here looks favourable, and their true all-in price is higher than 20,301. Staged payments, or a credit facility against the premium, would address it and would change the model.</p>
+<p><b>What is the regulatory treatment?</b> The fixed price, the loading and the retained surplus are all matters a regulator may wish to approve, particularly where the instrument affects the price paid by bulk consumers in a market the regulator has just opened. Section 1’s chronology suggests the regulatory architecture is still settling.</p>
+<h2>15 · Conclusions</h2>
+<p>The proposal is workable and the arithmetic holds. Six conclusions follow from it.</p>
+<p><b>The tariff carries no margin.</b> The fixed price is the market average by construction, so the guarantee has to be paid for entirely in the premium. Any subsequent negotiation that treats <em>K</em> as having a cushion in it is negotiating against a number that does not exist.</p>
+<p><b>The cost is the asymmetry, not the promise.</b> A two-sided contract at this strike costs 138,233 rupees across a 57 billion rupee year. The one-sided version costs 8.71 billion. If that price is unacceptable to buyers, the lever to reach for is partial two-sidedness — a share of cheap-hour savings returning to the pool — not a higher strike.</p>
+<p><b>Resolution is not a technicality.</b> Moving from monthly to hourly settlement doubles the measured cost. Moving from 288 averaged cells to 8,760 real hours will raise it again. Any competing valuation should be checked first for what resolution it was computed at, because that single question will usually explain the difference.</p>
+<p><b>Funding beats pricing.</b> The loading is the effective safety lever; the strike is not. This is counter-intuitive in a guarantee business and it is the finding most likely to be argued with.</p>
+<p><b>Nil exposure is earned, not given.</b> The 67 per cent was solved against the worst observed window. Change the price path and the exposure line stops reading nil. The structure is calibrated, not invincible, and the limitations in Section 13 all point the same way.</p>
+<p><b>It is a mutual, and mutuals get cheaper.</b> Forty-five per cent of the premium survives an ordinary year and lowers the next one — to a negative loading and an all-in price 8.7 per cent below year one. The 67 per cent is a capitalisation charge dressed as a margin. Presenting it as a permanent surcharge would misrepresent the product in the direction least favourable to it.</p>
+<p>What would change these conclusions, in order of how much it would move them: real hourly data; real buyer load shapes; a longer price history; and an explicit answer to what the guarantor is paid for standing behind the tail.</p>
+<h2>Appendix A · The year in both units</h2>
+<div class="tw wide"><table><caption>The same twelve months in consumer units and wholesale units. The effective gap is the payout divided by the energy covered — what the guarantee actually cost per unit in that month.</caption><thead><tr><th>Month</th><th>Days</th><th>Energy<br/>kWh</th><th>Energy<br/>MWh</th><th>Average<br/>MW</th><th>Price<br/>PKR/kWh</th><th>Price<br/>PKR/MWh</th><th>Payout<br/>PKR</th><th>Effective gap<br/>PKR/MWh</th></tr></thead><tbody><tr><td>Jan-25</td><td>31</td><td>219,048,787</td><td>219,049</td><td>294.4</td><td>22.5166</td><td>22,516.6</td><td>1,478,570,172</td><td>6,750.0</td></tr><tr><td>Feb-25</td><td>28</td><td>186,835,778</td><td>186,836</td><td>278.0</td><td>11.6446</td><td>11,644.6</td><td class="z">—</td><td class="z">—</td></tr><tr><td>Mar-25</td><td>31</td><td>228,205,722</td><td>228,206</td><td>306.7</td><td>17.5940</td><td>17,594.0</td><td>601,033,896</td><td>2,633.7</td></tr><tr><td>Apr-25</td><td>30</td><td>286,713,220</td><td>286,713</td><td>398.2</td><td>22.4463</td><td>22,446.3</td><td>1,802,662,755</td><td>6,287.3</td></tr><tr><td>May-25</td><td>31</td><td>348,459,375</td><td>348,459</td><td>468.4</td><td>15.9520</td><td>15,952.0</td><td>607,072,950</td><td>1,742.2</td></tr><tr><td>Jun-25</td><td>30</td><td>373,878,997</td><td>373,879</td><td>519.3</td><td>16.9137</td><td>16,913.7</td><td>1,107,693,673</td><td>2,962.7</td></tr><tr><td>Jul-25</td><td>31</td><td>385,604,659</td><td>385,605</td><td>518.3</td><td>16.1037</td><td>16,103.7</td><td>867,152,414</td><td>2,248.8</td></tr><tr><td>Aug-25</td><td>31</td><td>380,550,270</td><td>380,550</td><td>511.5</td><td>13.9458</td><td>13,945.8</td><td>452,757,355</td><td>1,189.7</td></tr><tr><td>Sep-25</td><td>30</td><td>358,401,476</td><td>358,401</td><td>497.8</td><td>15.3280</td><td>15,328.0</td><td>574,396,727</td><td>1,602.7</td></tr><tr><td>Oct-25</td><td>31</td><td>286,527,607</td><td>286,528</td><td>385.1</td><td>19.0053</td><td>19,005.3</td><td>1,139,595,821</td><td>3,977.3</td></tr><tr><td>Nov-25</td><td>30</td><td>225,166,282</td><td>225,166</td><td>312.7</td><td>10.2301</td><td>10,230.1</td><td class="z">—</td><td class="z">—</td></tr><tr><td>Dec-25</td><td>31</td><td>224,607,826</td><td>224,608</td><td>301.9</td><td>13.7635</td><td>13,763.5</td><td>76,900,708</td><td>342.4</td></tr></tbody><tfoot><tr><td>Total</td><td>365</td><td>3,504,000,000</td><td>3,504,000</td><td>400.0</td><td>16.3503</td><td>16,350.3</td><td>8,707,836,471</td><td>2,485.1</td></tr></tfoot></table></div>
+<h2>Appendix B · Reference values</h2>
+<div class="tw"><table><caption>Every constant used in this paper, in both unit conventions.</caption><thead><tr><th>Quantity</th><th>Value</th><th>Note</th></tr></thead><tbody><tr><td>System annual average demand</td><td>14,271.91 MW</td><td style="text-align:left;color:#56504A">ISMO, calendar 2025</td></tr><tr><td>System annual energy</td><td>125,021,932 MWh</td><td style="text-align:left;color:#56504A">14,271.91 × 8,760</td></tr><tr><td>Book size</td><td>400 MW</td><td style="text-align:left;color:#56504A">annual average, not a flat block</td></tr><tr><td>Book share of system</td><td>2.8027%</td><td style="text-align:left;color:#56504A">400 ÷ 14,271.91</td></tr><tr><td>Book annual energy</td><td>3,504,000 MWh</td><td style="text-align:left;color:#56504A">3,504,000,000 kWh</td></tr><tr><td>Fixed price <em>K</em></td><td>16,350.30 PKR/MWh</td><td style="text-align:left;color:#56504A">16.3503 PKR/kWh</td></tr><tr><td>2025 load-weighted average price</td><td>16,350.34 PKR/MWh</td><td style="text-align:left;color:#56504A"><em>K</em> is this, rounded</td></tr><tr><td>2025 simple 12-month average</td><td>16,286.97 PKR/MWh</td><td style="text-align:left;color:#56504A">0.39% lower — wrong weighting</td></tr><tr><td>Annual energy bill at <em>K</em></td><td>PKR 57,291,451,200</td><td style="text-align:left;color:#56504A">3,504,000 × 16,350.30</td></tr><tr><td>Undiscounted 2025 claims</td><td>PKR 8,707,836,471</td><td style="text-align:left;color:#56504A">hour by hour, one-sided</td></tr><tr><td>Two-sided net cost, 2025</td><td>PKR 138,233</td><td style="text-align:left;color:#56504A">0.00024% of the bill</td></tr><tr><td>Monthly-resolution claims</td><td>PKR 4,353,718,004</td><td style="text-align:left;color:#56504A">50.0% below the hourly figure</td></tr><tr><td>Expected cost (PV at 11%/12)</td><td>PKR 8,289,298,538</td><td style="text-align:left;color:#56504A">2,365.7 PKR/MWh</td></tr><tr><td>Expected cost per MW</td><td>PKR 20,723,246</td><td style="text-align:left;color:#56504A">per MW of book per year</td></tr><tr><td>Pool loading α</td><td>67%</td><td style="text-align:left;color:#56504A">solved against the worst window</td></tr><tr><td>Premium</td><td>PKR 13,843,128,560</td><td style="text-align:left;color:#56504A">3,950.7 PKR/MWh</td></tr><tr><td>Premium per MW</td><td>PKR 34,607,821</td><td style="text-align:left;color:#56504A">per MW of book per year</td></tr><tr><td>All-in price</td><td>20,301.0 PKR/MWh</td><td style="text-align:left;color:#56504A">20.3010 PKR/kWh, before charges</td></tr><tr><td>Fund return</td><td>11.00% a year</td><td style="text-align:left;color:#56504A">0.916667% a month</td></tr><tr><td>Interest earned, 2025</td><td>PKR 1,061,220,678</td><td style="text-align:left;color:#56504A">12.2% of claims paid</td></tr><tr><td>Closing pool, 2025</td><td>PKR 6,196,512,767</td><td style="text-align:left;color:#56504A">44.8% of the premium</td></tr><tr><td>Year-two top-up</td><td>PKR 7,646,615,793</td><td style="text-align:left;color:#56504A">2,182.3 PKR/MWh</td></tr><tr><td>Year-two implied loading</td><td>−7.8%</td><td style="text-align:left;color:#56504A">below expected cost</td></tr><tr><td>Year-two all-in price</td><td>18,532.6 PKR/MWh</td><td style="text-align:left;color:#56504A">8.7% below year one</td></tr><tr><td>Worst 12-month window</td><td>May 2025 – Apr 2026</td><td style="text-align:left;color:#56504A">claims ≈ PKR 14.98bn</td></tr><tr><td>Exposure at zero loading</td><td>≈ PKR 6.2bn</td><td style="text-align:left;color:#56504A">≈ 15.5m per MW</td></tr><tr><td>Loading sensitivity</td><td>236.6 PKR/MWh</td><td style="text-align:left;color:#56504A">per 10 points of loading</td></tr><tr><td>Fund-return sensitivity</td><td>≈ PKR 102m a year</td><td style="text-align:left;color:#56504A">per percentage point, ≈ 29 PKR/MWh</td></tr></tbody></table></div>
+<h2>Sources and reproducibility</h2>
+<p class="small">Every figure in this paper is derived from the ISMO hourly demand and marginal-cost tables and can be reproduced from the workbook and notebook below. Where a figure is stated as approximate — the worst-window claim total, the strike-price sensitivity — it comes from the scan in the notebook rather than from the twelve rows in Appendix A.</p>
+<ul class="small">
+<li><b>Interactive model and first article:</b> <a href="https://replace-with-your-article-url/">The price of a promise</a> — the live simulator, where book size, fixed price, loading, fund return, load shape and price path can be changed and the year recalculated.</li>
+<li><b>Workbook:</b> <em>ISMO Product Structuring.xlsx</em> — the formula-driven model, one sheet, every calculation live.</li>
+<li><b>Notebook:</b> <em>ISMO Product Structuring Python Code.ipynb</em> — the rolling-window scan, the loading solve and the sensitivity runs.</li>
+<li><b>Source data:</b> ISMO Master Database, February 2024 – April 2026.</li>
+</ul>
+<ol class="refs">
+<li>National Electric Power Regulatory Authority, <em>Competitive Trading Bilateral Contracts Market</em>. <a href="https://www.nepra.org.pk/ctbcm.php">nepra.org.pk/ctbcm.php</a></li>
+<li>“ISMO: A game-changer for Pakistan’s electricity market?”, <em>Business Recorder</em>. <a href="https://www.brecorder.com/news/40327272/ismo-a-game-changer-for-pakistans-electricity-market">brecorder.com</a></li>
+<li>“Pakistan Opens Electricity Market, Allowing Consumers to Choose Power Suppliers”, 20 September 2026. <a href="https://flare.pk/2026/09/pakistan-opens-electricity-market-allowing-consumers-to-choose-power-suppliers/">flare.pk</a></li>
+<li>“Pakistan Begins First Power Wheeling Auction, Offers 400MW”, <em>Pakistan Observer</em>. <a href="https://pakobserver.net/pakistan-begins-first-power-wheeling-auction-offers-400mw/">pakobserver.net</a></li>
+<li>“How the New Electricity Market Will Work”, <em>ProPakistani</em>, 21 September 2026. <a href="https://propakistani.pk/2026/09/21/how-the-new-electricity-market-will-work/">propakistani.pk</a></li>
+<li>National Credit Guarantee Company Limited. <a href="https://ncgcl.pk/">ncgcl.pk</a></li>
+<li>“Contracts for Difference (UK energy)”. <a href="https://en.wikipedia.org/wiki/Contracts_for_Difference_(UK_energy)">en.wikipedia.org</a>; Low Carbon Contracts Company, <a href="https://www.lowcarboncontracts.uk/news/contracts-for-difference-cfd/">lowcarboncontracts.uk</a></li>
+<li>American Public Power Association, “Prepay Bonds Provide Savings on Long-Term Energy Needs”. <a href="https://www.publicpower.org/periodical/article/prepay-bonds-provide-savings-long-term-energy-needs">publicpower.org</a></li>
+<li>Nuclear Electric Insurance Limited. <a href="https://www.myneil.com/about-us">myneil.com</a>; <a href="https://en.wikipedia.org/wiki/Nuclear_Electric_Insurance_Limited">en.wikipedia.org</a></li>
+<li>“Protection and indemnity insurance”. <a href="https://en.wikipedia.org/wiki/Protection_and_indemnity_insurance">en.wikipedia.org</a></li>
+<li>Carey, “Chile Electricity PEC issues the first tariff stabilization bond”. <a href="https://www.carey.cl/en/chile-electricity-pec-issues-the-first-tariff-stabilization-bond/">carey.cl</a></li>
+<li>Ministerio de Hacienda de Chile, <em>MEPCO</em>. <a href="https://www.hacienda.cl/english/work-areas/macroeconomic-policy/mepco">hacienda.cl</a>; Sustainability 13(21), 11870, “Impact of Energy Price Stabilization Mechanism on Regulated Clients’ Tariffs: The Case of Chile”. <a href="https://doi.org/10.3390/su132111870">doi.org/10.3390/su132111870</a></li>
+<li>“PMO steps in after NEPRA raises concerns over circular debt, capacity payments in State of Industry Report”, <em>Profit</em>. <a href="https://profit.pakistantoday.com.pk/2026/02/12/pmo-steps-in-after-nepra-raises-concerns-over-circular-debt-capacity-payments-in-state-of-industry-report/">profit.pakistantoday.com.pk</a></li>
+<li>“Texas Retail Power Provider Griddy Seeking Chapter 11”, <em>NGI</em>. <a href="https://www.naturalgasintel.com/news/texas-retail-power-provider-griddy-seeking-chapter-11-says-ercot-caused-financial-devastation/">naturalgasintel.com</a></li>
+<li>“PUC set power prices too high during Winter Storm Uri, court rules”, <em>Texas Tribune</em>. <a href="https://www.texastribune.org/2023/03/17/puc-appeals-court-uri-prices/">texastribune.org</a></li>
+<li><em>Loss Data Analytics</em>, ch. 7, Premium Foundations. <a href="https://openacttexts.github.io/Loss-Data-Analytics/ChapPremiumFoundations.html">openacttexts.github.io</a>; S. Feldblum, “Risk Loads for Insurers”, CAS. <a href="https://www.casact.org/sites/default/files/database/proceed_proceed90_90160.pdf">casact.org</a></li>
+<li>“Jensen’s inequality”. <a href="https://en.wikipedia.org/wiki/Jensen%27s_inequality">en.wikipedia.org</a>; “Convexity (finance)”. <a href="https://en.wikipedia.org/wiki/Convexity_(finance)">en.wikipedia.org</a></li>
+</ol>
+<footer>
+Product Structuring · working paper, 22 September 2026.<br/>
+Backtested on ISMO hourly demand and marginal-cost data, February 2024 – April 2026. Base case: calendar 2025.<br/>
+All figures are model output, not a quotation. All-in prices exclude Use of System Charges, administration and fees.
+</footer>
+</div>
